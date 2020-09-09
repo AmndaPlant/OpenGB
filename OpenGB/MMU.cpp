@@ -94,3 +94,8 @@ void MMU::writeShort(uint16_t addr, uint16_t data)
 	writeByte(addr, (uint8_t)(data & 0x00FF));
 	writeByte(addr + 1, (uint8_t)((data & 0xFF00) >> 8));
 }
+
+void MMU::set_rom(uint8_t *rom_data)
+{
+	std::memcpy(cart, rom_data, sizeof(cart));
+}

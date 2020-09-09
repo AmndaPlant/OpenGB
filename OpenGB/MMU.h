@@ -1,6 +1,8 @@
 #pragma once
 
 #include <stdint.h>
+#include <memory>
+
 
 class MMU {
 	private:
@@ -20,5 +22,7 @@ class MMU {
 
 		void writeByte(uint16_t addr, uint8_t data);
 		void writeShort(uint16_t addr, uint16_t data);
+
+		void set_rom(uint8_t* rom_data);
 };
 

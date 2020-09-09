@@ -19,10 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameBoy.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MMU.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cartridge.h" />
+    <ClInclude Include="GameBoy.h" />
     <ClInclude Include="MMU.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
