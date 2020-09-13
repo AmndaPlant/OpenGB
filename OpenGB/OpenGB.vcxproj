@@ -19,12 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CPU.cpp" />
     <ClCompile Include="GameBoy.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MMU.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cartridge.h" />
+    <ClInclude Include="CPU.h" />
     <ClInclude Include="GameBoy.h" />
     <ClInclude Include="MMU.h" />
   </ItemGroup>

@@ -2,7 +2,9 @@
 
 #include <stdint.h>
 #include <memory>
+#include <iostream>
 
+//#define LOGGING
 
 class MMU {
 	private:

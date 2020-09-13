@@ -1,5 +1,11 @@
 #include "GameBoy.h"
 
+GameBoy::GameBoy()
+{
+	cpu.connectGB(this);
+	mmu.writeByte(0xFF44, 0x90);
+}
+
 bool GameBoy::readROM(const char* filename)
 {
 	std::string name;
@@ -51,11 +57,11 @@ bool GameBoy::readROM(const char* filename)
 
 	std::cout << "ROM Type: " << it->second << std::endl;
 
-	if (type != ROM_PLAIN)
+	/*if (type != ROM_PLAIN)
 	{
 		std::cerr << "Only 32k games with no mappers are supported!" << std::endl;
 		return false;
-	}
+	}*/
 
 	rom_size = file_contents[ROM_OFFSET_ROM_SIZE];
 

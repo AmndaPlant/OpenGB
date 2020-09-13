@@ -262,3 +262,7 @@ __pycache__/
 
 # ROMS
 *.gb
+OpenGB/cpu_instrs
+
+# Output file
+OpenGB/output.txt

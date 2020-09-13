@@ -6,12 +6,16 @@
 
 #include "MMU.h"
 #include "Cartridge.h"
+#include "CPU.h"
 
 class GameBoy
 {
-	private:
-		MMU mmu;
 	public:
+		GameBoy();
+
+		MMU mmu;
+		CPU cpu;
+
 		bool readROM(const char* filename);
 		void unloadROM();
 };

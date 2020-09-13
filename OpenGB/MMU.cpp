@@ -79,6 +79,14 @@ void MMU::writeByte(uint16_t addr, uint8_t data)
 	// TODO Special GPU addrs
 	// TODO various IO mem addrs
 	// TODO interrupt addrs
+	// Logging for blargg's tests as we don't have a GPU
+	#ifndef LOGGING
+		else if (addr == 0xFF02 && data == 0x81)
+		{
+			char c = static_cast<char>(readByte(0xFF01));
+			std::cout << c;
+		}
+	#endif // LOGGING
 	else if (addr >= 0xFF00 && addr <= 0xFF7F)
 	{
 		io[addr - 0xFF00] = data;
