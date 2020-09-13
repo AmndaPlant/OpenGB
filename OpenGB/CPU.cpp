@@ -20,7 +20,7 @@ CPU::CPU()
 	using a = CPU;
 	lookup = 
 	{ 
-		{"NOP", &a::nop, 1},{"LD BC,d16", &a::ld_bc_nn, 3},{"LD (BC),A", &a::undefined, 1},{"INC BC", &a::inc_bc, 1},{"INC B", &a::undefined, 1},{"DEC B", &a::dec_b, 1},{"LD B,d8", &a::ld_b_n, 2},{"RLCA", &a::undefined, 1},{"LD (a16),SP", &a::undefined, 3},{"ADD HL,BC", &a::undefined, 1},{"LD A,(BC)", &a::undefined, 1},{"DEC BC", &a::undefined, 1},{"INC C", &a::undefined, 1},{"DEC C", &a::dec_c, 1},{"LD C,d8", &a::ld_c_n, 2},{"RRCA", &a::undefined, 1},
+		{"NOP", &a::nop, 1},{"LD BC,d16", &a::ld_bc_nn, 3},{"LD (BC),A", &a::undefined, 1},{"INC BC", &a::inc_bc, 1},{"INC B", &a::undefined, 1},{"DEC B", &a::dec_b, 1},{"LD B,d8", &a::ld_b_n, 2},{"RLCA", &a::undefined, 1},{"LD (a16),SP", &a::ld_nn_sp, 3},{"ADD HL,BC", &a::undefined, 1},{"LD A,(BC)", &a::undefined, 1},{"DEC BC", &a::undefined, 1},{"INC C", &a::undefined, 1},{"DEC C", &a::dec_c, 1},{"LD C,d8", &a::ld_c_n, 2},{"RRCA", &a::undefined, 1},
 		{"STOP 0", &a::undefined, 2},{"LD DE,d16", &a::ld_de_nn, 3},{"LD (DE),A", &a::ld_de_a, 1},{"INC DE", &a::inc_de, 1},{"INC D", &a::inc_d, 1},{"DEC D", &a::undefined, 1},{"LD D,d8", &a::undefined, 2},{"RLA", &a::undefined, 1},{"JR r8", &a::jr_n, 2},{"ADD HL,DE", &a::undefined, 1},{"LD A,(DE)", &a::ld_a_de, 1},{"DEC DE", &a::undefined, 1},{"INC E", &a::inc_e, 1},{"DEC E", &a::dec_e, 1},{"LD E,d8", &a::undefined, 2},{"RRA", &a::rra, 1}, 
 		{"JR NZ r8", &a::jr_nz_n, 2},{"LD HL,d16", &a::ld_hl_nn, 3},{"LD (HL+),A", &a::ldi_hl, 1},{"INC HL", &a::inc_hl, 1},{"INC H", &a::inc_h, 1},{"DEC H", &a::dec_h, 1},{"LD H,d8", &a::ld_h_n, 2},{"DAA", &a::undefined, 1},{"JR Z r8", &a::jr_z_n, 2},{"ADD HL,HL", &a::add_hl_hl, 1},{"LD A,(HL+)", &a::ldi_a, 1},{"DEC HL", &a::undefined, 1},{"INC L", &a::inc_l, 1},{"DEC L", &a::dec_l, 1},{"LD L,d8", &a::ld_l_n, 2},{"CPL", &a::undefined, 1}, 
 		{"JR NC r8", &a::jr_nc, 2},{"LD SP,d16", &a::ld_sp_nn, 3},{"LD (HL-),A", &a::ldd_a, 1},{"INC SP", &a::undefined, 1},{"INC (HL)", &a::undefined, 1},{"DEC (HL)", &a::dec_hla, 1},{"LD (HL),d8", &a::undefined, 2},{"SCF", &a::undefined, 1},{"JR C r8", &a::jr_c_n, 2},{"ADD HL,SP", &a::undefined, 1},{"LD A,(HL-)", &a::undefined, 1},{"DEC SP", &a::undefined, 1},{"INC A", &a::inc_a, 1},{"DEC A", &a::dec_a, 1},{"LD A,d8", &a::ld_a_n, 2},{"CCF", &a::undefined, 1}, 
@@ -34,8 +34,8 @@ CPU::CPU()
 		{"OR B", &a::or_b, 1},{"OR C", &a::or_c, 1},{"OR D", &a::undefined, 1},{"OR E", &a::undefined, 1},{"OR H", &a::undefined, 1},{"OR L", &a::undefined, 1},{"OR (HL)", &a::or_hl, 1},{"OR A", &a::or_a, 1},{"CP B", &a::undefined, 1},{"CP C", &a::undefined, 1},{"CP D", &a::undefined, 1},{"CP E", &a::undefined, 1},{"CP H", &a::undefined, 1},{"CP L", &a::undefined, 1},{"CP (HL)", &a::undefined, 1},{"CP A", &a::undefined, 1},
 		{"RET NZ", &a::undefined, 1},{"POP BC", &a::pop_bc, 1},{"JP NZ,a16", &a::undefined, 3},{"JP a16", &a::jp_nn, 3},{"CALL NZ,a16", &a::call_nz, 3},{"PUSH BC", &a::push_bc, 1},{"ADD A,d8", &a::add_n, 2},{"RST 00H", &a::undefined, 1},{"RET Z", &a::ret_z, 1},{"RET", &a::ret, 1},{"JP Z,a16", &a::undefined, 3},{"PREFIX CB", &a::cb, 1},{"CALL Z,a16", &a::undefined, 3},{"CALL a16", &a::call_nn, 3},{"ADC A,d8", &a::adc_n, 2},{"RST 08H", &a::undefined, 1},
 		{"RET NC", &a::ret_nc, 1},{"POP DE", &a::pop_de, 1},{"JP NC,a16", &a::undefined, 3},{"NOP", &a::nop, 1},{"CALL NC,a16", &a::undefined, 3},{"PUSH DE", &a::push_de, 1},{"SUB d8", &a::sub_n, 2},{"RST 10H", &a::undefined, 1},{"RET C", &a::ret_c, 1},{"RETI", &a::undefined, 1},{"JP C,a16", &a::undefined, 3},{"NOP", &a::nop, 1},{"CALL C,a16", &a::undefined, 1},{"NOP", &a::nop, 1},{"SBC A,d8", &a::undefined, 2},{"RST 18H", &a::undefined, 1},
-		{"LDH (a8),A", &a::ldh_n_a, 2},{"POP HL", &a::pop_hl, 1},{"LD(C),A", &a::undefined, 1},{"NOP", &a::nop, 1},{"NOP", &a::nop, 1},{"PUSH HL", &a::push_hl, 1},{"AND d8", &a::and_n, 2},{"RST 20H", &a::undefined, 1},{"ADD SP,r8", &a::undefined, 2},{"JP (HL)", &a::jp_hl, 1},{"LD (a16),A", &a::ld_nn_a, 3},{"NOP", &a::nop, 1},{"NOP", &a::nop, 1},{"NOP", &a::nop, 1},{"XOR d8", &a::xor_n, 2},{"RST 28H", &a::undefined, 1},
-		{"LDH A,(a8)", &a::ldh_a_n, 2},{"POP AF", &a::pop_af, 1},{"LD A,(C)", &a::undefined, 1},{"DI", &a::di, 1},{"NOP", &a::undefined, 1},{"PUSH AF", &a::push_af, 1},{"OR d8", &a::undefined, 2},{"RST 30H", &a::undefined, 1},{"LD HL,SP+r8", &a::undefined, 2},{"LD SP,HL", &a::undefined, 1},{"LD A,(a16)", &a::ld_a_nn, 3},{"EI", &a::undefined, 1},{"NOP", &a::nop, 1},{"NOP", &a::nop, 1},{"CP d8", &a::cp_n, 2},{"RST 38H", &a::undefined, 1}, 
+		{"LDH (a8),A", &a::ldh_n_a, 2},{"POP HL", &a::pop_hl, 1},{"LD(C),A", &a::ld_ff_c_a, 1},{"NOP", &a::nop, 1},{"NOP", &a::nop, 1},{"PUSH HL", &a::push_hl, 1},{"AND d8", &a::and_n, 2},{"RST 20H", &a::undefined, 1},{"ADD SP,r8", &a::undefined, 2},{"JP (HL)", &a::jp_hl, 1},{"LD (a16),A", &a::ld_nn_a, 3},{"NOP", &a::nop, 1},{"NOP", &a::nop, 1},{"NOP", &a::nop, 1},{"XOR d8", &a::xor_n, 2},{"RST 28H", &a::undefined, 1},
+		{"LDH A,(a8)", &a::ldh_a_n, 2},{"POP AF", &a::pop_af, 1},{"LD A,(C)", &a::ld_a_ff_c, 1},{"DI", &a::di, 1},{"NOP", &a::undefined, 1},{"PUSH AF", &a::push_af, 1},{"OR d8", &a::undefined, 2},{"RST 30H", &a::undefined, 1},{"LD HL,SP+r8", &a::undefined, 2},{"LD SP,HL", &a::ld_sp_hl, 1},{"LD A,(a16)", &a::ld_a_nn, 3},{"EI", &a::undefined, 1},{"NOP", &a::nop, 1},{"NOP", &a::nop, 1},{"CP d8", &a::cp_n, 2},{"RST 38H", &a::undefined, 1}, 
 	};
 
 	extended_lookup =
@@ -267,6 +267,13 @@ void CPU::dec_b()
 void CPU::ld_b_n()
 {
 	regs.b = gb->mmu.readByte(pc++);
+}
+
+// 0x08
+void CPU::ld_nn_sp()
+{
+	gb->mmu.writeShort(gb->mmu.readShort(pc), sp);
+	pc += 2;
 }
 
 // 0x0D
@@ -1043,6 +1050,13 @@ void CPU::pop_hl()
 	regs.hl = pop();
 }
 
+// 0xE2
+void CPU::ld_ff_c_a()
+{
+	uint16_t addr = 0xFF00 + regs.c;
+	gb->mmu.writeByte(addr, regs.a);
+}
+
 // 0xE5
 void CPU::push_hl()
 {
@@ -1081,10 +1095,18 @@ void CPU::ldh_a_n()
 	regs.a = gb->mmu.readByte(addr);
 }
 
-// 0xF3
+// 0xF1
 void CPU::pop_af()
 {
 	regs.af = pop();
+	regs.f &= 0xF0;
+}
+
+// 0xF2
+void CPU::ld_a_ff_c()
+{
+	uint16_t addr = 0xFF00 + regs.c;
+	regs.a = gb->mmu.readByte(addr);
 }
 
 // 0xF3
@@ -1097,6 +1119,12 @@ void CPU::di()
 void CPU::push_af()
 {
 	push(regs.af);
+}
+
+// 0xF9
+void CPU::ld_sp_hl()
+{
+	sp = regs.hl;
 }
 
 // 0xFA

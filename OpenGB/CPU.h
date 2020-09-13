@@ -130,6 +130,7 @@ class CPU
 		void inc_bc();
 		void dec_b();
 		void ld_b_n();
+		void ld_nn_sp();
 		void dec_c();
 		void ld_c_n();
 
@@ -262,6 +263,7 @@ class CPU
 
 		void ldh_n_a();
 		void pop_hl();
+		void ld_ff_c_a();
 		void push_hl();
 		void and_n();
 		void jp_hl();
@@ -270,8 +272,10 @@ class CPU
 
 		void ldh_a_n();
 		void pop_af();
+		void ld_a_ff_c();
 		void di();
 		void push_af();
+		void ld_sp_hl();
 		void ld_a_nn();
 		void cp_n();
 
