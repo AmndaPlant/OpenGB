@@ -83,8 +83,7 @@ void MMU::writeByte(uint16_t addr, uint8_t data)
 	#ifndef LOGGING
 		else if (addr == 0xFF02 && data == 0x81)
 		{
-			char c = static_cast<char>(readByte(0xFF01));
-			std::cout << c;
+			std::cout << static_cast<char>(readByte(0xFF01));
 		}
 	#endif // LOGGING
 	else if (addr >= 0xFF00 && addr <= 0xFF7F)

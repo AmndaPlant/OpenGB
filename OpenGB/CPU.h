@@ -131,6 +131,8 @@ class CPU
 		void dec_b();
 		void ld_b_n();
 		void ld_nn_sp();
+		void add_hl_bc();
+		void dec_bc();
 		void dec_c();
 		void ld_c_n();
 
@@ -139,7 +141,9 @@ class CPU
 		void inc_de();
 		void inc_d();
 		void jr_n();
+		void add_hl_de();
 		void ld_a_de();
+		void dec_de();
 		void inc_e();
 		void dec_e();
 		void rra();
@@ -154,6 +158,7 @@ class CPU
 		void jr_z_n();
 		void add_hl_hl();
 		void ldi_a();
+		void dec_hl();
 		void inc_l();
 		void dec_l();
 		void ld_l_n();
