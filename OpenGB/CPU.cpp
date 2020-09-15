@@ -44,18 +44,18 @@ CPU::CPU()
 		{"RL B", &a::undefined_cb, 1},{"RL C", &a::undefined_cb, 1},{"RL D", &a::undefined_cb, 1},{"RL E", &a::undefined_cb, 1},{"RL H", &a::undefined_cb, 1},{"RL L", &a::undefined_cb, 1},{"RL (HL)", &a::undefined_cb, 1},{"RL A", &a::undefined_cb, 1},{"RR B", &a::undefined_cb, 1},{"RR C", &a::rr_c, 1},{"RR D", &a::rr_d, 1},{"RR E", &a::rr_e, 1},{"RR H", &a::undefined_cb, 1},{"RR L", &a::undefined_cb, 1},{"RR (HL)", &a::undefined_cb, 1},{"RR A", &a::undefined_cb, 1},
 		{"SLA B", &a::undefined_cb, 1},{"SLA C", &a::undefined_cb, 1},{"SLA D", &a::undefined_cb, 1},{"SLA E", &a::undefined_cb, 1},{"SLA H", &a::undefined_cb, 1},{"SLA L", &a::undefined_cb, 1},{"SLA (HL)", &a::undefined_cb, 1},{"SLA A", &a::undefined_cb, 1},{"SRA B", &a::undefined_cb, 1},{"SRA C", &a::undefined_cb, 1},{"SRA D", &a::undefined_cb, 1},{"SRA E", &a::undefined_cb, 1},{"SRA H", &a::undefined_cb, 1},{"SRA L", &a::undefined_cb, 1},{"SRA (HL)", &a::undefined_cb, 1},{"SRA A", &a::undefined_cb, 1},
 		{"SWAP B", &a::undefined_cb, 1},{"SWAP C", &a::undefined_cb, 1},{"SWAP D", &a::undefined_cb, 1},{"SWAP E", &a::undefined_cb, 1},{"SWAP H", &a::undefined_cb, 1},{"SWAP L", &a::undefined_cb, 1},{"SWAP (HL)", &a::undefined_cb, 1},{"SWAP A", &a::swap_a, 1},{"SRL B", &a::srl_b , 1},{"SRL C", &a::undefined_cb, 1},{"SRL D", &a::undefined_cb, 1},{"SRL E", &a::undefined_cb, 1},{"SRL H", &a::undefined_cb, 1},{"SRL L", &a::undefined_cb, 1},{"SRL (HL)", &a::ld_a_n, 1},{"SRL A", &a::undefined_cb, 1},
-		{"BIT 0,B", &a::undefined_cb, 1},{"BIT 0,C", &a::undefined_cb, 1},{"BIT 0,D", &a::undefined_cb, 1},{"BIT 0,E", &a::undefined_cb, 1},{"BIT 0,H", &a::undefined_cb, 1},{"BIT 0,L", &a::undefined_cb, 1},{"BIT 0,(HL)", &a::undefined_cb, 1},{"BIT 0,A", &a::undefined_cb, 1},{"BIT 1,B", &a::undefined_cb, 1},{"BIT 1,C", &a::undefined_cb, 1},{"BIT 1,D", &a::undefined_cb, 1},{"BIT 1,E", &a::undefined_cb, 1},{"BIT 1,H", &a::undefined_cb, 1},{"BIT 1,L", &a::undefined_cb, 1},{"BIT 1,(HL)", &a::undefined_cb, 1},{"BIT 1,A", &a::undefined_cb, 1},
-		{"BIT 2,B", &a::undefined_cb, 1},{"BIT 2,C", &a::undefined_cb, 1},{"BIT 2,D", &a::undefined_cb, 1},{"BIT 2,E", &a::undefined_cb, 1},{"BIT 2,H", &a::undefined_cb, 1},{"BIT 2,L", &a::undefined_cb, 1},{"BIT 2,(HL)", &a::undefined_cb, 1},{"BIT 2,A", &a::undefined_cb, 1},{"BIT 3,B", &a::undefined_cb, 1},{"BIT 3,C", &a::undefined_cb, 1},{"BIT 3,D", &a::undefined_cb, 1},{"BIT 3,E", &a::undefined_cb, 1},{"BIT 3,H", &a::undefined_cb, 1},{"BIT 3,L", &a::undefined_cb, 1},{"BIT 3,(HL)", &a::undefined_cb, 1},{"BIT 3,A", &a::undefined_cb, 1},
-		{"BIT 4,B", &a::undefined_cb, 1},{"BIT 4,C", &a::undefined_cb, 1},{"BIT 4,C", &a::undefined_cb, 1},{"BIT 4,E", &a::undefined_cb, 1},{"BIT 4,H", &a::undefined_cb, 1},{"BIT 4,L", &a::undefined_cb, 1},{"BIT 4,(HL)", &a::undefined_cb, 1},{"BIT 4,A", &a::undefined_cb, 1},{"BIT 5,B", &a::undefined_cb, 1},{"BIT 5,C", &a::undefined_cb, 1},{"BIT 5,D", &a::undefined_cb, 1},{"BIT 5,E", &a::undefined_cb, 1},{"BIT 5,H", &a::undefined_cb, 1},{"BIT 5,L", &a::undefined_cb, 1},{"BIT 5,(HL)", &a::undefined_cb, 1},{"BIT 5,A", &a::undefined_cb, 1},
-		{"BIT 6,B", &a::undefined_cb, 1},{"BIT 6,C", &a::undefined_cb, 1},{"BIT 6,D", &a::undefined_cb, 1},{"BIT 6,E", &a::undefined_cb, 1},{"BIT 6,H", &a::undefined_cb, 1},{"BIT 6,L", &a::undefined_cb, 1},{"BIT 6,(HL)", &a::undefined_cb, 1},{"BIT 6,A", &a::undefined_cb, 1},{"BIT 7,B", &a::undefined_cb, 1},{"BIT 7,C", &a::undefined_cb, 1},{"BIT 7,D", &a::undefined_cb, 1},{"BIT 7,E", &a::undefined_cb, 1},{"BIT 7,H", &a::undefined_cb, 1},{"BIT 7,L", &a::undefined_cb, 1},{"BIT 7,(HL)", &a::undefined_cb, 1},{"BIT 7,A", &a::undefined_cb, 1},
-		{"RES 0,B", &a::undefined_cb, 1},{"RES 0,C", &a::undefined_cb, 1},{"RES 0,D", &a::undefined_cb, 1},{"RES 0,E", &a::undefined_cb, 1},{"RES 0,H", &a::undefined_cb, 1},{"RES 0,L", &a::undefined_cb, 1},{"RES 0,(HL)", &a::undefined_cb, 1},{"RES 0,A", &a::undefined_cb, 1},{"RES 1,B", &a::undefined_cb, 1},{"RES 1,C", &a::undefined_cb, 1},{"RES 1,D", &a::undefined_cb, 1},{"RES 1,E", &a::undefined_cb, 1},{"RES 1,H", &a::undefined_cb, 1},{"RES 1,L", &a::undefined_cb, 1},{"RES 1,(HL)", &a::undefined_cb, 1},{"RES 1,A", &a::undefined_cb, 1},
-		{"RES 2,B", &a::undefined_cb, 1},{"RES 2,C", &a::undefined_cb, 1},{"RES 2,D", &a::undefined_cb, 1},{"RES 2,E", &a::undefined_cb, 1},{"RES 2,H", &a::undefined_cb, 1},{"RES 2,L", &a::undefined_cb, 1},{"RES 2,(HL)", &a::undefined_cb, 1},{"RES 2,A", &a::undefined_cb, 1},{"RES 3,B", &a::undefined_cb, 1},{"RES 3,C", &a::undefined_cb, 1},{"RES 3,D", &a::undefined_cb, 1},{"RES 3,E", &a::undefined_cb, 1},{"RES 3,H", &a::undefined_cb, 1},{"RES 3,L", &a::undefined_cb, 1},{"RES 3,(HL)", &a::undefined_cb, 1},{"RES 3,A", &a::undefined_cb, 1},
-		{"RES 4,B", &a::undefined_cb, 1},{"RES 4,C", &a::undefined_cb, 1},{"RES 4,C", &a::undefined_cb, 1},{"RES 4,E", &a::undefined_cb, 1},{"RES 4,H", &a::undefined_cb, 1},{"RES 4,L", &a::undefined_cb, 1},{"RES 4,(HL)", &a::undefined_cb, 1},{"RES 4,A", &a::undefined_cb, 1},{"RES 5,B", &a::undefined_cb, 1},{"RES 5,C", &a::undefined_cb, 1},{"RES 5,D", &a::undefined_cb, 1},{"RES 5,E", &a::undefined_cb, 1},{"RES 5,H", &a::undefined_cb, 1},{"RES 5,L", &a::undefined_cb, 1},{"RES 5,(HL)", &a::undefined_cb, 1},{"RES 5,A", &a::undefined_cb, 1},
-		{"RES 6,B", &a::undefined_cb, 1},{"RES 6,C", &a::undefined_cb, 1},{"RES 6,D", &a::undefined_cb, 1},{"RES 6,E", &a::undefined_cb, 1},{"RES 6,H", &a::undefined_cb, 1},{"RES 6,L", &a::undefined_cb, 1},{"RES 6,(HL)", &a::undefined_cb, 1},{"RES 6,A", &a::undefined_cb, 1},{"RES 7,B", &a::undefined_cb, 1},{"RES 7,C", &a::undefined_cb, 1},{"RES 7,D", &a::undefined_cb, 1},{"RES 7,E", &a::undefined_cb, 1},{"RES 7,H", &a::undefined_cb, 1},{"RES 7,L", &a::undefined_cb, 1},{"RES 7,(HL)", &a::undefined_cb, 1},{"RES 7,A", &a::undefined_cb, 1},
-		{"SET 0,B", &a::undefined_cb, 1},{"SET 0,C", &a::undefined_cb, 1},{"SET 0,D", &a::undefined_cb, 1},{"SET 0,E", &a::undefined_cb, 1},{"SET 0,H", &a::undefined_cb, 1},{"SET 0,L", &a::undefined_cb, 1},{"SET 0,(HL)", &a::undefined_cb, 1},{"SET 0,A", &a::undefined_cb, 1},{"SET 1,B", &a::undefined_cb, 1},{"SET 1,C", &a::undefined_cb, 1},{"SET 1,D", &a::undefined_cb, 1},{"SET 1,E", &a::undefined_cb, 1},{"SET 1,H", &a::undefined_cb, 1},{"SET 1,L", &a::undefined_cb, 1},{"SET 1,(HL)", &a::undefined_cb, 1},{"SET 1,A", &a::undefined_cb, 1},
-		{"SET 2,B", &a::undefined_cb, 1},{"SET 2,C", &a::undefined_cb, 1},{"SET 2,D", &a::undefined_cb, 1},{"SET 2,E", &a::undefined_cb, 1},{"SET 2,H", &a::undefined_cb, 1},{"SET 2,L", &a::undefined_cb, 1},{"SET 2,(HL)", &a::undefined_cb, 1},{"SET 2,A", &a::undefined_cb, 1},{"SET 3,B", &a::undefined_cb, 1},{"SET 3,C", &a::undefined_cb, 1},{"SET 3,D", &a::undefined_cb, 1},{"SET 3,E", &a::undefined_cb, 1},{"SET 3,H", &a::undefined_cb, 1},{"SET 3,L", &a::undefined_cb, 1},{"SET 3,(HL)", &a::undefined_cb, 1},{"SET 3,A", &a::undefined_cb, 1},
-		{"SET 4,B", &a::undefined_cb, 1},{"SET 4,C", &a::undefined_cb, 1},{"SET 4,C", &a::undefined_cb, 1},{"SET 4,E", &a::undefined_cb, 1},{"SET 4,H", &a::undefined_cb, 1},{"SET 4,L", &a::undefined_cb, 1},{"SET 4,(HL)", &a::undefined_cb, 1},{"SET 4,A", &a::undefined_cb, 1},{"SET 5,B", &a::undefined_cb, 1},{"SET 5,C", &a::undefined_cb, 1},{"SET 5,D", &a::undefined_cb, 1},{"SET 5,E", &a::undefined_cb, 1},{"SET 5,H", &a::undefined_cb, 1},{"SET 5,L", &a::undefined_cb, 1},{"SET 5,(HL)", &a::undefined_cb, 1},{"SET 5,A", &a::undefined_cb, 1},
-		{"SET 6,B", &a::undefined_cb, 1},{"SET 6,C", &a::undefined_cb, 1},{"SET 6,D", &a::undefined_cb, 1},{"SET 6,E", &a::undefined_cb, 1},{"SET 6,H", &a::undefined_cb, 1},{"SET 6,L", &a::undefined_cb, 1},{"SET 6,(HL)", &a::undefined_cb, 1},{"SET 6,A", &a::undefined_cb, 1},{"SET 7,B", &a::undefined_cb, 1},{"SET 7,C", &a::undefined_cb, 1},{"SET 7,D", &a::undefined_cb, 1},{"SET 7,E", &a::undefined_cb, 1},{"SET 7,H", &a::undefined_cb, 1},{"SET 7,L", &a::undefined_cb, 1},{"SET 7,(HL)", &a::undefined_cb, 1},{"SET 7,A", &a::undefined_cb, 1},
+		{"BIT 0,B", &a::bit_0_b, 1},{"BIT 0,C", &a::bit_0_c, 1},{"BIT 0,D", &a::bit_0_d, 1},{"BIT 0,E", &a::bit_0_e, 1},{"BIT 0,H", &a::bit_0_h, 1},{"BIT 0,L", &a::bit_0_l, 1},{"BIT 0,(HL)", &a::bit_0_hl, 1},{"BIT 0,A", &a::bit_0_a, 1},{"BIT 1,B", &a::bit_1_b, 1},{"BIT 1,C", &a::bit_1_c, 1},{"BIT 1,D", &a::bit_1_d, 1},{"BIT 1,E", &a::bit_1_e, 1},{"BIT 1,H", &a::bit_1_h, 1},{"BIT 1,L", &a::bit_1_l, 1},{"BIT 1,(HL)", &a::bit_1_hl, 1},{"BIT 1,A", &a::bit_1_a, 1},
+		{"BIT 2,B", &a::bit_2_b, 1},{"BIT 2,C", &a::bit_2_c, 1},{"BIT 2,D", &a::bit_2_d, 1},{"BIT 2,E", &a::bit_2_e, 1},{"BIT 2,H", &a::bit_2_h, 1},{"BIT 2,L", &a::bit_2_l, 1},{"BIT 2,(HL)", &a::bit_2_hl, 1},{"BIT 2,A", &a::bit_2_a, 1},{"BIT 3,B", &a::bit_3_b, 1},{"BIT 3,C", &a::bit_3_c, 1},{"BIT 3,D", &a::bit_3_d, 1},{"BIT 3,E", &a::bit_3_e, 1},{"BIT 3,H", &a::bit_3_h, 1},{"BIT 3,L", &a::bit_3_l, 1},{"BIT 3,(HL)", &a::bit_3_hl, 1},{"BIT 3,A", &a::bit_3_a, 1},
+		{"BIT 4,B", &a::bit_4_b, 1},{"BIT 4,C", &a::bit_4_c, 1},{"BIT 4,D", &a::bit_4_d, 1},{"BIT 4,E", &a::bit_4_e, 1},{"BIT 4,H", &a::bit_4_h, 1},{"BIT 4,L", &a::bit_4_l, 1},{"BIT 4,(HL)", &a::bit_4_hl, 1},{"BIT 4,A", &a::bit_4_a, 1},{"BIT 5,B", &a::bit_5_b, 1},{"BIT 5,C", &a::bit_5_c, 1},{"BIT 5,D", &a::bit_5_d, 1},{"BIT 5,E", &a::bit_5_e, 1},{"BIT 5,H", &a::bit_5_h, 1},{"BIT 5,L", &a::bit_5_l, 1},{"BIT 5,(HL)", &a::bit_5_hl, 1},{"BIT 5,A", &a::bit_5_a, 1},
+		{"BIT 6,B", &a::bit_6_b, 1},{"BIT 6,C", &a::bit_6_c, 1},{"BIT 6,D", &a::bit_6_d, 1},{"BIT 6,E", &a::bit_6_e, 1},{"BIT 6,H", &a::bit_6_h, 1},{"BIT 6,L", &a::bit_6_l, 1},{"BIT 6,(HL)", &a::bit_6_hl, 1},{"BIT 6,A", &a::bit_6_a, 1},{"BIT 7,B", &a::bit_7_b, 1},{"BIT 7,C", &a::bit_7_c, 1},{"BIT 7,D", &a::bit_7_d, 1},{"BIT 7,E", &a::bit_7_e, 1},{"BIT 7,H", &a::bit_7_h, 1},{"BIT 7,L", &a::bit_7_l, 1},{"BIT 7,(HL)", &a::bit_7_hl, 1},{"BIT 7,A", &a::bit_7_a, 1},
+		{"RES 0,B", &a::res_0_b, 1},{"RES 0,C", &a::res_0_c, 1},{"RES 0,D", &a::res_0_d, 1},{"RES 0,E", &a::res_0_e, 1},{"RES 0,H", &a::res_0_h, 1},{"RES 0,L", &a::res_0_l, 1},{"RES 0,(HL)", &a::res_0_hl, 1},{"RES 0,A", &a::res_0_a, 1},{"RES 1,B", &a::res_1_b, 1},{"RES 1,C", &a::res_1_c, 1},{"RES 1,D", &a::res_1_d, 1},{"RES 1,E", &a::res_1_e, 1},{"RES 1,H", &a::res_1_h, 1},{"RES 1,L", &a::res_1_l, 1},{"RES 1,(HL)", &a::res_1_hl, 1},{"RES 1,A", &a::res_1_a, 1},
+		{"RES 2,B", &a::res_2_b, 1},{"RES 2,C", &a::res_2_c, 1},{"RES 2,D", &a::res_2_d, 1},{"RES 2,E", &a::res_2_e, 1},{"RES 2,H", &a::res_2_h, 1},{"RES 2,L", &a::res_2_l, 1},{"RES 2,(HL)", &a::res_2_hl, 1},{"RES 2,A", &a::res_2_a, 1},{"RES 3,B", &a::res_3_b, 1},{"RES 3,C", &a::res_3_c, 1},{"RES 3,D", &a::res_3_d, 1},{"RES 3,E", &a::res_3_e, 1},{"RES 3,H", &a::res_3_h, 1},{"RES 3,L", &a::res_3_l, 1},{"RES 3,(HL)", &a::res_3_hl, 1},{"RES 3,A", &a::res_3_a, 1},
+		{"RES 4,B", &a::res_4_b, 1},{"RES 4,C", &a::res_4_c, 1},{"RES 4,D", &a::res_4_d, 1},{"RES 4,E", &a::res_4_e, 1},{"RES 4,H", &a::res_4_h, 1},{"RES 4,L", &a::res_4_l, 1},{"RES 4,(HL)", &a::res_4_hl, 1},{"RES 4,A", &a::res_4_a, 1},{"RES 5,B", &a::res_5_b, 1},{"RES 5,C", &a::res_5_c, 1},{"RES 5,D", &a::res_5_d, 1},{"RES 5,E", &a::res_5_e, 1},{"RES 5,H", &a::res_5_h, 1},{"RES 5,L", &a::res_5_l, 1},{"RES 5,(HL)", &a::res_5_hl, 1},{"RES 5,A", &a::res_5_a, 1},
+		{"RES 6,B", &a::res_6_b, 1},{"RES 6,C", &a::res_6_c, 1},{"RES 6,D", &a::res_6_d, 1},{"RES 6,E", &a::res_6_e, 1},{"RES 6,H", &a::res_6_h, 1},{"RES 6,L", &a::res_6_l, 1},{"RES 6,(HL)", &a::res_6_hl, 1},{"RES 6,A", &a::res_6_a, 1},{"RES 7,B", &a::res_7_b, 1},{"RES 7,C", &a::res_7_c, 1},{"RES 7,D", &a::res_7_d, 1},{"RES 7,E", &a::res_7_e, 1},{"RES 7,H", &a::res_7_h, 1},{"RES 7,L", &a::res_7_l, 1},{"RES 7,(HL)", &a::res_7_hl, 1},{"RES 7,A", &a::res_7_a, 1},
+		{"SET 0,B", &a::set_0_b, 1},{"SET 0,C", &a::set_0_c, 1},{"SET 0,D", &a::set_0_d, 1},{"SET 0,E", &a::set_0_e, 1},{"SET 0,H", &a::set_0_h, 1},{"SET 0,L", &a::set_0_l, 1},{"SET 0,(HL)", &a::set_0_hl, 1},{"SET 0,A", &a::set_0_a, 1},{"SET 1,B", &a::set_1_b, 1},{"SET 1,C", &a::set_1_c, 1},{"SET 1,D", &a::set_1_d, 1},{"SET 1,E", &a::set_1_e, 1},{"SET 1,H", &a::set_1_h, 1},{"SET 1,L", &a::set_1_l, 1},{"SET 1,(HL)", &a::set_1_hl, 1},{"SET 1,A", &a::set_1_a, 1},
+		{"SET 2,B", &a::set_2_b, 1},{"SET 2,C", &a::set_2_c, 1},{"SET 2,D", &a::set_2_d, 1},{"SET 2,E", &a::set_2_e, 1},{"SET 2,H", &a::set_2_h, 1},{"SET 2,L", &a::set_2_l, 1},{"SET 2,(HL)", &a::set_2_hl, 1},{"SET 2,A", &a::set_2_a, 1},{"SET 3,B", &a::set_3_b, 1},{"SET 3,C", &a::set_3_c, 1},{"SET 3,D", &a::set_3_d, 1},{"SET 3,E", &a::set_3_e, 1},{"SET 3,H", &a::set_3_h, 1},{"SET 3,L", &a::set_3_l, 1},{"SET 3,(HL)", &a::set_3_hl, 1},{"SET 3,A", &a::set_3_a, 1},
+		{"SET 4,B", &a::set_4_b, 1},{"SET 4,C", &a::set_4_c, 1},{"SET 4,D", &a::set_4_d, 1},{"SET 4,E", &a::set_4_e, 1},{"SET 4,H", &a::set_4_h, 1},{"SET 4,L", &a::set_4_l, 1},{"SET 4,(HL)", &a::set_4_hl, 1},{"SET 4,A", &a::set_4_a, 1},{"SET 5,B", &a::set_5_b, 1},{"SET 5,C", &a::set_5_c, 1},{"SET 5,D", &a::set_5_d, 1},{"SET 5,E", &a::set_5_e, 1},{"SET 5,H", &a::set_5_h, 1},{"SET 5,L", &a::set_5_l , 1},{"SET 5,(HL)", &a::set_5_hl, 1},{"SET 5,A", &a::set_5_a, 1},
+		{"SET 6,B", &a::set_6_b, 1},{"SET 6,C", &a::set_6_c, 1},{"SET 6,D", &a::set_6_d, 1},{"SET 6,E", &a::set_6_e, 1},{"SET 6,H", &a::set_6_h, 1},{"SET 6,L", &a::set_6_l, 1},{"SET 6,(HL)", &a::set_6_hl, 1},{"SET 6,A", &a::set_6_a, 1},{"SET 7,B", &a::set_7_b, 1},{"SET 7,C", &a::set_7_c, 1},{"SET 7,D", &a::set_7_d, 1},{"SET 7,E", &a::set_7_e, 1},{"SET 7,H", &a::set_7_h, 1},{"SET 7,L", &a::set_7_l , 1},{"SET 7,(HL)", &a::set_7_hl, 1},{"SET 7,A", &a::set_7_a, 1},
 	};
 }
 
@@ -1141,14 +1141,6 @@ void CPU::cp_n()
 	cp(gb->mmu.readByte(pc++));
 }
 
-uint8_t CPU::srl(uint8_t value)
-{
-	value & 0x01 ? FLAGS_SET(FLAGS_CARRY) : FLAGS_CLEAR(FLAGS_CARRY);
-	value >>= 1;
-	value == 0 ? FLAGS_SET(FLAGS_ZERO) : FLAGS_CLEAR(FLAGS_ZERO);
-	FLAGS_CLEAR(FLAGS_NEGATIVE | FLAGS_HALFCARRY);
-	return value;
-}
 
 uint8_t CPU::rr(uint8_t value)
 {
@@ -1168,6 +1160,33 @@ uint8_t CPU::swap(uint8_t value)
 	FLAGS_CLEAR(FLAGS_NEGATIVE | FLAGS_HALFCARRY | FLAGS_CARRY);
 
 	return value;
+}
+
+
+uint8_t CPU::srl(uint8_t value)
+{
+	value & 0x01 ? FLAGS_SET(FLAGS_CARRY) : FLAGS_CLEAR(FLAGS_CARRY);
+	value >>= 1;
+	value == 0 ? FLAGS_SET(FLAGS_ZERO) : FLAGS_CLEAR(FLAGS_ZERO);
+	FLAGS_CLEAR(FLAGS_NEGATIVE | FLAGS_HALFCARRY);
+	return value;
+}
+
+void CPU::bit(uint8_t value, uint8_t bit)
+{
+	((value & (1 << bit)) == 0) ? FLAGS_SET(FLAGS_ZERO) : FLAGS_CLEAR(FLAGS_ZERO);
+	FLAGS_SET(FLAGS_HALFCARRY);
+	FLAGS_CLEAR(FLAGS_NEGATIVE);
+}
+
+uint8_t CPU::res(uint8_t value, uint8_t bit)
+{
+	return (value & ~(1 << bit));
+}
+
+uint8_t CPU::set(uint8_t value, uint8_t bit)
+{
+	return (value | (1 << bit));
 }
 
 // 0x19
@@ -1199,6 +1218,1161 @@ void CPU::srl_b()
 {
 	regs.b = srl(regs.b);
 }
+
+
+
+// 0x40
+void CPU::bit_0_b()
+{
+	bit(regs.b, 0);
+}
+
+// 0x41
+void CPU::bit_0_c()
+{
+	bit(regs.c, 0);
+}
+
+// 0x42
+void CPU::bit_0_d()
+{
+	bit(regs.d, 0);
+}
+
+// 0x43
+void CPU::bit_0_e()
+{
+	bit(regs.e, 0);
+}
+
+// 0x44
+void CPU::bit_0_h()
+{
+	bit(regs.h, 0);
+}
+
+// 0x45
+void CPU::bit_0_l()
+{
+	bit(regs.l, 0);
+}
+
+// 0x46
+void CPU::bit_0_hl()
+{
+	bit(gb->mmu.readByte(regs.hl), 0);
+}
+
+// 0x47
+void CPU::bit_0_a()
+{
+	bit(regs.a, 0);
+}
+
+// 0x48
+void CPU::bit_1_b()
+{
+	bit(regs.b, 1);
+}
+
+// 0x49
+void CPU::bit_1_c()
+{
+	bit(regs.c, 1);
+}
+
+// 0x4A
+void CPU::bit_1_d()
+{
+	bit(regs.d, 1);
+}
+
+// 0x4B
+void CPU::bit_1_e()
+{
+	bit(regs.e, 1);
+}
+
+// 0x4C
+void CPU::bit_1_h()
+{
+	bit(regs.h, 1);
+}
+
+// 0x4D
+void CPU::bit_1_l()
+{
+	bit(regs.l, 1);
+}
+
+// 0x4E
+void CPU::bit_1_hl()
+{
+	bit(gb->mmu.readByte(regs.hl), 1);
+}
+
+// 0x4F
+void CPU::bit_1_a()
+{
+	bit(regs.a, 1);
+}
+
+// 0x50
+void CPU::bit_2_b()
+{
+	bit(regs.b, 2);
+}
+
+// 0x51
+void CPU::bit_2_c()
+{
+	bit(regs.c, 2);
+}
+
+// 0x52
+void CPU::bit_2_d()
+{
+	bit(regs.d, 2);
+}
+
+// 0x53
+void CPU::bit_2_e()
+{
+	bit(regs.e, 2);
+}
+
+// 0x54
+void CPU::bit_2_h()
+{
+	bit(regs.h, 2);
+}
+
+// 0x55
+void CPU::bit_2_l()
+{
+	bit(regs.l, 2);
+}
+
+// 0x56
+void CPU::bit_2_hl()
+{
+	bit(gb->mmu.readByte(regs.hl), 2);
+}
+
+// 0x57
+void CPU::bit_2_a()
+{
+	bit(regs.a, 2);
+}
+
+// 0x58
+void CPU::bit_3_b()
+{
+	bit(regs.b, 3);
+}
+
+// 0x59
+void CPU::bit_3_c()
+{
+	bit(regs.c, 3);
+}
+
+// 0x5A
+void CPU::bit_3_d()
+{
+	bit(regs.d, 3);
+}
+
+// 0x5B
+void CPU::bit_3_e()
+{
+	bit(regs.e, 3);
+}
+
+// 0x5C
+void CPU::bit_3_h()
+{
+	bit(regs.h, 3);
+}
+
+// 0x5D
+void CPU::bit_3_l()
+{
+	bit(regs.l, 3);
+}
+
+// 0x5E
+void CPU::bit_3_hl()
+{
+	bit(gb->mmu.readByte(regs.hl), 3);
+}
+
+// 0x5F
+void CPU::bit_3_a()
+{
+	bit(regs.a, 3);
+}
+
+// 0x60
+void CPU::bit_4_b()
+{
+	bit(regs.b, 4);
+}
+
+// 0x61
+void CPU::bit_4_c()
+{
+	bit(regs.c, 4);
+}
+
+// 0x62
+void CPU::bit_4_d()
+{
+	bit(regs.d, 4);
+}
+
+// 0x63
+void CPU::bit_4_e()
+{
+	bit(regs.e, 4);
+}
+
+// 0x64
+void CPU::bit_4_h()
+{
+	bit(regs.h, 4);
+}
+
+// 0x65
+void CPU::bit_4_l()
+{
+	bit(regs.l, 4);
+}
+
+// 0x66
+void CPU::bit_4_hl()
+{
+	bit(gb->mmu.readByte(regs.hl), 4);
+}
+
+// 0x67
+void CPU::bit_4_a()
+{
+	bit(regs.a, 4);
+}
+
+// 0x68
+void CPU::bit_5_b()
+{
+	bit(regs.b, 5);
+}
+
+// 0x69
+void CPU::bit_5_c()
+{
+	bit(regs.c, 5);
+}
+
+// 0x6A
+void CPU::bit_5_d()
+{
+	bit(regs.d, 5);
+}
+
+// 0x6B
+void CPU::bit_5_e()
+{
+	bit(regs.e, 5);
+}
+
+// 0x6C
+void CPU::bit_5_h()
+{
+	bit(regs.h, 5);
+}
+
+// 0x6D
+void CPU::bit_5_l()
+{
+	bit(regs.l, 5);
+}
+
+// 0x6E
+void CPU::bit_5_hl()
+{
+	bit(gb->mmu.readByte(regs.hl), 5);
+}
+
+// 0x6F
+void CPU::bit_5_a()
+{
+	bit(regs.a, 5);
+}
+
+// 0x70
+void CPU::bit_6_b()
+{
+	bit(regs.b, 6);
+}
+
+// 0x71
+void CPU::bit_6_c()
+{
+	bit(regs.c, 6);
+}
+
+// 0x72
+void CPU::bit_6_d()
+{
+	bit(regs.d, 6);
+}
+
+// 0x73
+void CPU::bit_6_e()
+{
+	bit(regs.e, 6);
+}
+
+// 0x74
+void CPU::bit_6_h()
+{
+	bit(regs.h, 6);
+}
+
+// 0x75
+void CPU::bit_6_l()
+{
+	bit(regs.l, 6);
+}
+
+// 0x76
+void CPU::bit_6_hl()
+{
+	bit(gb->mmu.readByte(regs.hl), 6);
+}
+
+// 0x77
+void CPU::bit_6_a()
+{
+	bit(regs.a, 6);
+}
+
+// 0x78
+void CPU::bit_7_b()
+{
+	bit(regs.b, 7);
+}
+
+// 0x79
+void CPU::bit_7_c()
+{
+	bit(regs.c, 7);
+}
+
+// 0x7A
+void CPU::bit_7_d()
+{
+	bit(regs.d, 7);
+}
+
+// 0x7B
+void CPU::bit_7_e()
+{
+	bit(regs.e, 7);
+}
+
+// 0x7C
+void CPU::bit_7_h()
+{
+	bit(regs.h, 7);
+}
+
+// 0x7D
+void CPU::bit_7_l()
+{
+	bit(regs.l, 7);
+}
+
+// 0x7E
+void CPU::bit_7_hl()
+{
+	bit(gb->mmu.readByte(regs.hl), 7);
+}
+
+// 0x7F
+void CPU::bit_7_a()
+{
+	bit(regs.a, 7);
+}
+
+// 0x80
+void CPU::res_0_b()
+{
+	regs.b = res(regs.b, 0);
+}
+
+// 0x81
+void CPU::res_0_c()
+{
+	regs.c = res(regs.c, 0);
+}
+
+// 0x82
+void CPU::res_0_d()
+{
+	regs.d = res(regs.d, 0);
+}
+
+// 0x83
+void CPU::res_0_e()
+{
+	regs.e = res(regs.e, 0);
+}
+
+// 0x84
+void CPU::res_0_h()
+{
+	regs.h = res(regs.h, 0);
+}
+
+// 0x85
+void CPU::res_0_l()
+{
+	regs.l = res(regs.l, 0);
+}
+
+// 0x86
+void CPU::res_0_hl()
+{
+	gb->mmu.writeByte(regs.hl, res(gb->mmu.readByte(regs.hl), 0));
+}
+
+// 0x87
+void CPU::res_0_a()
+{
+	regs.a = res(regs.a, 0);
+}
+
+// 0x88
+void CPU::res_1_b()
+{
+	regs.b = res(regs.b, 1);
+}
+
+// 0x89
+void CPU::res_1_c()
+{
+	regs.c = res(regs.c, 1);
+}
+
+// 0x8A
+void CPU::res_1_d()
+{
+	regs.d = res(regs.d, 1);
+}
+
+// 0x8B
+void CPU::res_1_e()
+{
+	regs.e = res(regs.e, 1);
+}
+
+// 0x8C
+void CPU::res_1_h()
+{
+	regs.h = res(regs.h, 1);
+}
+
+// 0x8D
+void CPU::res_1_l()
+{
+	regs.l = res(regs.l, 1);
+}
+
+// 0x8E
+void CPU::res_1_hl()
+{
+	gb->mmu.writeByte(regs.hl, res(gb->mmu.readByte(regs.hl), 1));
+}
+
+// 0x8F
+void CPU::res_1_a()
+{
+	regs.a = res(regs.a, 1);
+}
+
+// 0x90
+void CPU::res_2_b()
+{
+	regs.b = res(regs.b, 2);
+}
+
+// 0x91
+void CPU::res_2_c()
+{
+	regs.c = res(regs.c, 2);
+}
+
+// 0x92
+void CPU::res_2_d()
+{
+	regs.d = res(regs.d, 2);
+}
+
+// 0x93
+void CPU::res_2_e()
+{
+	regs.e = res(regs.e, 2);
+}
+
+// 0x94
+void CPU::res_2_h()
+{
+	regs.h = res(regs.h, 2);
+}
+
+// 0x95
+void CPU::res_2_l()
+{
+	regs.l = res(regs.l, 2);
+}
+
+// 0x96
+void CPU::res_2_hl()
+{
+	gb->mmu.writeByte(regs.hl, res(gb->mmu.readByte(regs.hl), 2));
+}
+
+// 0x97
+void CPU::res_2_a()
+{
+	regs.a = res(regs.a, 2);
+}
+
+// 0x98
+void CPU::res_3_b()
+{
+	regs.b = res(regs.b, 3);
+}
+
+// 0x99
+void CPU::res_3_c()
+{
+	regs.c = res(regs.c, 3);
+}
+
+// 0x9A
+void CPU::res_3_d()
+{
+	regs.d = res(regs.d, 3);
+}
+
+// 0x9B
+void CPU::res_3_e()
+{
+	regs.e = res(regs.e, 3);
+}
+
+// 0x9C
+void CPU::res_3_h()
+{
+	regs.h = res(regs.h, 3);
+}
+
+// 0x9D
+void CPU::res_3_l()
+{
+	regs.l = res(regs.l, 3);
+}
+
+// 0x9E
+void CPU::res_3_hl()
+{
+	gb->mmu.writeByte(regs.hl, res(gb->mmu.readByte(regs.hl), 3));
+}
+
+// 0x9F
+void CPU::res_3_a()
+{
+	regs.a = res(regs.a, 3);
+}
+
+// 0xA0
+void CPU::res_4_b()
+{
+	regs.b = res(regs.b, 4);
+}
+
+// 0xA1
+void CPU::res_4_c()
+{
+	regs.c = res(regs.c, 4);
+}
+
+// 0xA2
+void CPU::res_4_d()
+{
+	regs.d = res(regs.d, 4);
+}
+
+// 0xA3
+void CPU::res_4_e()
+{
+	regs.e = res(regs.e, 4);
+}
+
+// 0xA4
+void CPU::res_4_h()
+{
+	regs.h = res(regs.h, 4);
+}
+
+// 0xA5
+void CPU::res_4_l()
+{
+	regs.l = res(regs.l, 4);
+}
+
+// 0xA6
+void CPU::res_4_hl()
+{
+	gb->mmu.writeByte(regs.hl, res(gb->mmu.readByte(regs.hl), 4));
+}
+
+// 0xA7
+void CPU::res_4_a()
+{
+	regs.a = res(regs.a, 4);
+}
+
+// 0xA8
+void CPU::res_5_b()
+{
+	regs.b = res(regs.b, 5);
+}
+
+// 0xA9
+void CPU::res_5_c()
+{
+	regs.c = res(regs.c, 5);
+}
+
+// 0xAA
+void CPU::res_5_d()
+{
+	regs.d = res(regs.d, 5);
+}
+
+// 0xAB
+void CPU::res_5_e()
+{
+	regs.e = res(regs.e, 5);
+}
+
+// 0xAC
+void CPU::res_5_h()
+{
+	regs.h = res(regs.h, 5);
+}
+
+// 0xAD
+void CPU::res_5_l()
+{
+	regs.l = res(regs.l, 5);
+}
+
+// 0xAE
+void CPU::res_5_hl()
+{
+	gb->mmu.writeByte(regs.hl, res(gb->mmu.readByte(regs.hl), 5));
+}
+
+// 0xAF
+void CPU::res_5_a()
+{
+	regs.a = res(regs.a, 5);
+}
+
+// 0xB0
+void CPU::res_6_b()
+{
+	regs.b = res(regs.b, 6);
+}
+
+// 0xB1
+void CPU::res_6_c()
+{
+	regs.c = res(regs.c, 6);
+}
+
+// 0xB2
+void CPU::res_6_d()
+{
+	regs.d = res(regs.d, 6);
+}
+
+// 0xB3
+void CPU::res_6_e()
+{
+	regs.e = res(regs.e, 6);
+}
+
+// 0xB4
+void CPU::res_6_h()
+{
+	regs.h = res(regs.h, 6);
+}
+
+// 0xB5
+void CPU::res_6_l()
+{
+	regs.l = res(regs.l, 6);
+}
+
+// 0xB6
+void CPU::res_6_hl()
+{
+	gb->mmu.writeByte(regs.hl, res(gb->mmu.readByte(regs.hl), 6));
+}
+
+// 0xB7
+void CPU::res_6_a()
+{
+	regs.a = res(regs.a, 6);
+}
+
+// 0xB8
+void CPU::res_7_b()
+{
+	regs.b = res(regs.b, 7);
+}
+
+// 0xB9
+void CPU::res_7_c()
+{
+	regs.c = res(regs.c, 7);
+}
+
+// 0xBA
+void CPU::res_7_d()
+{
+	regs.d = res(regs.d, 7);
+}
+
+// 0xBB
+void CPU::res_7_e()
+{
+	regs.e = res(regs.e, 7);
+}
+
+// 0xBC
+void CPU::res_7_h()
+{
+	regs.h = res(regs.h, 7);
+}
+
+// 0xBD
+void CPU::res_7_l()
+{
+	regs.l = res(regs.l, 7);
+}
+
+// 0xBE
+void CPU::res_7_hl()
+{
+	gb->mmu.writeByte(regs.hl, res(gb->mmu.readByte(regs.hl), 7));
+}
+
+// 0xBF
+void CPU::res_7_a()
+{
+	regs.a = res(regs.a, 7);
+}
+
+// 0xC0
+void CPU::set_0_b()
+{
+	regs.b = set(regs.b, 0);
+}
+
+// 0xC1
+void CPU::set_0_c()
+{
+	regs.c = set(regs.c, 0);
+}
+
+// 0xC2
+void CPU::set_0_d()
+{
+	regs.d = set(regs.d, 0);
+}
+
+// 0xC3
+void CPU::set_0_e()
+{
+	regs.e = set(regs.e, 0);
+}
+
+// 0xC4
+void CPU::set_0_h()
+{
+	regs.h = set(regs.h, 0);
+}
+
+// 0xC5
+void CPU::set_0_l()
+{
+	regs.l = set(regs.l, 0);
+}
+
+// 0xC6
+void CPU::set_0_hl()
+{
+	gb->mmu.writeByte(regs.hl, set(gb->mmu.readByte(regs.hl), 0));
+}
+
+// 0xC7
+void CPU::set_0_a()
+{
+	regs.a = set(regs.a, 0);
+}
+
+// 0xC8
+void CPU::set_1_b()
+{
+	regs.b = set(regs.b, 1);
+}
+
+// 0xC9
+void CPU::set_1_c()
+{
+	regs.c = set(regs.c, 1);
+}
+
+// 0xCA
+void CPU::set_1_d()
+{
+	regs.d = set(regs.d, 1);
+}
+
+// 0xCB
+void CPU::set_1_e()
+{
+	regs.e = set(regs.e, 1);
+}
+
+// 0xCC
+void CPU::set_1_h()
+{
+	regs.h = set(regs.h, 1);
+}
+
+// 0xCD
+void CPU::set_1_l()
+{
+	regs.l = set(regs.l, 1);
+}
+
+// 0xCE
+void CPU::set_1_hl()
+{
+	gb->mmu.writeByte(regs.hl, set(gb->mmu.readByte(regs.hl), 1));
+}
+
+// 0xCF
+void CPU::set_1_a()
+{
+	regs.a = set(regs.a, 1);
+}
+
+// 0xD0
+void CPU::set_2_b()
+{
+	regs.b = set(regs.b, 2);
+}
+
+// 0xD1
+void CPU::set_2_c()
+{
+	regs.c = set(regs.c, 2);
+}
+
+// 0xD2
+void CPU::set_2_d()
+{
+	regs.d = set(regs.d, 2);
+}
+
+// 0xD3
+void CPU::set_2_e()
+{
+	regs.e = set(regs.e, 2);
+}
+
+// 0xD4
+void CPU::set_2_h()
+{
+	regs.h = set(regs.h, 2);
+}
+
+// 0xD5
+void CPU::set_2_l()
+{
+	regs.l = set(regs.l, 2);
+}
+
+// 0xD6
+void CPU::set_2_hl()
+{
+	gb->mmu.writeByte(regs.hl, set(gb->mmu.readByte(regs.hl), 2));
+}
+
+// 0xD7
+void CPU::set_2_a()
+{
+	regs.a = set(regs.a, 2);
+}
+
+// 0xD8
+void CPU::set_3_b()
+{
+	regs.b = set(regs.b, 3);
+}
+
+// 0xD9
+void CPU::set_3_c()
+{
+	regs.c = set(regs.c, 3);
+}
+
+// 0xDA
+void CPU::set_3_d()
+{
+	regs.d = set(regs.d, 3);
+}
+
+// 0xDB
+void CPU::set_3_e()
+{
+	regs.e = set(regs.e, 3);
+}
+
+// 0xDC
+void CPU::set_3_h()
+{
+	regs.h = set(regs.h, 3);
+}
+
+// 0xDD
+void CPU::set_3_l()
+{
+	regs.l = set(regs.l, 3);
+}
+
+// 0xDE
+void CPU::set_3_hl()
+{
+	gb->mmu.writeByte(regs.hl, set(gb->mmu.readByte(regs.hl), 3));
+}
+
+// 0xDF
+void CPU::set_3_a()
+{
+	regs.a = set(regs.a, 3);
+}
+
+// 0xE0
+void CPU::set_4_b()
+{
+	regs.b = set(regs.b, 4);
+}
+
+// 0xE1
+void CPU::set_4_c()
+{
+	regs.c = set(regs.c, 4);
+}
+
+// 0xE2
+void CPU::set_4_d()
+{
+	regs.d = set(regs.d, 4);
+}
+
+// 0xE3
+void CPU::set_4_e()
+{
+	regs.e = set(regs.e, 4);
+}
+
+// 0xE4
+void CPU::set_4_h()
+{
+	regs.h = set(regs.h, 4);
+}
+
+// 0xE5
+void CPU::set_4_l()
+{
+	regs.l = set(regs.l, 4);
+}
+
+// 0xE6
+void CPU::set_4_hl()
+{
+	gb->mmu.writeByte(regs.hl, set(gb->mmu.readByte(regs.hl), 4));
+}
+
+// 0xE7
+void CPU::set_4_a()
+{
+	regs.a = set(regs.a, 4);
+}
+
+// 0xE8
+void CPU::set_5_b()
+{
+	regs.b = set(regs.b, 5);
+}
+
+// 0xE9
+void CPU::set_5_c()
+{
+	regs.c = set(regs.c, 5);
+}
+
+// 0xEA
+void CPU::set_5_d()
+{
+	regs.d = set(regs.d, 5);
+}
+
+// 0xEB
+void CPU::set_5_e()
+{
+	regs.e = set(regs.e, 5);
+}
+
+// 0xEC
+void CPU::set_5_h()
+{
+	regs.h = set(regs.h, 5);
+}
+
+// 0xED
+void CPU::set_5_l()
+{
+	regs.l = set(regs.l, 5);
+}
+
+// 0xEE
+void CPU::set_5_hl()
+{
+	gb->mmu.writeByte(regs.hl, set(gb->mmu.readByte(regs.hl), 5));
+}
+
+// 0xEF
+void CPU::set_5_a()
+{
+	regs.a = set(regs.a, 5);
+}
+
+// 0xF0
+void CPU::set_6_b()
+{
+	regs.b = set(regs.b, 6);
+}
+
+// 0xF1
+void CPU::set_6_c()
+{
+	regs.c = set(regs.c, 6);
+}
+
+// 0xF2
+void CPU::set_6_d()
+{
+	regs.d = set(regs.d, 6);
+}
+
+// 0xF3
+void CPU::set_6_e()
+{
+	regs.e = set(regs.e, 6);
+}
+
+// 0xF4
+void CPU::set_6_h()
+{
+	regs.h = set(regs.h, 6);
+}
+
+// 0xF5
+void CPU::set_6_l()
+{
+	regs.l = set(regs.l, 6);
+}
+
+// 0xF6
+void CPU::set_6_hl()
+{
+	gb->mmu.writeByte(regs.hl, set(gb->mmu.readByte(regs.hl), 6));
+}
+
+// 0xF7
+void CPU::set_6_a()
+{
+	regs.a = set(regs.a, 6);
+}
+
+// 0xF8
+void CPU::set_7_b()
+{
+	regs.b = set(regs.b, 7);
+}
+
+// 0xF9
+void CPU::set_7_c()
+{
+	regs.c = set(regs.c, 7);
+}
+
+// 0xFA
+void CPU::set_7_d()
+{
+	regs.d = set(regs.d, 7);
+}
+
+// 0xFB
+void CPU::set_7_e()
+{
+	regs.e = set(regs.e, 7);
+}
+
+// 0xFC
+void CPU::set_7_h()
+{
+	regs.h = set(regs.h, 7);
+}
+
+// 0xFD
+void CPU::set_7_l()
+{
+	regs.l = set(regs.l, 7);
+}
+
+// 0xFE
+void CPU::set_7_hl()
+{
+	gb->mmu.writeByte(regs.hl, set(gb->mmu.readByte(regs.hl), 7));
+}
+
+// 0xFF
+void CPU::set_7_a()
+{
+	regs.a = set(regs.a, 7);
+}
+
 
 void CPU::cb_instr()
 {
