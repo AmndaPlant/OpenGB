@@ -108,6 +108,7 @@ class CPU
 		void add(uint8_t value);
 		void adc(uint8_t value);
 		void sub(uint8_t value);
+		void sbc(uint8_t value);
 		void AND(uint8_t value);
 		void XOR(uint8_t value);
 		void OR(uint8_t value);
@@ -140,12 +141,14 @@ class CPU
 		void ld_de_a();
 		void inc_de();
 		void inc_d();
+		void ld_d_n();
 		void jr_n();
 		void add_hl_de();
 		void ld_a_de();
 		void dec_de();
 		void inc_e();
 		void dec_e();
+		void ld_e_n();
 		void rra();
 
 		void jr_nz_n();
@@ -167,6 +170,7 @@ class CPU
 		void ld_sp_nn();
 		void ldd_a();
 		void dec_hla();
+		void ld_hl_n();
 		void jr_c_n();
 		void inc_a();
 		void dec_a();
@@ -265,6 +269,7 @@ class CPU
 		void push_de();
 		void sub_n();
 		void ret_c();
+		void sbc_n();
 
 		void ldh_n_a();
 		void pop_hl();
@@ -280,6 +285,7 @@ class CPU
 		void ld_a_ff_c();
 		void di();
 		void push_af();
+		void or_n();
 		void ld_sp_hl();
 		void ld_a_nn();
 		void cp_n();
