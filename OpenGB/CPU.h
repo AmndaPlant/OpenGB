@@ -169,6 +169,7 @@ class CPU
 		void jr_nc();
 		void ld_sp_nn();
 		void ldd_a();
+		void inc_hla();
 		void dec_hla();
 		void ld_hl_n();
 		void jr_c_n();
@@ -245,6 +246,7 @@ class CPU
 
 		void or_b();
 		void xor_c();
+		void xor_e();
 		void xor_l();
 		void xor_hl();
 		void xor_a();
@@ -253,32 +255,47 @@ class CPU
 		void or_hl();
 		void or_a();
 
+		void ret_nz();
 		void pop_bc();
+		void jp_nz();
 		void jp_nn();
 		void call_nz();
 		void push_bc();
 		void add_n();
+		void rst_0();
 		void ret_z();
 		void ret();
+		void jp_z();
 		void cb();
+		void call_z();
 		void call_nn();
 		void adc_n();
+		void rst_8();
 
 		void ret_nc();
 		void pop_de();
+		void jp_nc();
+		void call_nc();
 		void push_de();
 		void sub_n();
+		void rst_10();
 		void ret_c();
+		void reti();
+		void jp_c();
+		void call_c();
 		void sbc_n();
+		void rst_18();
 
 		void ldh_n_a();
 		void pop_hl();
 		void ld_ff_c_a();
 		void push_hl();
 		void and_n();
+		void rst_20();
 		void jp_hl();
 		void ld_nn_a();
 		void xor_n();
+		void rst_28();
 
 		void ldh_a_n();
 		void pop_af();
@@ -286,9 +303,11 @@ class CPU
 		void di();
 		void push_af();
 		void or_n();
+		void rst_30();
 		void ld_sp_hl();
 		void ld_a_nn();
 		void cp_n();
+		void rst_38();
 
 		// Extended instructions
 		uint8_t rr(uint8_t value);
