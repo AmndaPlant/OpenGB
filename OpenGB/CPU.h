@@ -169,10 +169,13 @@ class CPU
 		void jr_nc();
 		void ld_sp_nn();
 		void ldd_a();
+		void inc_sp();
 		void inc_hla();
 		void dec_hla();
 		void ld_hl_n();
 		void jr_c_n();
+		void add_hl_sp();
+		void dec_sp();
 		void inc_a();
 		void dec_a();
 		void ld_a_n();
@@ -292,6 +295,7 @@ class CPU
 		void push_hl();
 		void and_n();
 		void rst_20();
+		void add_sp_n();
 		void jp_hl();
 		void ld_nn_a();
 		void xor_n();
@@ -304,6 +308,7 @@ class CPU
 		void push_af();
 		void or_n();
 		void rst_30();
+		void ld_hl_sp_n();
 		void ld_sp_hl();
 		void ld_a_nn();
 		void cp_n();
