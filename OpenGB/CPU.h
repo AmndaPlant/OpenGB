@@ -128,12 +128,14 @@ class CPU
 
 		void nop();
 		void ld_bc_nn();
+		void inc_b();
 		void inc_bc();
 		void dec_b();
 		void ld_b_n();
 		void ld_nn_sp();
 		void add_hl_bc();
 		void dec_bc();
+		void inc_c();
 		void dec_c();
 		void ld_c_n();
 
@@ -158,6 +160,7 @@ class CPU
 		void inc_h();
 		void dec_h();
 		void ld_h_n();
+		void daa();
 		void jr_z_n();
 		void add_hl_hl();
 		void ldi_a();
@@ -247,16 +250,20 @@ class CPU
 		void ld_a_hl();
 		void ld_a_a();
 
-		void or_b();
 		void xor_c();
 		void xor_e();
 		void xor_l();
 		void xor_hl();
 		void xor_a();
 
+		void or_b();
 		void or_c();
 		void or_hl();
 		void or_a();
+		void cp_b();
+		void cp_c();
+		void cp_d();
+		void cp_e();
 
 		void ret_nz();
 		void pop_bc();

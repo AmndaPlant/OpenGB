@@ -20,9 +20,9 @@ CPU::CPU()
 	using a = CPU;
 	lookup = 
 	{ 
-		{"NOP", &a::nop, 1},{"LD BC,d16", &a::ld_bc_nn, 3},{"LD (BC),A", &a::undefined, 1},{"INC BC", &a::inc_bc, 1},{"INC B", &a::undefined, 1},{"DEC B", &a::dec_b, 1},{"LD B,d8", &a::ld_b_n, 2},{"RLCA", &a::undefined, 1},{"LD (a16),SP", &a::ld_nn_sp, 3},{"ADD HL,BC", &a::add_hl_bc, 1},{"LD A,(BC)", &a::undefined, 1},{"DEC BC", &a::dec_bc, 1},{"INC C", &a::undefined, 1},{"DEC C", &a::dec_c, 1},{"LD C,d8", &a::ld_c_n, 2},{"RRCA", &a::undefined, 1},
+		{"NOP", &a::nop, 1},{"LD BC,d16", &a::ld_bc_nn, 3},{"LD (BC),A", &a::undefined, 1},{"INC BC", &a::inc_bc, 1},{"INC B", &a::inc_b, 1},{"DEC B", &a::dec_b, 1},{"LD B,d8", &a::ld_b_n, 2},{"RLCA", &a::undefined, 1},{"LD (a16),SP", &a::ld_nn_sp, 3},{"ADD HL,BC", &a::add_hl_bc, 1},{"LD A,(BC)", &a::undefined, 1},{"DEC BC", &a::dec_bc, 1},{"INC C", &a::inc_c, 1},{"DEC C", &a::dec_c, 1},{"LD C,d8", &a::ld_c_n, 2},{"RRCA", &a::undefined, 1},
 		{"STOP 0", &a::undefined, 2},{"LD DE,d16", &a::ld_de_nn, 3},{"LD (DE),A", &a::ld_de_a, 1},{"INC DE", &a::inc_de, 1},{"INC D", &a::inc_d, 1},{"DEC D", &a::undefined, 1},{"LD D,d8", &a::ld_d_n, 2},{"RLA", &a::undefined, 1},{"JR r8", &a::jr_n, 2},{"ADD HL,DE", &a::add_hl_de, 1},{"LD A,(DE)", &a::ld_a_de, 1},{"DEC DE", &a::dec_de, 1},{"INC E", &a::inc_e, 1},{"DEC E", &a::dec_e, 1},{"LD E,d8", &a::ld_e_n, 2},{"RRA", &a::rra, 1}, 
-		{"JR NZ r8", &a::jr_nz_n, 2},{"LD HL,d16", &a::ld_hl_nn, 3},{"LD (HL+),A", &a::ldi_hl, 1},{"INC HL", &a::inc_hl, 1},{"INC H", &a::inc_h, 1},{"DEC H", &a::dec_h, 1},{"LD H,d8", &a::ld_h_n, 2},{"DAA", &a::undefined, 1},{"JR Z r8", &a::jr_z_n, 2},{"ADD HL,HL", &a::add_hl_hl, 1},{"LD A,(HL+)", &a::ldi_a, 1},{"DEC HL", &a::dec_hl, 1},{"INC L", &a::inc_l, 1},{"DEC L", &a::dec_l, 1},{"LD L,d8", &a::ld_l_n, 2},{"CPL", &a::undefined, 1}, 
+		{"JR NZ r8", &a::jr_nz_n, 2},{"LD HL,d16", &a::ld_hl_nn, 3},{"LD (HL+),A", &a::ldi_hl, 1},{"INC HL", &a::inc_hl, 1},{"INC H", &a::inc_h, 1},{"DEC H", &a::dec_h, 1},{"LD H,d8", &a::ld_h_n, 2},{"DAA", &a::daa, 1},{"JR Z r8", &a::jr_z_n, 2},{"ADD HL,HL", &a::add_hl_hl, 1},{"LD A,(HL+)", &a::ldi_a, 1},{"DEC HL", &a::dec_hl, 1},{"INC L", &a::inc_l, 1},{"DEC L", &a::dec_l, 1},{"LD L,d8", &a::ld_l_n, 2},{"CPL", &a::undefined, 1}, 
 		{"JR NC r8", &a::jr_nc, 2},{"LD SP,d16", &a::ld_sp_nn, 3},{"LD (HL-),A", &a::ldd_a, 1},{"INC SP", &a::inc_sp, 1},{"INC (HL)", &a::inc_hla, 1},{"DEC (HL)", &a::dec_hla, 1},{"LD (HL),d8", &a::ld_hl_n, 2},{"SCF", &a::undefined, 1},{"JR C r8", &a::jr_c_n, 2},{"ADD HL,SP", &a::add_hl_sp, 1},{"LD A,(HL-)", &a::undefined, 1},{"DEC SP", &a::dec_sp, 1},{"INC A", &a::inc_a, 1},{"DEC A", &a::dec_a, 1},{"LD A,d8", &a::ld_a_n, 2},{"CCF", &a::undefined, 1}, 
 		{"LD B,B", &a::ld_b_b, 1},{"LD B,C", &a::ld_b_c, 1},{"LD B,D", &a::ld_b_d, 1},{"LD B,E", &a::ld_b_e, 1},{"LD B,H", &a::ld_b_h, 1},{"LD B,L", &a::ld_b_l, 1},{"LD B,(HL)", &a::ld_b_hl, 1},{"LD B,A", &a::ld_b_a, 1},{"LD C,B", &a::ld_c_b, 1},{"LD C,C", &a::ld_c_c, 1},{"LD C,D", &a::ld_c_d, 1},{"LD C,E", &a::ld_c_e, 1},{"LD C,H", &a::ld_c_h, 1},{"LD C,L", &a::ld_c_l, 1},{"LD C,(HL)", &a::ld_c_hl, 1},{"LD C,A", &a::ld_c_a, 1}, 
 		{"LD D,B", &a::ld_d_b, 1},{"LD D,C", &a::ld_d_c, 1},{"LD D,D", &a::ld_d_d, 1},{"LD D,E", &a::ld_d_e, 1},{"LD D,H", &a::ld_d_h, 1},{"LD D,L", &a::ld_d_l, 1},{"LD D,(HL)", &a::ld_d_hl, 1},{"LD D,A", &a::ld_d_a, 1},{"LD E,B", &a::ld_e_b, 1},{"LD E,C", &a::ld_e_c, 1},{"LD E,D", &a::ld_e_d, 1},{"LD E,E", &a::ld_e_e, 1},{"LD E,H", &a::ld_e_h, 1},{"LD E,L", &a::ld_e_l, 1},{"LD E,(HL)", &a::ld_e_hl, 1},{"LD E,A", &a::ld_e_a, 1}, 
@@ -31,7 +31,7 @@ CPU::CPU()
 		{"ADD A,B", &a::undefined, 1},{"ADD A,C", &a::undefined, 1},{"ADD A,D", &a::undefined, 1},{"ADD A,E", &a::undefined, 1},{"ADD A,H", &a::undefined, 1},{"ADD A,L", &a::undefined, 1},{"ADD A,(HL)", &a::undefined, 1},{"ADD A,A", &a::undefined, 1},{"ADC A,B", &a::undefined, 1},{"ADC A,C", &a::undefined, 1},{"ADC A,D", &a::undefined, 1},{"ADC A,E", &a::undefined, 1},{"ADC A,H", &a::undefined, 1},{"ADC A,L", &a::undefined, 1},{"ADC A,(HL)", &a::undefined, 1},{"ADC A,A", &a::undefined, 1}, 
 		{"SUB B", &a::undefined, 1},{"SUB C", &a::undefined, 1},{"SUB D", &a::undefined, 1},{"SUB E", &a::undefined, 1},{"SUB H", &a::undefined, 1},{"SUB L", &a::undefined, 1},{"SUB (HL)", &a::undefined, 1},{"SUB A", &a::undefined, 1},{"SBC A,B", &a::undefined, 1},{"SBC A,C", &a::undefined, 1},{"SBC A,D", &a::undefined, 1},{"SBC A,E", &a::undefined, 1},{"SBC A,H", &a::undefined, 1},{"SBC A,L", &a::undefined, 1},{"SBC A,(HL)", &a::undefined, 1},{"SBC A,A", &a::undefined, 1},
 		{"AND B", &a::undefined, 1},{"AND C", &a::undefined, 1},{"AND D", &a::undefined, 1},{"AND E", &a::undefined, 1},{"AND H", &a::undefined, 1},{"AND L", &a::undefined, 1},{"AND (HL)", &a::undefined, 1},{"AND A", &a::undefined, 1},{"XOR B", &a::undefined, 1},{"XOR C", &a::xor_c, 1},{"XOR D", &a::undefined, 1},{"XOR E", &a::xor_e, 1},{"XOR H", &a::undefined, 1},{"XOR L", &a::xor_l, 1},{"XOR (HL)", &a::xor_hl, 1},{"XOR A", &a::xor_a, 1},
-		{"OR B", &a::or_b, 1},{"OR C", &a::or_c, 1},{"OR D", &a::undefined, 1},{"OR E", &a::undefined, 1},{"OR H", &a::undefined, 1},{"OR L", &a::undefined, 1},{"OR (HL)", &a::or_hl, 1},{"OR A", &a::or_a, 1},{"CP B", &a::undefined, 1},{"CP C", &a::undefined, 1},{"CP D", &a::undefined, 1},{"CP E", &a::undefined, 1},{"CP H", &a::undefined, 1},{"CP L", &a::undefined, 1},{"CP (HL)", &a::undefined, 1},{"CP A", &a::undefined, 1},
+		{"OR B", &a::or_b, 1},{"OR C", &a::or_c, 1},{"OR D", &a::undefined, 1},{"OR E", &a::undefined, 1},{"OR H", &a::undefined, 1},{"OR L", &a::undefined, 1},{"OR (HL)", &a::or_hl, 1},{"OR A", &a::or_a, 1},{"CP B", &a::cp_b, 1},{"CP C", &a::cp_c, 1},{"CP D", &a::cp_d, 1},{"CP E", &a::cp_e, 1},{"CP H", &a::undefined, 1},{"CP L", &a::undefined, 1},{"CP (HL)", &a::undefined, 1},{"CP A", &a::undefined, 1},
 		{"RET NZ", &a::ret_nz, 1},{"POP BC", &a::pop_bc, 1},{"JP NZ,a16", &a::jp_nz, 3},{"JP a16", &a::jp_nn, 3},{"CALL NZ,a16", &a::call_nz, 3},{"PUSH BC", &a::push_bc, 1},{"ADD A,d8", &a::add_n, 2},{"RST 00H", &a::rst_0, 1},{"RET Z", &a::ret_z, 1},{"RET", &a::ret, 1},{"JP Z,a16", &a::jp_z, 3},{"PREFIX CB", &a::cb, 1},{"CALL Z,a16", &a::call_z, 3},{"CALL a16", &a::call_nn, 3},{"ADC A,d8", &a::adc_n, 2},{"RST 08H", &a::rst_8, 1},
 		{"RET NC", &a::ret_nc, 1},{"POP DE", &a::pop_de, 1},{"JP NC,a16", &a::jp_nc, 3},{"NOP", &a::nop, 1},{"CALL NC,a16", &a::call_nc, 3},{"PUSH DE", &a::push_de, 1},{"SUB d8", &a::sub_n, 2},{"RST 10H", &a::rst_10, 1},{"RET C", &a::ret_c, 1},{"RETI", &a::reti, 1},{"JP C,a16", &a::jp_c, 3},{"NOP", &a::nop, 1},{"CALL C,a16", &a::call_c, 1},{"NOP", &a::nop, 1},{"SBC A,d8", &a::sbc_n, 2},{"RST 18H", &a::rst_18, 1},
 		{"LDH (a8),A", &a::ldh_n_a, 2},{"POP HL", &a::pop_hl, 1},{"LD(C),A", &a::ld_ff_c_a, 1},{"NOP", &a::nop, 1},{"NOP", &a::nop, 1},{"PUSH HL", &a::push_hl, 1},{"AND d8", &a::and_n, 2},{"RST 20H", &a::rst_20, 1},{"ADD SP,r8", &a::add_sp_n, 2},{"JP (HL)", &a::jp_hl, 1},{"LD (a16),A", &a::ld_nn_a, 3},{"NOP", &a::nop, 1},{"NOP", &a::nop, 1},{"NOP", &a::nop, 1},{"XOR d8", &a::xor_n, 2},{"RST 28H", &a::rst_28, 1},
@@ -274,6 +274,12 @@ void CPU::inc_bc()
 	++regs.bc;
 }
 
+// 0x04
+void CPU::inc_b()
+{
+	regs.b = inc(regs.b);
+}
+
 // 0x05
 void CPU::dec_b()
 {
@@ -303,6 +309,12 @@ void CPU::add_hl_bc()
 void CPU::dec_bc()
 {
 	--regs.bc;
+}
+
+// 0x0C
+void CPU::inc_c()
+{
+	regs.c = inc(regs.c);
 }
 
 // 0x0D
@@ -447,6 +459,27 @@ void CPU::dec_h()
 void CPU::ld_h_n()
 {
 	regs.h = gb->mmu.readByte(pc++);
+}
+
+// 0x27
+void CPU::daa()
+{
+	uint16_t temp = regs.a;
+	if (FLAGS_ISNEGATIVE)
+	{
+		if (FLAGS_ISHALFCARRY) temp = (temp - 0x06) & 0xFF;
+		if (FLAGS_ISCARRY) temp -= 0x60;
+	}
+	else
+	{
+		if (FLAGS_ISHALFCARRY || (temp & 0xF) > 9) temp += 0x06;
+		if (FLAGS_ISCARRY || temp > 0x9F) temp += 0x60;
+	}
+
+	regs.a = temp;
+	FLAGS_CLEAR(FLAGS_HALFCARRY);
+	(regs.a == 0) ? FLAGS_SET(FLAGS_ZERO) : FLAGS_CLEAR(FLAGS_ZERO);
+	if (temp >= 0x100) FLAGS_SET(FLAGS_CARRY);
 }
 
 // 0x28
@@ -1024,6 +1057,30 @@ void CPU::or_hl()
 void CPU::or_a()
 {
 	OR(regs.a);
+}
+
+// 0xB8
+void CPU::cp_b()
+{
+	cp(regs.b);
+}
+
+// 0xB9
+void CPU::cp_c()
+{
+	cp(regs.c);
+}
+
+// 0xBA
+void CPU::cp_d()
+{
+	cp(regs.d);
+}
+
+// 0xBB
+void CPU::cp_e()
+{
+	cp(regs.e);
 }
 
 // 0xC0
