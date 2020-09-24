@@ -128,6 +128,7 @@ class CPU
 
 		void nop();
 		void ld_bc_nn();
+		void ld_bc_a();
 		void inc_b();
 		void inc_bc();
 		void dec_b();
@@ -135,6 +136,7 @@ class CPU
 		void rlca();
 		void ld_nn_sp();
 		void add_hl_bc();
+		void ld_a_bc();
 		void dec_bc();
 		void inc_c();
 		void dec_c();
@@ -176,7 +178,7 @@ class CPU
 
 		void jr_nc();
 		void ld_sp_nn();
-		void ldd_a();
+		void ldd_hl();
 		void inc_sp();
 		void inc_hla();
 		void dec_hla();
@@ -184,6 +186,7 @@ class CPU
 		void scf();
 		void jr_c_n();
 		void add_hl_sp();
+		void ldd_a();
 		void dec_sp();
 		void inc_a();
 		void dec_a();
