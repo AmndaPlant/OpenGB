@@ -132,18 +132,22 @@ class CPU
 		void inc_bc();
 		void dec_b();
 		void ld_b_n();
+		void rlca();
 		void ld_nn_sp();
 		void add_hl_bc();
 		void dec_bc();
 		void inc_c();
 		void dec_c();
 		void ld_c_n();
+		void rrca();
 
 		void ld_de_nn();
 		void ld_de_a();
 		void inc_de();
 		void inc_d();
+		void dec_d();
 		void ld_d_n();
+		void rla();
 		void jr_n();
 		void add_hl_de();
 		void ld_a_de();
@@ -168,6 +172,7 @@ class CPU
 		void inc_l();
 		void dec_l();
 		void ld_l_n();
+		void cpl();
 
 		void jr_nc();
 		void ld_sp_nn();
@@ -176,12 +181,14 @@ class CPU
 		void inc_hla();
 		void dec_hla();
 		void ld_hl_n();
+		void scf();
 		void jr_c_n();
 		void add_hl_sp();
 		void dec_sp();
 		void inc_a();
 		void dec_a();
 		void ld_a_n();
+		void ccf();
 
 		void ld_b_b();
 		void ld_b_c();
@@ -250,20 +257,73 @@ class CPU
 		void ld_a_hl();
 		void ld_a_a();
 
+		void add_b();
+		void add_c();
+		void add_d();
+		void add_e();
+		void add_h();
+		void add_l();
+		void add_hl();
+		void add_a();
+		void adc_b();
+		void adc_c();
+		void adc_d();
+		void adc_e();
+		void adc_h();
+		void adc_l();
+		void adc_hl();
+		void adc_a();
+
+		void sub_b();
+		void sub_c();
+		void sub_d();
+		void sub_e();
+		void sub_h();
+		void sub_l();
+		void sub_hl();
+		void sub_a();
+		void sbc_b();
+		void sbc_c();
+		void sbc_d();
+		void sbc_e();
+		void sbc_h();
+		void sbc_l();
+		void sbc_hl();
+		void sbc_a();
+
+		void and_b();
+		void and_c();
+		void and_d();
+		void and_e();
+		void and_h();
+		void and_l();
+		void and_hl();
+		void and_a();
+		void xor_b();
 		void xor_c();
+		void xor_d();
 		void xor_e();
+		void xor_h();
 		void xor_l();
 		void xor_hl();
 		void xor_a();
 
 		void or_b();
 		void or_c();
+		void or_d();
+		void or_e();
+		void or_h();
+		void or_l();
 		void or_hl();
 		void or_a();
 		void cp_b();
 		void cp_c();
 		void cp_d();
 		void cp_e();
+		void cp_h();
+		void cp_l();
+		void cp_hl();
+		void cp_a();
 
 		void ret_nz();
 		void pop_bc();
@@ -322,19 +382,85 @@ class CPU
 		void rst_38();
 
 		// Extended instructions
+		uint8_t rlc(uint8_t value);
+		uint8_t rrc(uint8_t value);
+		uint8_t rl(uint8_t value);
 		uint8_t rr(uint8_t value);
+		uint8_t sla(uint8_t value);
+		uint8_t sra(uint8_t value);
 		uint8_t swap(uint8_t value);
 		uint8_t srl(uint8_t value);
 		void bit(uint8_t value, uint8_t bit);
 		uint8_t res(uint8_t value, uint8_t bit);
 		uint8_t set(uint8_t value, uint8_t bit);
 
+		void rlc_b();
+		void rlc_c();
+		void rlc_d();
+		void rlc_e();
+		void rlc_h();
+		void rlc_l();
+		void rlc_hl();
+		void rlc_a();
+		void rrc_b();
+		void rrc_c();
+		void rrc_d();
+		void rrc_e();
+		void rrc_h();
+		void rrc_l();
+		void rrc_hl();
+		void rrc_a();
+
+		void rl_b();
+		void rl_c();
+		void rl_d();
+		void rl_e();
+		void rl_h();
+		void rl_l();
+		void rl_hl();
+		void rl_a();
+		void rr_b();
 		void rr_c();
 		void rr_d();
 		void rr_e();
+		void rr_h();
+		void rr_l();
+		void rr_hl();
+		void rr_a();
 
+		void sla_b();
+		void sla_c();
+		void sla_d();
+		void sla_e();
+		void sla_h();
+		void sla_l();
+		void sla_hl();
+		void sla_a();
+		void sra_b();
+		void sra_c();
+		void sra_d();
+		void sra_e();
+		void sra_h();
+		void sra_l();
+		void sra_hl();
+		void sra_a();
+
+		void swap_b();
+		void swap_c();
+		void swap_d();
+		void swap_e();
+		void swap_h();
+		void swap_l();
+		void swap_hl();
 		void swap_a();
 		void srl_b();
+		void srl_c();
+		void srl_d();
+		void srl_e();
+		void srl_h();
+		void srl_l();
+		void srl_hl();
+		void srl_a();
 
 		void bit_0_b();
 		void bit_0_c();

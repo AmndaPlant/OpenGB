@@ -20,18 +20,18 @@ CPU::CPU()
 	using a = CPU;
 	lookup = 
 	{ 
-		{"NOP", &a::nop, 1},{"LD BC,d16", &a::ld_bc_nn, 3},{"LD (BC),A", &a::undefined, 1},{"INC BC", &a::inc_bc, 1},{"INC B", &a::inc_b, 1},{"DEC B", &a::dec_b, 1},{"LD B,d8", &a::ld_b_n, 2},{"RLCA", &a::undefined, 1},{"LD (a16),SP", &a::ld_nn_sp, 3},{"ADD HL,BC", &a::add_hl_bc, 1},{"LD A,(BC)", &a::undefined, 1},{"DEC BC", &a::dec_bc, 1},{"INC C", &a::inc_c, 1},{"DEC C", &a::dec_c, 1},{"LD C,d8", &a::ld_c_n, 2},{"RRCA", &a::undefined, 1},
-		{"STOP 0", &a::undefined, 2},{"LD DE,d16", &a::ld_de_nn, 3},{"LD (DE),A", &a::ld_de_a, 1},{"INC DE", &a::inc_de, 1},{"INC D", &a::inc_d, 1},{"DEC D", &a::undefined, 1},{"LD D,d8", &a::ld_d_n, 2},{"RLA", &a::undefined, 1},{"JR r8", &a::jr_n, 2},{"ADD HL,DE", &a::add_hl_de, 1},{"LD A,(DE)", &a::ld_a_de, 1},{"DEC DE", &a::dec_de, 1},{"INC E", &a::inc_e, 1},{"DEC E", &a::dec_e, 1},{"LD E,d8", &a::ld_e_n, 2},{"RRA", &a::rra, 1}, 
-		{"JR NZ r8", &a::jr_nz_n, 2},{"LD HL,d16", &a::ld_hl_nn, 3},{"LD (HL+),A", &a::ldi_hl, 1},{"INC HL", &a::inc_hl, 1},{"INC H", &a::inc_h, 1},{"DEC H", &a::dec_h, 1},{"LD H,d8", &a::ld_h_n, 2},{"DAA", &a::daa, 1},{"JR Z r8", &a::jr_z_n, 2},{"ADD HL,HL", &a::add_hl_hl, 1},{"LD A,(HL+)", &a::ldi_a, 1},{"DEC HL", &a::dec_hl, 1},{"INC L", &a::inc_l, 1},{"DEC L", &a::dec_l, 1},{"LD L,d8", &a::ld_l_n, 2},{"CPL", &a::undefined, 1}, 
-		{"JR NC r8", &a::jr_nc, 2},{"LD SP,d16", &a::ld_sp_nn, 3},{"LD (HL-),A", &a::ldd_a, 1},{"INC SP", &a::inc_sp, 1},{"INC (HL)", &a::inc_hla, 1},{"DEC (HL)", &a::dec_hla, 1},{"LD (HL),d8", &a::ld_hl_n, 2},{"SCF", &a::undefined, 1},{"JR C r8", &a::jr_c_n, 2},{"ADD HL,SP", &a::add_hl_sp, 1},{"LD A,(HL-)", &a::undefined, 1},{"DEC SP", &a::dec_sp, 1},{"INC A", &a::inc_a, 1},{"DEC A", &a::dec_a, 1},{"LD A,d8", &a::ld_a_n, 2},{"CCF", &a::undefined, 1}, 
+		{"NOP", &a::nop, 1},{"LD BC,d16", &a::ld_bc_nn, 3},{"LD (BC),A", &a::undefined, 1},{"INC BC", &a::inc_bc, 1},{"INC B", &a::inc_b, 1},{"DEC B", &a::dec_b, 1},{"LD B,d8", &a::ld_b_n, 2},{"RLCA", &a::rlca, 1},{"LD (a16),SP", &a::ld_nn_sp, 3},{"ADD HL,BC", &a::add_hl_bc, 1},{"LD A,(BC)", &a::undefined, 1},{"DEC BC", &a::dec_bc, 1},{"INC C", &a::inc_c, 1},{"DEC C", &a::dec_c, 1},{"LD C,d8", &a::ld_c_n, 2},{"RRCA", &a::rrca, 1},
+		{"STOP 0", &a::undefined, 2},{"LD DE,d16", &a::ld_de_nn, 3},{"LD (DE),A", &a::ld_de_a, 1},{"INC DE", &a::inc_de, 1},{"INC D", &a::inc_d, 1},{"DEC D", &a::dec_d, 1},{"LD D,d8", &a::ld_d_n, 2},{"RLA", &a::rla, 1},{"JR r8", &a::jr_n, 2},{"ADD HL,DE", &a::add_hl_de, 1},{"LD A,(DE)", &a::ld_a_de, 1},{"DEC DE", &a::dec_de, 1},{"INC E", &a::inc_e, 1},{"DEC E", &a::dec_e, 1},{"LD E,d8", &a::ld_e_n, 2},{"RRA", &a::rra, 1}, 
+		{"JR NZ r8", &a::jr_nz_n, 2},{"LD HL,d16", &a::ld_hl_nn, 3},{"LD (HL+),A", &a::ldi_hl, 1},{"INC HL", &a::inc_hl, 1},{"INC H", &a::inc_h, 1},{"DEC H", &a::dec_h, 1},{"LD H,d8", &a::ld_h_n, 2},{"DAA", &a::daa, 1},{"JR Z r8", &a::jr_z_n, 2},{"ADD HL,HL", &a::add_hl_hl, 1},{"LD A,(HL+)", &a::ldi_a, 1},{"DEC HL", &a::dec_hl, 1},{"INC L", &a::inc_l, 1},{"DEC L", &a::dec_l, 1},{"LD L,d8", &a::ld_l_n, 2},{"CPL", &a::cpl, 1}, 
+		{"JR NC r8", &a::jr_nc, 2},{"LD SP,d16", &a::ld_sp_nn, 3},{"LD (HL-),A", &a::ldd_a, 1},{"INC SP", &a::inc_sp, 1},{"INC (HL)", &a::inc_hla, 1},{"DEC (HL)", &a::dec_hla, 1},{"LD (HL),d8", &a::ld_hl_n, 2},{"SCF", &a::scf, 1},{"JR C r8", &a::jr_c_n, 2},{"ADD HL,SP", &a::add_hl_sp, 1},{"LD A,(HL-)", &a::undefined, 1},{"DEC SP", &a::dec_sp, 1},{"INC A", &a::inc_a, 1},{"DEC A", &a::dec_a, 1},{"LD A,d8", &a::ld_a_n, 2},{"CCF", &a::ccf, 1}, 
 		{"LD B,B", &a::ld_b_b, 1},{"LD B,C", &a::ld_b_c, 1},{"LD B,D", &a::ld_b_d, 1},{"LD B,E", &a::ld_b_e, 1},{"LD B,H", &a::ld_b_h, 1},{"LD B,L", &a::ld_b_l, 1},{"LD B,(HL)", &a::ld_b_hl, 1},{"LD B,A", &a::ld_b_a, 1},{"LD C,B", &a::ld_c_b, 1},{"LD C,C", &a::ld_c_c, 1},{"LD C,D", &a::ld_c_d, 1},{"LD C,E", &a::ld_c_e, 1},{"LD C,H", &a::ld_c_h, 1},{"LD C,L", &a::ld_c_l, 1},{"LD C,(HL)", &a::ld_c_hl, 1},{"LD C,A", &a::ld_c_a, 1}, 
 		{"LD D,B", &a::ld_d_b, 1},{"LD D,C", &a::ld_d_c, 1},{"LD D,D", &a::ld_d_d, 1},{"LD D,E", &a::ld_d_e, 1},{"LD D,H", &a::ld_d_h, 1},{"LD D,L", &a::ld_d_l, 1},{"LD D,(HL)", &a::ld_d_hl, 1},{"LD D,A", &a::ld_d_a, 1},{"LD E,B", &a::ld_e_b, 1},{"LD E,C", &a::ld_e_c, 1},{"LD E,D", &a::ld_e_d, 1},{"LD E,E", &a::ld_e_e, 1},{"LD E,H", &a::ld_e_h, 1},{"LD E,L", &a::ld_e_l, 1},{"LD E,(HL)", &a::ld_e_hl, 1},{"LD E,A", &a::ld_e_a, 1}, 
 		{"LD H,B", &a::ld_h_b, 1},{"LD H,C", &a::ld_h_c, 1},{"LD H,D", &a::ld_h_d, 1},{"LD H,E", &a::ld_h_e, 1},{"LD H,H", &a::ld_h_h, 1},{"LD H,L", &a::ld_h_l , 1},{"LD H,(HL)", &a::ld_h_hl, 1},{"LD H,A", &a::ld_h_a, 1},{"LD L,B", &a::ld_l_b, 1},{"LD L,C", &a::ld_l_c, 1},{"LD L,D", &a::ld_l_d, 1},{"LD L,E", &a::ld_l_e, 1},{"LD L,H", &a::ld_l_h, 1},{"LD L,L", &a::ld_l_l , 1},{"LD L,(HL)", &a::ld_l_hl, 1},{"LD L,A", &a::ld_l_a, 1},
 		{"LD (HL),B", &a::ld_hl_b, 1},{"LD (HL),C", &a::ld_hl_c, 1},{"LD (HL),D", &a::ld_hl_d, 1},{"LD (HL),E", &a::ld_hl_e, 1},{"LD (HL),H", &a::ld_hl_h, 1},{"LD (HL),L", &a::ld_hl_l, 1},{"HALT", &a::undefined, 1},{"LD (HL),A", &a::ld_hl_a, 1},{"LD A,B", &a::ld_a_b, 1},{"LD A,C", &a::ld_a_c, 1},{"LD A,D", &a::ld_a_d, 1},{"LD A,E", &a::ld_a_e, 1},{"LD A,H", &a::ld_a_h, 1},{"LD A,L", &a::ld_a_l, 1},{"LD A,(HL)", &a::ld_a_hl, 1},{"LD A,A", &a::ld_a_a, 1}, 
-		{"ADD A,B", &a::undefined, 1},{"ADD A,C", &a::undefined, 1},{"ADD A,D", &a::undefined, 1},{"ADD A,E", &a::undefined, 1},{"ADD A,H", &a::undefined, 1},{"ADD A,L", &a::undefined, 1},{"ADD A,(HL)", &a::undefined, 1},{"ADD A,A", &a::undefined, 1},{"ADC A,B", &a::undefined, 1},{"ADC A,C", &a::undefined, 1},{"ADC A,D", &a::undefined, 1},{"ADC A,E", &a::undefined, 1},{"ADC A,H", &a::undefined, 1},{"ADC A,L", &a::undefined, 1},{"ADC A,(HL)", &a::undefined, 1},{"ADC A,A", &a::undefined, 1}, 
-		{"SUB B", &a::undefined, 1},{"SUB C", &a::undefined, 1},{"SUB D", &a::undefined, 1},{"SUB E", &a::undefined, 1},{"SUB H", &a::undefined, 1},{"SUB L", &a::undefined, 1},{"SUB (HL)", &a::undefined, 1},{"SUB A", &a::undefined, 1},{"SBC A,B", &a::undefined, 1},{"SBC A,C", &a::undefined, 1},{"SBC A,D", &a::undefined, 1},{"SBC A,E", &a::undefined, 1},{"SBC A,H", &a::undefined, 1},{"SBC A,L", &a::undefined, 1},{"SBC A,(HL)", &a::undefined, 1},{"SBC A,A", &a::undefined, 1},
-		{"AND B", &a::undefined, 1},{"AND C", &a::undefined, 1},{"AND D", &a::undefined, 1},{"AND E", &a::undefined, 1},{"AND H", &a::undefined, 1},{"AND L", &a::undefined, 1},{"AND (HL)", &a::undefined, 1},{"AND A", &a::undefined, 1},{"XOR B", &a::undefined, 1},{"XOR C", &a::xor_c, 1},{"XOR D", &a::undefined, 1},{"XOR E", &a::xor_e, 1},{"XOR H", &a::undefined, 1},{"XOR L", &a::xor_l, 1},{"XOR (HL)", &a::xor_hl, 1},{"XOR A", &a::xor_a, 1},
-		{"OR B", &a::or_b, 1},{"OR C", &a::or_c, 1},{"OR D", &a::undefined, 1},{"OR E", &a::undefined, 1},{"OR H", &a::undefined, 1},{"OR L", &a::undefined, 1},{"OR (HL)", &a::or_hl, 1},{"OR A", &a::or_a, 1},{"CP B", &a::cp_b, 1},{"CP C", &a::cp_c, 1},{"CP D", &a::cp_d, 1},{"CP E", &a::cp_e, 1},{"CP H", &a::undefined, 1},{"CP L", &a::undefined, 1},{"CP (HL)", &a::undefined, 1},{"CP A", &a::undefined, 1},
+		{"ADD A,B", &a::add_b, 1},{"ADD A,C", &a::add_c, 1},{"ADD A,D", &a::add_d, 1},{"ADD A,E", &a::add_e, 1},{"ADD A,H", &a::add_h, 1},{"ADD A,L", &a::add_l, 1},{"ADD A,(HL)", &a::add_hl, 1},{"ADD A,A", &a::add_a, 1},{"ADC A,B", &a::adc_b, 1},{"ADC A,C", &a::adc_c, 1},{"ADC A,D", &a::adc_d, 1},{"ADC A,E", &a::adc_e, 1},{"ADC A,H", &a::adc_h, 1},{"ADC A,L", &a::adc_l, 1},{"ADC A,(HL)", &a::adc_hl, 1},{"ADC A,A", &a::adc_a, 1},
+		{"SUB B", &a::sub_b, 1},{"SUB C", &a::sub_c, 1},{"SUB D", &a::sub_d, 1},{"SUB E", &a::sub_e, 1},{"SUB H", &a::sub_h, 1},{"SUB L", &a::sub_l, 1},{"SUB (HL)", &a::sub_hl, 1},{"SUB A", &a::sub_a, 1},{"SBC A,B", &a::sbc_b, 1},{"SBC A,C", &a::sbc_c, 1},{"SBC A,D", &a::sbc_d, 1},{"SBC A,E", &a::sbc_e, 1},{"SBC A,H", &a::sbc_h, 1},{"SBC A,L", &a::sbc_l, 1},{"SBC A,(HL)", &a::sbc_hl, 1},{"SBC A,A", &a::sbc_a, 1},
+		{"AND B", &a::and_b, 1},{"AND C", &a::and_c, 1},{"AND D", &a::and_d, 1},{"AND E", &a::and_e, 1},{"AND H", &a::and_h, 1},{"AND L", &a::and_l, 1},{"AND (HL)", &a::and_hl, 1},{"AND A", &a::and_a, 1},{"XOR B", &a::xor_b, 1},{"XOR C", &a::xor_c, 1},{"XOR D", &a::xor_d, 1},{"XOR E", &a::xor_e, 1},{"XOR H", &a::xor_h, 1},{"XOR L", &a::xor_l, 1},{"XOR (HL)", &a::xor_hl, 1},{"XOR A", &a::xor_a, 1},
+		{"OR B", &a::or_b, 1},{"OR C", &a::or_c, 1},{"OR D", &a::or_d, 1},{"OR E", &a::or_e, 1},{"OR H", &a::or_h, 1},{"OR L", &a::or_l, 1},{"OR (HL)", &a::or_hl, 1},{"OR A", &a::or_a, 1},{"CP B", &a::cp_b, 1},{"CP C", &a::cp_c, 1},{"CP D", &a::cp_d, 1},{"CP E", &a::cp_e, 1},{"CP H", &a::cp_h, 1},{"CP L", &a::cp_l, 1},{"CP (HL)", &a::cp_hl, 1},{"CP A", &a::cp_a, 1},
 		{"RET NZ", &a::ret_nz, 1},{"POP BC", &a::pop_bc, 1},{"JP NZ,a16", &a::jp_nz, 3},{"JP a16", &a::jp_nn, 3},{"CALL NZ,a16", &a::call_nz, 3},{"PUSH BC", &a::push_bc, 1},{"ADD A,d8", &a::add_n, 2},{"RST 00H", &a::rst_0, 1},{"RET Z", &a::ret_z, 1},{"RET", &a::ret, 1},{"JP Z,a16", &a::jp_z, 3},{"PREFIX CB", &a::cb, 1},{"CALL Z,a16", &a::call_z, 3},{"CALL a16", &a::call_nn, 3},{"ADC A,d8", &a::adc_n, 2},{"RST 08H", &a::rst_8, 1},
 		{"RET NC", &a::ret_nc, 1},{"POP DE", &a::pop_de, 1},{"JP NC,a16", &a::jp_nc, 3},{"NOP", &a::nop, 1},{"CALL NC,a16", &a::call_nc, 3},{"PUSH DE", &a::push_de, 1},{"SUB d8", &a::sub_n, 2},{"RST 10H", &a::rst_10, 1},{"RET C", &a::ret_c, 1},{"RETI", &a::reti, 1},{"JP C,a16", &a::jp_c, 3},{"NOP", &a::nop, 1},{"CALL C,a16", &a::call_c, 1},{"NOP", &a::nop, 1},{"SBC A,d8", &a::sbc_n, 2},{"RST 18H", &a::rst_18, 1},
 		{"LDH (a8),A", &a::ldh_n_a, 2},{"POP HL", &a::pop_hl, 1},{"LD(C),A", &a::ld_ff_c_a, 1},{"NOP", &a::nop, 1},{"NOP", &a::nop, 1},{"PUSH HL", &a::push_hl, 1},{"AND d8", &a::and_n, 2},{"RST 20H", &a::rst_20, 1},{"ADD SP,r8", &a::add_sp_n, 2},{"JP (HL)", &a::jp_hl, 1},{"LD (a16),A", &a::ld_nn_a, 3},{"NOP", &a::nop, 1},{"NOP", &a::nop, 1},{"NOP", &a::nop, 1},{"XOR d8", &a::xor_n, 2},{"RST 28H", &a::rst_28, 1},
@@ -40,10 +40,10 @@ CPU::CPU()
 
 	extended_lookup =
 	{
-		{"RLC B", &a::undefined_cb, 1},{"RLC C", &a::undefined_cb, 1},{"RLC D", &a::undefined_cb, 1},{"RLC E", &a::undefined_cb, 1},{"RLC H", &a::undefined_cb, 1},{"RLC L", &a::undefined_cb, 1},{"RLC (HL)", &a::undefined_cb, 1},{"RLC A", &a::undefined_cb, 1},{"RRC B", &a::undefined_cb, 1},{"RRC C", &a::undefined_cb, 1},{"RRC D", &a::undefined_cb, 1},{"RRC E", &a::undefined_cb, 1},{"RRC H", &a::undefined_cb, 1},{"RRC L", &a::undefined_cb, 1},{"RRC (HL)", &a::undefined_cb, 1},{"RRC A", &a::undefined_cb, 1},
-		{"RL B", &a::undefined_cb, 1},{"RL C", &a::undefined_cb, 1},{"RL D", &a::undefined_cb, 1},{"RL E", &a::undefined_cb, 1},{"RL H", &a::undefined_cb, 1},{"RL L", &a::undefined_cb, 1},{"RL (HL)", &a::undefined_cb, 1},{"RL A", &a::undefined_cb, 1},{"RR B", &a::undefined_cb, 1},{"RR C", &a::rr_c, 1},{"RR D", &a::rr_d, 1},{"RR E", &a::rr_e, 1},{"RR H", &a::undefined_cb, 1},{"RR L", &a::undefined_cb, 1},{"RR (HL)", &a::undefined_cb, 1},{"RR A", &a::undefined_cb, 1},
-		{"SLA B", &a::undefined_cb, 1},{"SLA C", &a::undefined_cb, 1},{"SLA D", &a::undefined_cb, 1},{"SLA E", &a::undefined_cb, 1},{"SLA H", &a::undefined_cb, 1},{"SLA L", &a::undefined_cb, 1},{"SLA (HL)", &a::undefined_cb, 1},{"SLA A", &a::undefined_cb, 1},{"SRA B", &a::undefined_cb, 1},{"SRA C", &a::undefined_cb, 1},{"SRA D", &a::undefined_cb, 1},{"SRA E", &a::undefined_cb, 1},{"SRA H", &a::undefined_cb, 1},{"SRA L", &a::undefined_cb, 1},{"SRA (HL)", &a::undefined_cb, 1},{"SRA A", &a::undefined_cb, 1},
-		{"SWAP B", &a::undefined_cb, 1},{"SWAP C", &a::undefined_cb, 1},{"SWAP D", &a::undefined_cb, 1},{"SWAP E", &a::undefined_cb, 1},{"SWAP H", &a::undefined_cb, 1},{"SWAP L", &a::undefined_cb, 1},{"SWAP (HL)", &a::undefined_cb, 1},{"SWAP A", &a::swap_a, 1},{"SRL B", &a::srl_b , 1},{"SRL C", &a::undefined_cb, 1},{"SRL D", &a::undefined_cb, 1},{"SRL E", &a::undefined_cb, 1},{"SRL H", &a::undefined_cb, 1},{"SRL L", &a::undefined_cb, 1},{"SRL (HL)", &a::ld_a_n, 1},{"SRL A", &a::undefined_cb, 1},
+		{"RLC B", &a::rlc_b, 1},{"RLC C", &a::rlc_c, 1},{"RLC D", &a::rlc_d, 1},{"RLC E", &a::rlc_e, 1},{"RLC H", &a::rlc_h, 1},{"RLC L", &a::rlc_l, 1},{"RLC (HL)", &a::rlc_hl, 1},{"RLC A", &a::rlc_a, 1},{"RRC B", &a::rrc_b, 1},{"RRC C", &a::rrc_c, 1},{"RRC D", &a::rrc_d, 1},{"RRC E", &a::rrc_e, 1},{"RRC H", &a::rrc_h, 1},{"RRC L", &a::rrc_l, 1},{"RRC (HL)", &a::rrc_hl, 1},{"RRC A", &a::rrc_a, 1},
+		{"RL B", &a::rl_b, 1},{"RL C", &a::rl_c, 1},{"RL D", &a::rl_d, 1},{"RL E", &a::rl_e, 1},{"RL H", &a::rl_h, 1},{"RL L", &a::rl_l, 1},{"RL (HL)", &a::rl_hl, 1},{"RL A", &a::rl_a, 1},{"RR B", &a::rr_b, 1},{"RR C", &a::rr_c, 1},{"RR D", &a::rr_d, 1},{"RR E", &a::rr_e, 1},{"RR H", &a::rr_h, 1},{"RR L", &a::rr_l, 1},{"RR (HL)", &a::rr_hl, 1},{"RR A", &a::rr_a, 1},
+		{"SLA B", &a::sla_b, 1},{"SLA C", &a::sla_c , 1},{"SLA D", &a::sla_d, 1},{"SLA E", &a::sla_e, 1},{"SLA H", &a::sla_h, 1},{"SLA L", &a::sla_l, 1},{"SLA (HL)", &a::sla_hl, 1},{"SLA A", &a::sla_a, 1},{"SRA B", &a::sra_b, 1},{"SRA C", &a::sra_c, 1},{"SRA D", &a::sra_d, 1},{"SRA E", &a::sra_e, 1},{"SRA H", &a::sra_h, 1},{"SRA L", &a::sra_l, 1},{"SRA (HL)", &a::sra_hl, 1},{"SRA A", &a::sra_a, 1},
+		{"SWAP B", &a::swap_b, 1},{"SWAP C", &a::swap_c, 1},{"SWAP D", &a::swap_d, 1},{"SWAP E", &a::swap_e, 1},{"SWAP H", &a::swap_h, 1},{"SWAP L", &a::swap_l, 1},{"SWAP (HL)", &a::swap_hl, 1},{"SWAP A", &a::swap_a, 1},{"SRL B", &a::srl_b , 1},{"SRL C", &a::srl_c, 1},{"SRL D", &a::srl_d, 1},{"SRL E", &a::srl_e, 1},{"SRL H", &a::srl_h, 1},{"SRL L", &a::srl_l, 1},{"SRL (HL)", &a::srl_hl, 1},{"SRL A", &a::srl_a, 1},
 		{"BIT 0,B", &a::bit_0_b, 1},{"BIT 0,C", &a::bit_0_c, 1},{"BIT 0,D", &a::bit_0_d, 1},{"BIT 0,E", &a::bit_0_e, 1},{"BIT 0,H", &a::bit_0_h, 1},{"BIT 0,L", &a::bit_0_l, 1},{"BIT 0,(HL)", &a::bit_0_hl, 1},{"BIT 0,A", &a::bit_0_a, 1},{"BIT 1,B", &a::bit_1_b, 1},{"BIT 1,C", &a::bit_1_c, 1},{"BIT 1,D", &a::bit_1_d, 1},{"BIT 1,E", &a::bit_1_e, 1},{"BIT 1,H", &a::bit_1_h, 1},{"BIT 1,L", &a::bit_1_l, 1},{"BIT 1,(HL)", &a::bit_1_hl, 1},{"BIT 1,A", &a::bit_1_a, 1},
 		{"BIT 2,B", &a::bit_2_b, 1},{"BIT 2,C", &a::bit_2_c, 1},{"BIT 2,D", &a::bit_2_d, 1},{"BIT 2,E", &a::bit_2_e, 1},{"BIT 2,H", &a::bit_2_h, 1},{"BIT 2,L", &a::bit_2_l, 1},{"BIT 2,(HL)", &a::bit_2_hl, 1},{"BIT 2,A", &a::bit_2_a, 1},{"BIT 3,B", &a::bit_3_b, 1},{"BIT 3,C", &a::bit_3_c, 1},{"BIT 3,D", &a::bit_3_d, 1},{"BIT 3,E", &a::bit_3_e, 1},{"BIT 3,H", &a::bit_3_h, 1},{"BIT 3,L", &a::bit_3_l, 1},{"BIT 3,(HL)", &a::bit_3_hl, 1},{"BIT 3,A", &a::bit_3_a, 1},
 		{"BIT 4,B", &a::bit_4_b, 1},{"BIT 4,C", &a::bit_4_c, 1},{"BIT 4,D", &a::bit_4_d, 1},{"BIT 4,E", &a::bit_4_e, 1},{"BIT 4,H", &a::bit_4_h, 1},{"BIT 4,L", &a::bit_4_l, 1},{"BIT 4,(HL)", &a::bit_4_hl, 1},{"BIT 4,A", &a::bit_4_a, 1},{"BIT 5,B", &a::bit_5_b, 1},{"BIT 5,C", &a::bit_5_c, 1},{"BIT 5,D", &a::bit_5_d, 1},{"BIT 5,E", &a::bit_5_e, 1},{"BIT 5,H", &a::bit_5_h, 1},{"BIT 5,L", &a::bit_5_l, 1},{"BIT 5,(HL)", &a::bit_5_hl, 1},{"BIT 5,A", &a::bit_5_a, 1},
@@ -292,6 +292,16 @@ void CPU::ld_b_n()
 	regs.b = gb->mmu.readByte(pc++);
 }
 
+// 0x07
+void CPU::rlca()
+{
+	uint8_t carry = (regs.a & 0x80) >> 7;
+	carry ? FLAGS_SET(FLAGS_CARRY) : FLAGS_CLEAR(FLAGS_CARRY);
+	regs.a <<= 1;
+	regs.a += carry;
+	FLAGS_CLEAR(FLAGS_ZERO | FLAGS_NEGATIVE | FLAGS_HALFCARRY);
+}
+
 // 0x08
 void CPU::ld_nn_sp()
 {
@@ -329,6 +339,16 @@ void CPU::ld_c_n()
 	regs.c = gb->mmu.readByte(pc++);
 }
 
+// 0x0F
+void CPU::rrca()
+{
+	uint8_t carry = (regs.a & 0x01);
+	carry ? FLAGS_SET(FLAGS_CARRY) : FLAGS_CLEAR(FLAGS_CARRY);
+	regs.a >>= 1;
+	regs.a += (carry << 7);
+	FLAGS_CLEAR(FLAGS_ZERO | FLAGS_NEGATIVE | FLAGS_HALFCARRY);
+}
+
 // 0x11
 void CPU::ld_de_nn()
 {
@@ -354,10 +374,26 @@ void CPU::inc_d()
 	regs.d = inc(regs.d);
 }
 
+// 0x15
+void CPU::dec_d()
+{
+	regs.d = dec(regs.d);
+}
+
 // 0x16
 void CPU::ld_d_n()
 {
 	regs.d = gb->mmu.readByte(pc++);
+}
+
+// 0x17
+void CPU::rla()
+{
+	uint8_t carry = FLAGS_ISCARRY ? 1 : 0;
+	regs.a & 0x80 ? FLAGS_SET(FLAGS_CARRY) : FLAGS_CLEAR(FLAGS_CARRY);
+	regs.a <<= 1;
+	regs.a += carry;
+	FLAGS_CLEAR(FLAGS_ZERO | FLAGS_NEGATIVE | FLAGS_HALFCARRY);
 }
 
 // 0x18
@@ -476,7 +512,7 @@ void CPU::daa()
 		if (FLAGS_ISCARRY || temp > 0x9F) temp += 0x60;
 	}
 
-	regs.a = temp;
+	regs.a = static_cast<uint8_t>(temp);
 	FLAGS_CLEAR(FLAGS_HALFCARRY);
 	(regs.a == 0) ? FLAGS_SET(FLAGS_ZERO) : FLAGS_CLEAR(FLAGS_ZERO);
 	if (temp >= 0x100) FLAGS_SET(FLAGS_CARRY);
@@ -531,6 +567,13 @@ void CPU::ld_l_n()
 	regs.l = gb->mmu.readByte(pc++);
 }
 
+// 0x2F
+void CPU::cpl()
+{
+	regs.a = ~regs.a;
+	FLAGS_SET(FLAGS_NEGATIVE | FLAGS_HALFCARRY);
+}
+
 // 0x30
 void CPU::jr_nc()
 {
@@ -581,6 +624,13 @@ void CPU::ld_hl_n()
 	gb->mmu.writeByte(regs.hl, gb->mmu.readByte(pc++));
 }
 
+// 0x37
+void CPU::scf()
+{
+	FLAGS_SET(FLAGS_CARRY);
+	FLAGS_CLEAR(FLAGS_NEGATIVE | FLAGS_HALFCARRY);
+}
+
 // 0x38
 void CPU::jr_c_n()
 {
@@ -622,6 +672,12 @@ void CPU::dec_a()
 void CPU::ld_a_n()
 {
 	regs.a = gb->mmu.readByte(pc++);
+}
+
+void CPU::ccf()
+{
+	FLAGS_ISCARRY ? FLAGS_CLEAR(FLAGS_CARRY) : FLAGS_SET(FLAGS_CARRY);
+	FLAGS_CLEAR(FLAGS_NEGATIVE | FLAGS_HALFCARRY);
 }
 
 // 0x40
@@ -1005,16 +1061,274 @@ void CPU::ld_a_a()
 	regs.a = regs.a;
 }
 
+// 0x80
+void CPU::add_b()
+{
+	add(regs.b);
+}
+
+// 0x81
+void CPU::add_c()
+{
+	add(regs.c);
+}
+
+// 0x82
+void CPU::add_d()
+{
+	add(regs.d);
+}
+
+// 0x83
+void CPU::add_e()
+{
+	add(regs.e);
+}
+
+// 0x84
+void CPU::add_h()
+{
+	add(regs.h);
+}
+
+// 0x85
+void CPU::add_l()
+{
+	add(regs.l);
+}
+
+// 0x86
+void CPU::add_hl()
+{
+	add(gb->mmu.readByte(regs.hl));
+}
+
+// 0x87
+void CPU::add_a()
+{
+	add(regs.a);
+}
+
+// 0x88
+void CPU::adc_b()
+{
+	adc(regs.b);
+}
+
+// 0x89
+void CPU::adc_c()
+{
+	adc(regs.c);
+}
+
+// 0x8A
+void CPU::adc_d()
+{
+	adc(regs.d);
+}
+
+// 0x8B
+void CPU::adc_e()
+{
+	adc(regs.e);
+}
+
+// 0x8C
+void CPU::adc_h()
+{
+	adc(regs.h);
+}
+
+// 0x8D
+void CPU::adc_l()
+{
+	adc(regs.l);
+}
+
+// 0x8E
+void CPU::adc_hl()
+{
+	adc(gb->mmu.readByte(pc));
+}
+
+// 0x8F
+void CPU::adc_a()
+{
+	adc(regs.a);
+}
+
+// 0x90
+void CPU::sub_b()
+{
+	sub(regs.b);
+}
+
+// 0x91
+void CPU::sub_c()
+{
+	sub(regs.c);
+}
+
+// 0x92
+void CPU::sub_d()
+{
+	sub(regs.d);
+}
+
+// 0x93
+void CPU::sub_e()
+{
+	sub(regs.e);
+}
+
+// 0x94
+void CPU::sub_h()
+{
+	sub(regs.h);
+}
+
+// 0x95
+void CPU::sub_l()
+{
+	sub(regs.l);
+}
+
+// 0x96
+void CPU::sub_hl()
+{
+	sub(gb->mmu.readByte(regs.hl));
+}
+
+// 0x97
+void CPU::sub_a()
+{
+	sub(regs.a);
+}
+
+// 0x98
+void CPU::sbc_b()
+{
+	sbc(regs.b);
+}
+
+// 0x99
+void CPU::sbc_c()
+{
+	sbc(regs.c);
+}
+
+// 0x9A
+void CPU::sbc_d()
+{
+	sbc(regs.d);
+}
+
+// 0x9B
+void CPU::sbc_e()
+{
+	sbc(regs.e);
+}
+
+// 0x9C
+void CPU::sbc_h()
+{
+	sbc(regs.h);
+}
+
+// 0x9D
+void CPU::sbc_l()
+{
+	sbc(regs.l);
+}
+
+// 0x9E
+void CPU::sbc_hl()
+{
+	sbc(gb->mmu.readByte(pc));
+}
+
+// 0x9F
+void CPU::sbc_a()
+{
+	sbc(regs.a);
+}
+
+// 0xA0
+void CPU::and_b()
+{
+	AND(regs.b);
+}
+
+// 0xA1
+void CPU::and_c()
+{
+	AND(regs.c);
+}
+
+// 0xA2
+void CPU::and_d()
+{
+	AND(regs.d);
+}
+
+// 0xA3
+void CPU::and_e()
+{
+	AND(regs.e);
+}
+
+// 0xA4
+void CPU::and_h()
+{
+	AND(regs.h);
+}
+
+// 0xA5
+void CPU::and_l()
+{
+	AND(regs.l);
+}
+
+// 0xA6
+void CPU::and_hl()
+{
+	AND(gb->mmu.readByte(regs.hl));
+}
+
+// 0xA7
+void CPU::and_a()
+{
+	AND(regs.a);
+}
+
+// 0xA8
+void CPU::xor_b()
+{
+	XOR(regs.b);
+}
+
 // 0xA9
 void CPU::xor_c()
 {
 	XOR(regs.c);
 }
 
+// 0xAA
+void CPU::xor_d()
+{
+	XOR(regs.d);
+}
+
 // 0xAB
 void CPU::xor_e()
 {
 	XOR(regs.e);
+}
+
+// 0xAC
+void CPU::xor_h()
+{
+	XOR(regs.h);
 }
 
 // 0xAD
@@ -1045,6 +1359,30 @@ void CPU::or_b()
 void CPU::or_c()
 {
 	OR(regs.c);
+}
+
+// 0xB2
+void CPU::or_d()
+{
+	OR(regs.d);
+}
+
+// 0xB3
+void CPU::or_e()
+{
+	OR(regs.e);
+}
+
+// 0xB4
+void CPU::or_h()
+{
+	OR(regs.h);
+}
+
+// 0xB5
+void CPU::or_l()
+{
+	OR(regs.l);
 }
 
 // 0xB6
@@ -1082,6 +1420,34 @@ void CPU::cp_e()
 {
 	cp(regs.e);
 }
+
+// 0xBC
+void CPU::cp_h()
+{
+	cp(regs.h);
+}
+
+
+// 0xBD
+void CPU::cp_l()
+{
+	cp(regs.l);
+}
+
+
+// 0xBE
+void CPU::cp_hl ()
+{
+	cp(gb->mmu.readByte(regs.hl));
+}
+
+
+// 0xBF
+void CPU::cp_a()
+{
+	cp(regs.a);
+}
+
 
 // 0xC0
 void CPU::ret_nz()
@@ -1489,6 +1855,46 @@ void CPU::rst_38()
 	jp(0x38);
 }
 
+uint8_t CPU::rlc(uint8_t value)
+{
+	int carry = (value & 0x80) >> 7;
+	value & 0x80 ? FLAGS_SET(FLAGS_CARRY) : FLAGS_CLEAR(FLAGS_CARRY);
+	value <<= 1;
+	value += carry;
+	value == 0 ? FLAGS_SET(FLAGS_ZERO) : FLAGS_CLEAR(FLAGS_ZERO);
+	FLAGS_CLEAR(FLAGS_NEGATIVE | FLAGS_HALFCARRY);
+	return value;
+}
+
+uint8_t CPU::rrc(uint8_t value)
+{
+	int carry = (value & 0x01);
+	value >>= 1;
+	if (carry)
+	{
+		FLAGS_SET(FLAGS_CARRY);
+		value |= 0x80;
+	}
+	else
+	{
+		FLAGS_CLEAR(FLAGS_CARRY);
+	}
+
+	value == 0 ? FLAGS_SET(FLAGS_ZERO) : FLAGS_CLEAR(FLAGS_ZERO);
+	FLAGS_CLEAR(FLAGS_NEGATIVE | FLAGS_HALFCARRY);
+	return value;
+}
+
+uint8_t CPU::rl(uint8_t value)
+{
+	int old_carry = FLAGS_ISCARRY ? 1 : 0;
+	value & 0x80 ? FLAGS_SET(FLAGS_CARRY) : FLAGS_CLEAR(FLAGS_CARRY);
+	value <<= 1;
+	value += old_carry;
+	value == 0 ? FLAGS_SET(FLAGS_ZERO) : FLAGS_CLEAR(FLAGS_ZERO);
+	FLAGS_CLEAR(FLAGS_NEGATIVE | FLAGS_HALFCARRY);
+	return value;
+}
 
 uint8_t CPU::rr(uint8_t value)
 {
@@ -1496,6 +1902,24 @@ uint8_t CPU::rr(uint8_t value)
 	value & 0x01 ? FLAGS_SET(FLAGS_CARRY) : FLAGS_CLEAR(FLAGS_CARRY);
 	value >>= 1;
 	value += old_carry;
+	value == 0 ? FLAGS_SET(FLAGS_ZERO) : FLAGS_CLEAR(FLAGS_ZERO);
+	FLAGS_CLEAR(FLAGS_NEGATIVE | FLAGS_HALFCARRY);
+	return value;
+}
+
+uint8_t CPU::sla(uint8_t value)
+{
+	value & 0x80 ? FLAGS_SET(FLAGS_CARRY) : FLAGS_CLEAR(FLAGS_CARRY);
+	value <<= 1;
+	value == 0 ? FLAGS_SET(FLAGS_ZERO) : FLAGS_CLEAR(FLAGS_ZERO);
+	FLAGS_CLEAR(FLAGS_NEGATIVE | FLAGS_HALFCARRY);
+	return value;
+}
+
+uint8_t CPU::sra(uint8_t value)
+{
+	value & 0x01 ? FLAGS_SET(FLAGS_CARRY) : FLAGS_CLEAR(FLAGS_CARRY);
+	value = (value & 0x80) | value >> 1;
 	value == 0 ? FLAGS_SET(FLAGS_ZERO) : FLAGS_CLEAR(FLAGS_ZERO);
 	FLAGS_CLEAR(FLAGS_NEGATIVE | FLAGS_HALFCARRY);
 	return value;
@@ -1509,7 +1933,6 @@ uint8_t CPU::swap(uint8_t value)
 
 	return value;
 }
-
 
 uint8_t CPU::srl(uint8_t value)
 {
@@ -1537,6 +1960,156 @@ uint8_t CPU::set(uint8_t value, uint8_t bit)
 	return (value | (1 << bit));
 }
 
+// 0x00
+void CPU::rlc_b()
+{
+	regs.b = rlc(regs.b);
+}
+
+// 0x01
+void CPU::rlc_c()
+{
+	regs.c = rlc(regs.c);
+}
+
+// 0x02
+void CPU::rlc_d()
+{
+	regs.d = rlc(regs.d);
+}
+
+// 0x03
+void CPU::rlc_e()
+{
+	regs.e = rlc(regs.e);
+}
+
+// 0x04
+void CPU::rlc_h()
+{
+	regs.h = rlc(regs.h);
+}
+
+// 0x05
+void CPU::rlc_l()
+{
+	regs.l = rlc(regs.l);
+}
+
+// 0x06
+void CPU::rlc_hl()
+{
+	gb->mmu.writeByte(regs.hl, (gb->mmu.readByte(regs.hl)));
+}
+
+// 0x07
+void CPU::rlc_a()
+{
+	regs.a = rlc(regs.a);
+}
+
+// 0x08
+void CPU::rrc_b()
+{
+	regs.b = rrc(regs.b);
+}
+
+// 0x09
+void CPU::rrc_c()
+{
+	regs.c = rrc(regs.c);
+}
+
+// 0x0A
+void CPU::rrc_d()
+{
+	regs.d = rrc(regs.d);
+}
+
+// 0x0B
+void CPU::rrc_e()
+{
+	regs.e = rrc(regs.e);
+}
+
+// 0x0C
+void CPU::rrc_h()
+{
+	regs.h = rrc(regs.h);
+}
+
+// 0x0D
+void CPU::rrc_l()
+{
+	regs.l = rrc(regs.l);
+}
+
+// 0x0E
+void CPU::rrc_hl()
+{
+	gb->mmu.writeByte(regs.hl, (gb->mmu.readByte(regs.hl)));
+}
+
+// 0x0F
+void CPU::rrc_a()
+{
+	regs.a = rrc(regs.a);
+}
+
+// 0x10
+void CPU::rl_b()
+{
+	regs.b = rl(regs.b);
+}
+
+// 0x11
+void CPU::rl_c()
+{
+	regs.c = rl(regs.c);
+}
+
+// 0x12
+void CPU::rl_d()
+{
+	regs.d = rl(regs.d);
+}
+
+// 0x13
+void CPU::rl_e()
+{
+	regs.e = rl(regs.e);
+}
+
+// 0x14
+void CPU::rl_h()
+{
+	regs.h = rl(regs.h);
+}
+
+// 0x15
+void CPU::rl_l()
+{
+	regs.l = rl(regs.l);
+}
+
+// 0x16
+void CPU::rl_hl()
+{
+	gb->mmu.writeByte(regs.hl, rl(gb->mmu.readByte(regs.hl)));
+}
+
+// 0x17
+void CPU::rl_a()
+{
+	regs.a = rl(regs.a);
+}
+
+// 0x18
+void CPU::rr_b()
+{
+	regs.b = rr(regs.b);
+}
+
 // 0x19
 void CPU::rr_c()
 {
@@ -1555,6 +2128,168 @@ void CPU::rr_e()
 	regs.e = rr(regs.e);
 }
 
+// 0x1C
+void CPU::rr_h()
+{
+	regs.h = rr(regs.h);
+}
+
+// 0x1D
+void CPU::rr_l()
+{
+	regs.l = rr(regs.l);
+}
+
+// 0x1E
+void CPU::rr_hl()
+{
+	gb->mmu.writeByte(regs.hl, rr(gb->mmu.readByte(regs.hl)));
+}
+
+// 0x1F
+void CPU::rr_a()
+{
+	regs.a = rr(regs.a);
+}
+
+// 0x20
+void CPU::sla_b()
+{
+	regs.b = sla(regs.b);
+}
+
+// 0x21
+void CPU::sla_c()
+{
+	regs.c = sla(regs.c);
+}
+
+// 0x22
+void CPU::sla_d()
+{
+	regs.d = sla(regs.d);
+}
+
+// 0x23
+void CPU::sla_e()
+{
+	regs.e = sla(regs.e);
+}
+
+// 0x24
+void CPU::sla_h()
+{
+	regs.h = sla(regs.h);
+}
+
+// 0x25
+void CPU::sla_l()
+{
+	regs.l = sla(regs.l);
+}
+
+// 0x26
+void CPU::sla_hl()
+{
+	gb->mmu.writeByte(regs.hl, gb->mmu.readByte(regs.hl));
+}
+
+// 0x27
+void CPU::sla_a()
+{
+	regs.a = sla(regs.a);
+}
+
+// 0x28
+void CPU::sra_b()
+{
+	regs.b = sra(regs.b);
+}
+
+// 0x29
+void CPU::sra_c()
+{
+	regs.c = sra(regs.c);
+}
+
+// 0x2A
+void CPU::sra_d()
+{
+	regs.d = sra(regs.d);
+}
+
+// 0x2B
+void CPU::sra_e()
+{
+	regs.e = sra(regs.e);
+}
+
+// 0x2C
+void CPU::sra_h()
+{
+	regs.h = sra(regs.h);
+}
+
+// 0x2D
+void CPU::sra_l()
+{
+	regs.l = sra(regs.l);
+}
+
+// 0x2E
+void CPU::sra_hl()
+{
+	gb->mmu.writeByte(regs.hl, sra(gb->mmu.readByte(regs.hl)));
+}
+
+// 0x2F
+void CPU::sra_a()
+{
+	regs.a = sra(regs.a);
+}
+
+// 0x30
+void CPU::swap_b()
+{
+	regs.b = swap(regs.b);
+}
+
+// 0x31
+void CPU::swap_c()
+{
+	regs.c = swap(regs.c);
+}
+
+// 0x32
+void CPU::swap_d()
+{
+	regs.d = swap(regs.d);
+}
+
+// 0x33
+void CPU::swap_e()
+{
+	regs.e = swap(regs.e);
+}
+
+// 0x34
+void CPU::swap_h()
+{
+	regs.h = swap(regs.h);
+}
+
+// 0x35
+void CPU::swap_l()
+{
+	regs.l = swap(regs.l);
+}
+
+// 0x36
+void CPU::swap_hl()
+{
+	gb->mmu.writeByte(regs.hl, swap(gb->mmu.readByte(regs.hl)));
+}
+
 // 0x37
 void CPU::swap_a()
 {
@@ -1567,7 +2302,47 @@ void CPU::srl_b()
 	regs.b = srl(regs.b);
 }
 
+// 0x39
+void CPU::srl_c()
+{
+	regs.c = srl(regs.c);
+}
 
+// 0x3A
+void CPU::srl_d()
+{
+	regs.d = srl(regs.d);
+}
+
+// 0x3B
+void CPU::srl_e()
+{
+	regs.e = srl(regs.e);
+}
+
+// 0x3C
+void CPU::srl_h()
+{
+	regs.h = srl(regs.h);
+}
+
+// 0x3D
+void CPU::srl_l()
+{
+	regs.l = srl(regs.l);
+}
+
+// 0x3E
+void CPU::srl_hl()
+{
+	gb->mmu.writeByte(regs.hl, srl(gb->mmu.readByte(regs.hl)));
+}
+
+// 0x3F
+void CPU::srl_a()
+{
+	regs.a = srl(regs.a);
+}
 
 // 0x40
 void CPU::bit_0_b()
