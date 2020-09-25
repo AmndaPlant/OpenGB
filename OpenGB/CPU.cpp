@@ -21,6 +21,8 @@ CPU::CPU()
 	timaCounter = 0;
 	currentSpeed = 1024;
 
+	frame_complete = false;
+
 	// Opcode lookup table
 	using a = CPU;
 	lookup = 
@@ -4167,14 +4169,11 @@ void CPU::cpu_step()
 	{
 		cycles = 1;
 	}
-}
 
-void CPU::cpu_frame()
-{
-	int total_cycles = 0; // Hold all cycles for this frame
-	while (total_cycles < 17476) // Run for amount of clock cycles in one frame at 59.7 Hz
+	total_cycles += cycles;
+	if (total_cycles >= 17556)
 	{
-		cpu_step();
-		total_cycles += cycles;
+		total_cycles = 0;
+		frame_complete = true;
 	}
 }

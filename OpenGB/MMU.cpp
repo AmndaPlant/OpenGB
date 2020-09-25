@@ -111,6 +111,10 @@ void MMU::writeByte(uint16_t addr, uint8_t data, bool direct)
 			default: break;
 		}
 	}
+	else if (addr == 0xFF44 && !direct) // LY
+	{
+		io[0x44] = 0x00;
+	}
 	else if (addr >= 0xFF00 && addr <= 0xFF7F)
 	{
 		io[addr - 0xFF00] = data;

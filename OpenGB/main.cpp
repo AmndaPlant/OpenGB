@@ -1,4 +1,5 @@
 #include <iostream>
+#include <chrono>
 #include <SDL.h>
 
 #include "GameBoy.h"
@@ -31,10 +32,12 @@ int main(int argc, char **argv)
 
 	SDL_Window *window;
 	SDL_Renderer *renderer;
-	SDL_CreateWindowAndRenderer(160, 144, SDL_WINDOW_SHOWN, &window, &renderer);
+	SDL_SetHint(SDL_HINT_RENDER_VSYNC, "1");
+    SDL_CreateWindowAndRenderer(320, 288, SDL_WINDOW_SHOWN, &window, &renderer);
 	SDL_SetWindowTitle(window, "OpenGB");
+    SDL_SetWindowResizable(window, SDL_TRUE);
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
-	SDL_SetWindowResizable(window, SDL_TRUE);
+	SDL_RenderSetLogicalSize(renderer, 160, 144);
 
 	if (!window)
 	{
@@ -43,13 +46,11 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	SDL_Texture* screen = SDL_CreateTexture(
-		renderer,
-		SDL_PIXELFORMAT_ARGB8888,
-		SDL_TEXTUREACCESS_STREAMING,
-		256, 240);
+	gb.ppu.setRenderer(renderer);
 
 	bool running = true;
+
+	float timeRemaining = 0.0f;
 
 	while (running)
 	{
@@ -63,13 +64,11 @@ int main(int argc, char **argv)
 					break;
 			}
 		}
-		gb.cpu.cpu_frame();
 
-		SDL_RenderCopy(renderer, screen, NULL, NULL);
-		SDL_RenderPresent(renderer);
+		do { gb.clock(); } while (!gb.cpu.frame_complete);
+		gb.cpu.frame_complete = false;
 	}
 	SDL_DestroyRenderer(renderer);
-	SDL_DestroyTexture(screen);
 	SDL_DestroyWindow(window);
 
 	SDL_Quit();

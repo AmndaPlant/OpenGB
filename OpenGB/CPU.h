@@ -102,6 +102,7 @@ class CPU
 		uint8_t opcode;
 
 		int cycles;
+		int total_cycles;
 		uint16_t timerDiv;
 		uint8_t timaCounter;
 		uint8_t currentSpeed;
@@ -691,9 +692,12 @@ class CPU
 
 		void dump_regs();
 		void cpu_step();
-		void cpu_frame();
 
 		void setClockSpeed(uint8_t newSpeed) { currentSpeed = newSpeed; }
 		void resetTimerDiv() { timerDiv = 0; }
+
+		bool frame_complete;
+
+		uint8_t get_cycles() { return cycles; }
 };
 

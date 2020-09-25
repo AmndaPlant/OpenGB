@@ -4,6 +4,7 @@ GameBoy::GameBoy()
 {
 	mmu.connectGB(this);
 	cpu.connectGB(this);
+	ppu.connectGB(this);
 }
 
 bool GameBoy::readROM(const char* filename)
@@ -101,4 +102,10 @@ void GameBoy::unloadROM()
 {
 	uint8_t zeros[0x8000] = { 0 };
 	mmu.set_rom(zeros);
+}
+
+void GameBoy::clock()
+{
+	cpu.cpu_step();
+	ppu.clock();
 }

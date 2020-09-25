@@ -7,6 +7,7 @@
 #include "MMU.h"
 #include "Cartridge.h"
 #include "CPU.h"
+#include "PPU.h"
 
 class GameBoy
 {
@@ -15,8 +16,11 @@ class GameBoy
 
 		MMU mmu;
 		CPU cpu;
+		PPU ppu;
 
 		bool readROM(const char* filename);
 		void unloadROM();
+
+		void clock();
 };
 
