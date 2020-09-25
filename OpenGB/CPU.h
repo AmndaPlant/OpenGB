@@ -691,6 +691,7 @@ class CPU
 
 		void dump_regs();
 		void cpu_step();
+		void cpu_frame();
 
 		void setClockSpeed(uint8_t newSpeed) { currentSpeed = newSpeed; }
 		void resetTimerDiv() { timerDiv = 0; }

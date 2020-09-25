@@ -4168,3 +4168,13 @@ void CPU::cpu_step()
 		cycles = 1;
 	}
 }
+
+void CPU::cpu_frame()
+{
+	int total_cycles = 0; // Hold all cycles for this frame
+	while (total_cycles < 17476) // Run for amount of clock cycles in one frame at 59.7 Hz
+	{
+		cpu_step();
+		total_cycles += cycles;
+	}
+}

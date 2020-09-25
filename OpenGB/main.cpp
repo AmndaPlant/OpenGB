@@ -63,7 +63,7 @@ int main(int argc, char **argv)
 					break;
 			}
 		}
-		gb.cpu.cpu_step();
+		gb.cpu.cpu_frame();
 
 		SDL_RenderCopy(renderer, screen, NULL, NULL);
 		SDL_RenderPresent(renderer);
