@@ -266,3 +266,5 @@ OpenGB/cpu_instrs
 
 # Output file
 OpenGB/output.txt
+
+*.dll
