@@ -2,8 +2,8 @@
 
 GameBoy::GameBoy()
 {
+	mmu.connectGB(this);
 	cpu.connectGB(this);
-	mmu.writeByte(0xFF44, 0x90);
 }
 
 bool GameBoy::readROM(const char* filename)

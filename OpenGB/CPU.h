@@ -23,6 +23,12 @@ class GameBoy;
 #define FLAGS_SET(x) (regs.f |= (x))
 #define FLAGS_CLEAR(x) (regs.f &= ~(x))
 
+#define VBLANK 0x0040
+#define LCD_STATUS 0x0048
+#define TIMER 0x0050
+#define SERIAL 0x0058
+#define JOYPAD 0x0060
+
 class CPU
 {
 	private:
@@ -95,6 +101,11 @@ class CPU
 		uint16_t pc;
 		uint8_t opcode;
 
+		int cycles;
+		uint16_t timerDiv;
+		uint8_t timaCounter;
+		uint8_t currentSpeed;
+
 		bool HALT;
 		bool interrupts_enabled;
 
@@ -102,9 +113,11 @@ class CPU
 
 		void cb_instr();
 
+		void handle_interrupts();
+		void handle_timer();
+
 		uint8_t inc(uint8_t value);
 		uint8_t dec(uint8_t value);
-
 		void add(uint8_t value);
 		void adc(uint8_t value);
 		void sub(uint8_t value);
@@ -113,13 +126,10 @@ class CPU
 		void XOR(uint8_t value);
 		void OR(uint8_t value);
 		void cp(uint8_t value);
-
 		void add16(uint16_t value);
-
 		void jp(uint16_t addr);
 		void jr();
 		void call(uint16_t addr);
-		
 		void push(uint16_t word);
 		uint16_t pop();
 
@@ -251,6 +261,7 @@ class CPU
 		void ld_hl_h();
 		void ld_hl_l();
 		void ld_hl_a();
+		void halt();
 		void ld_a_b();
 		void ld_a_c();
 		void ld_a_d();
@@ -381,6 +392,7 @@ class CPU
 		void ld_hl_sp_n();
 		void ld_sp_hl();
 		void ld_a_nn();
+		void ei();
 		void cp_n();
 		void rst_38();
 
@@ -680,6 +692,7 @@ class CPU
 		void dump_regs();
 		void cpu_step();
 
-		bool is_halted() { return HALT; };
+		void setClockSpeed(uint8_t newSpeed) { currentSpeed = newSpeed; }
+		void resetTimerDiv() { timerDiv = 0; }
 };
 

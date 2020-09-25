@@ -14,7 +14,7 @@ int main(int argc, char **argv)
 	if (gb.readROM(argv[1]))
 	{
 		std::cout << "Succesfully loaded ROM!" << std::endl;
-		while (!gb.cpu.is_halted())
+		while (1)
 		{
 			gb.cpu.cpu_step();
 		}
