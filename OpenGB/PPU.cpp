@@ -40,7 +40,7 @@ void PPU::draw_background(uint8_t scanline)
 		if (is_unsigned)
 			tile_location += (tile_no * 16);
 		else
-			tile_location += (tile_no * 128) * 16;
+			tile_location += (tile_no + 128) * 16;
 
 		uint8_t line = y_pos % 8;
 		line *= 2;
@@ -73,13 +73,6 @@ void PPU::draw(uint8_t scanline)
 		{
 			draw_background(scanline);
 		}
-		//// Render noise for now
-		//for (int x = 0; x < 160; ++x)
-		//{
-		//	uint8_t color = rand() % 4;
-
-		//	lcd[scanline * 160 + x] = color;
-		//}
 	}
 }
 
@@ -94,14 +87,14 @@ void PPU::check_lyc()
 
 void PPU::clock()
 {
-	cycles += (gb->cpu.get_cycles() * 4);
 	bool req_int = false; // Should we request an LCD interrupt
 	mode = gb->mmu.readByte(STAT) & 0x03;
-	uint8_t current_mode = mode;
+ 	uint8_t current_mode = mode;
 	uint8_t status = gb->mmu.readByte(STAT);
 
 	if (gb->mmu.readByte(LCDC) & 0x80)
 	{
+		cycles += (gb->cpu.get_cycles() * 4);
 		switch (mode)
 		{
 			case HBLANK:
@@ -112,6 +105,7 @@ void PPU::clock()
 					draw(scanline);
 					++scanline;
 					gb->mmu.writeByte(LY, scanline, true);
+					check_lyc();
 					if (scanline >= 144) // We're on the final scanline
 					{
 						mode = VBLANK;
@@ -141,6 +135,7 @@ void PPU::clock()
 					uint8_t scanline = gb->mmu.readByte(LY);
 					++scanline;
 					gb->mmu.writeByte(LY, scanline, true);
+					check_lyc();
 					if (scanline == 154) // End of frame
 					{
 						mode = OAM_READ;
@@ -182,12 +177,11 @@ void PPU::clock()
 		}
 		if (req_int && (mode != current_mode))
 			gb->mmu.writeByte(IF, gb->mmu.readByte(IF) | 0x02);
-		check_lyc();
-	}
 
+	}
 	else
 	{
-		gb->mmu.writeByte(STAT, gb->mmu.readByte(STAT) & 0xFC);
-		gb->mmu.writeByte(LY, 0x00);
+		lcd = { 0 };
+		cycles = 0;
 	}
 }

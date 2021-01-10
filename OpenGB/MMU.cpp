@@ -112,6 +112,17 @@ void MMU::writeByte(uint16_t addr, uint8_t data, bool direct)
 			default: break;
 		}
 	}
+	else if (addr == 0xFF40 && (data & 0x80) == 0)
+	{
+		io[0x40] = data;
+		writeByte(0xFF41, readByte(0xFF41) & 0xFC);
+		io[0x44] = 0;
+	}
+	else if (addr == 0xFF40 && (data & 0x80) == 0x80 && (io[0x40] & 0x80) == 0)
+	{
+		io[0x40] = data;
+		io[0x41] = (io[0x41] & 0xFC) | 0x02;
+	}
 	else if (addr == 0xFF44 && !direct) // LY
 	{
 		io[0x44] = 0x00;
@@ -135,8 +146,4 @@ void MMU::writeShort(uint16_t addr, uint16_t data, bool direct)
 void MMU::set_rom(uint8_t *rom_data)
 {
 	std::memcpy(cart, rom_data, sizeof(cart));
-	for (int i = 0; i < 0x30; ++i)
-	{
-		cart[0x0104 + i] = logo[i];
-	}
 }

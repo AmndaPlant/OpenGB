@@ -173,19 +173,20 @@ void CPU::handle_timer()
 	if ((timerAttrs >> 2) & 0x1)
 	{
 		timaCounter += cycles * 4;
-		while (timaCounter >= currentSpeed)
-		{
-			timaCounter -= currentSpeed;
+		int freq = 4096;
+		if ((timerAttrs & 3) == 1) freq = 262144;
+		else if ((timerAttrs & 3) == 2) freq = 65536;
+		else if ((timerAttrs & 3) == 3) freq = 16384;
 
-			if (gb->mmu.readByte(0xFF05) == 0xFF)
+		while (timaCounter >= (4194304 / freq))
+		{
+			gb->mmu.writeByte(0xFF05, gb->mmu.readByte(0xFF05) + 1);
+			if (gb->mmu.readByte(0xFF05) == 0)
 			{
+				gb->mmu.writeByte(IF, gb->mmu.readByte(IF) | 4);
 				gb->mmu.writeByte(0xFF05, gb->mmu.readByte(0xFF06));
-				gb->mmu.writeByte(0xFF0F, (gb->mmu.readByte(0xFF0F) | 0x04)); // Trigger interrupt
 			}
-			else
-			{
-				gb->mmu.writeByte(0xFF05, (gb->mmu.readByte(0xFF05) + 1));
-			}
+			timaCounter -= (4194304 / freq);
 		}
 	}
 
