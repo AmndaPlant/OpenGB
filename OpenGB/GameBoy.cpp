@@ -5,6 +5,11 @@ GameBoy::GameBoy()
 	mmu.connectGB(this);
 	cpu.connectGB(this);
 	ppu.connectGB(this);
+
+	mmu.writeByte(0xFF40, 0x91); // LCDC
+	mmu.writeByte(0xFF41, 0x81); // STAT
+	mmu.writeByte(0xFF44, 0x8F, true); // LY
+	mmu.writeByte(0xFF47, 0xFC); // BGP
 }
 
 bool GameBoy::readROM(const char* filename)
@@ -26,12 +31,12 @@ bool GameBoy::readROM(const char* filename)
 	std::ifstream::pos_type position = stream.tellg();
 	size_t filesize = static_cast<size_t>(position);
 
-	if (filesize < 0x180)
+	/*if (filesize < 0x180)
 	{
 		std::cerr << "File too small" << std::endl;
 		stream.close();
 		return false;
-	}
+	}*/
 
 	unsigned char* file_contents = new unsigned char[filesize];
 
@@ -39,56 +44,56 @@ bool GameBoy::readROM(const char* filename)
 	stream.read((char*) file_contents, position);
 	stream.close();
 
-	for (int i = ROM_OFFSET_NAME; i < ROM_OFFSET_NAME + 16; ++i)
-	{
-		name += file_contents[i];
-	}
+	//for (int i = ROM_OFFSET_NAME; i < ROM_OFFSET_NAME + 16; ++i)
+	//{
+	//	name += file_contents[i];
+	//}
 
-	std::cout << "Internal Title: " << name << std::endl;
+	//std::cout << "Internal Title: " << name << std::endl;
 
-	type = static_cast<rom_type>(file_contents[ROM_OFFSET_TYPE]);
+	//type = static_cast<rom_type>(file_contents[ROM_OFFSET_TYPE]);
 
-	auto it = rom_type_names.find(type);
+	//auto it = rom_type_names.find(type);
 
-	if (it == rom_type_names.end())
-	{
-		std::cerr << "Invalid ROM type" << std::endl;
-		return false;
-	}
+	//if (it == rom_type_names.end())
+	//{
+	//	std::cerr << "Invalid ROM type" << std::endl;
+	//	return false;
+	//}
 
-	std::cout << "ROM Type: " << it->second << std::endl;
+	//std::cout << "ROM Type: " << it->second << std::endl;
 
-	/*if (type != ROM_PLAIN)
-	{
-		std::cerr << "Only 32k games with no mappers are supported!" << std::endl;
-		return false;
-	}*/
+	///*if (type != ROM_PLAIN)
+	//{
+	//	std::cerr << "Only 32k games with no mappers are supported!" << std::endl;
+	//	return false;
+	//}*/
 
-	rom_size = file_contents[ROM_OFFSET_ROM_SIZE];
+	//rom_size = file_contents[ROM_OFFSET_ROM_SIZE];
 
-	if ((rom_size & 0xF0) == 0x50) rom_size = (int)pow(2.0, (double)(((0x52) & 0xF) + 1)) + 64;
-	else rom_size = (int)pow(2.0, (double)(rom_size + 1));
+	//if ((rom_size & 0xF0) == 0x50) rom_size = (int)pow(2.0, (double)(((0x52) & 0xF) + 1)) + 64;
+	//else rom_size = (int)pow(2.0, (double)(rom_size + 1));
 
-	std::cout << "ROM Size: " << rom_size * 16 << "K" << std::endl;
+	//std::cout << "ROM Size: " << rom_size * 16 << "K" << std::endl;
 
-	if (rom_size * 16 != 32)
-	{
-		std::cerr << "Only 32k games with no mappers are supported!" << std::endl;
-		return false;
-	}
+	//if (rom_size * 16 != 32)
+	//{
+	//	std::cerr << "Only 32k games with no mappers are supported!" << std::endl;
+	//	return false;
+	//}
 
-	if (filesize != rom_size * 16 * 1024)
-	{
-		std::cerr << "Filesize does not equal ROM size" << std::endl;
-		return false;
-	}
+	//if (filesize != rom_size * 16 * 1024)
+	//{
+	//	std::cerr << "Filesize does not equal ROM size" << std::endl;
+	//	return false;
+	//}
 
-	ram_size = file_contents[ROM_OFFSET_RAM_SIZE];
-	ram_size = (int)pow(4.0, (double)(ram_size)) / 2;
+	//ram_size = file_contents[ROM_OFFSET_RAM_SIZE];
+	//ram_size = (int)pow(4.0, (double)(ram_size)) / 2;
 
-	std::cout << "RAM Size: " << ram_size << "K" << std::endl;
+	//std::cout << "RAM Size: " << ram_size << "K" << std::endl;
 
-	ram_size = ceil(ram_size / 8.f);
+	//ram_size = ceil(ram_size / 8.f);
 
 	for (int i = 0; i < filesize; ++i)
 	{

@@ -1,114 +1,116 @@
 #include "PPU.h"
 #include "GameBoy.h"
 
+void PPU::draw(uint8_t scanline)
+{
+	// Render noise for now
+	for (int x = 0; x < 160; ++x)
+	{
+		uint8_t color = rand() % 4;
+
+		lcd[scanline * 160 + x] = color;
+	}
+}
+
+void PPU::check_lyc()
+{
+	bool equal = gb->mmu.readByte(LY) == gb->mmu.readByte(LYC);
+	uint8_t status = gb->mmu.readByte(STAT) & 0xFB;
+	if (equal) status |= 0x04;
+	gb->mmu.writeByte(STAT, status);
+	if (gb->mmu.readByte(STAT) & 0x40) gb->mmu.writeByte(IF, gb->mmu.readByte(IF) | 0x02);
+}
+
 void PPU::clock()
 {
-	read_lcd_control();
-
-	if (!lcd_display_enable)
-	{
-		// LCD is off
-		return;
-	}
-
 	cycles += (gb->cpu.get_cycles() * 4);
+	bool req_int = false; // Should we request an LCD interrupt
+	mode = gb->mmu.readByte(STAT) & 0x03;
+	uint8_t current_mode = mode;
+	uint8_t status = gb->mmu.readByte(STAT);
 
-	handle_ppu_modes();
-}
-
-void PPU::read_lcd_control()
-{
-	uint8_t lcd_control = gb->mmu.readByte(0xFF40);
-	bg_display_enable = lcd_control & 0x01;
-	sprite_display_enable = lcd_control & 0x02;
-	sprite_size = lcd_control & 0x04;
-	bg_tile_map_region = lcd_control & 0x08;
-	bg_and_window_tile_map_region = lcd_control & 0x10;
-	window_display_enable = lcd_control & 0x20;
-	window_tile_map_region = lcd_control & 0x40;
-	lcd_display_enable = lcd_control & 0x80;
-}
-
-void PPU::render_scanline()
-{
-	read_lcd_control();
-
-	scanline = gb->mmu.readByte(0xFF44);
-}
-
-void PPU::render_frame()
-{
-	// Just draw noise for now
-	for (int x = 0; x < 144; ++x)
+	if (gb->mmu.readByte(LCDC) & 0x80)
 	{
-		for (int y = 0; y < 160; ++y)
+		switch (mode)
 		{
-			uint8_t color = rand() % 255;
-			uint8_t r = color;
-			uint8_t g = color;
-			uint8_t b = color;
-			uint8_t a = 0xFF;
-
-			SDL_SetRenderDrawColor(renderer, r, g, b, a);
-			SDL_RenderDrawPoint(renderer, y, x);
+			case HBLANK:
+				if (cycles >= HBLANK_CYCLES)
+				{
+					cycles = 0;
+					uint8_t scanline = gb->mmu.readByte(LY);
+					draw(scanline);
+					++scanline;
+					gb->mmu.writeByte(LY, scanline, true);
+					if (scanline == 144) // We're on the final scanline
+					{
+						mode = VBLANK;
+						// Set STAT register 
+						status &= 0xFC;
+						status |= 0x01;
+						gb->mmu.writeByte(STAT, status);
+						// Fire V-Blank interrupt
+						gb->mmu.writeByte(IF, (gb->mmu.readByte(IF) | 0x01));
+						// Check interrupt
+						req_int = gb->mmu.readByte(STAT) & 0x10;
+					}
+					else
+					{
+						mode = OAM_READ;
+						status &= 0xFC;
+						status |= 0x02;
+						gb->mmu.writeByte(STAT, status);
+						req_int = gb->mmu.readByte(STAT) & 0x20;
+					}
+				}
+				break;
+			case VBLANK:
+				if (cycles >= VBLANK_CYCLES)
+				{
+					cycles = 0;
+					uint8_t scanline = gb->mmu.readByte(LY);
+					++scanline;
+					gb->mmu.writeByte(LY, scanline, true);
+					if (scanline == 154) // End of frame
+					{
+						mode = OAM_READ;
+						gb->mmu.writeByte(LY, 0x00);
+						uint8_t status = gb->mmu.readByte(STAT);
+						status &= 0xFC;
+						status |= 0x02;
+						gb->mmu.writeByte(STAT, status);
+						req_int = gb->mmu.readByte(STAT) & 0x20;
+					}
+				}
+				break;
+			case OAM_READ:
+				if (cycles >= OAM_READ_CYCLES)
+				{
+					cycles = 0;
+					mode = VRAM_READ;
+					uint8_t status = gb->mmu.readByte(STAT);
+					status &= 0xFC;
+					status |= 0x03;
+					gb->mmu.writeByte(STAT, status);
+				}
+				break;
+			case VRAM_READ: // VRAM
+				if (cycles >= VRAM_READ_CYCLES)
+				{
+					cycles = 0;
+					mode = HBLANK;
+					req_int = gb->mmu.readByte(STAT) & 0x08;
+					uint8_t status = gb->mmu.readByte(STAT);
+					status &= 0xFC;
+					status |= 0x00;
+					gb->mmu.writeByte(STAT, status);
+				}
+				break;
+			default:
+				std::cerr << "Invalid PPU State!" << std::endl;
+				break;
 		}
-	}
-
-	SDL_RenderPresent(renderer);
-}
-
-void PPU::handle_ppu_modes()
-{
-	switch (ppu_mode)
-	{
-		case OAM_READ:
-			if (cycles >= OAM_READ_CYCLES)
-			{
-				cycles = 0;
-				ppu_mode = VRAM_READ;
-			}
-			break;
-		case VRAM_READ:
-			if (cycles >= VRAM_READ_CYCLES)
-			{
-				cycles = 0;
-				ppu_mode = HBLANK;
-				render_scanline();
-			}
-			break;
-		case HBLANK:
-			if (cycles >= HBLANK_CYCLES)
-			{
-				cycles = 0;
-				gb->mmu.writeByte(0xFF44, gb->mmu.readByte(0xFF44) + 1, true);
-				scanline = gb->mmu.readByte(0xFF44);
-
-				// Check if on last scanline
-				if (scanline == 144)
-				{
-					ppu_mode = VBLANK;
-					gb->mmu.writeByte(0xFF0F, gb->mmu.readByte(0xFF0F) | 0x01); // Fire VBlank interrupt
-					render_frame();
-				}
-				else
-				{
-					ppu_mode = OAM_READ;
-				}
-			}
-			break;
-		case VBLANK:
-			if (cycles >= VBLANK_CYCLES)
-			{
-				cycles = 0;
-				gb->mmu.writeByte(0xFF44, gb->mmu.readByte(0xFF44) + 1, true);
-				scanline = gb->mmu.readByte(0xFF44);
-
-				if (scanline > 153)
-				{
-					ppu_mode = OAM_READ;
-					gb->mmu.writeByte(0xFF44, 0);
-				}
-			}
-			break;
+		if (req_int && (mode != current_mode))
+			gb->mmu.writeByte(IF, gb->mmu.readByte(IF) | 0x02);
+		check_lyc();
 	}
 }

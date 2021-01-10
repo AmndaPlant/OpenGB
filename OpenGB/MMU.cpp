@@ -1,6 +1,14 @@
 #include "MMU.h"
 #include "GameBoy.h"
 
+MMU::MMU()
+{
+	for (int i = 0; i < 0x30; ++i)
+	{
+		cart[0x104 + i] = logo[i];
+	}
+}
+
 void MMU::copy(uint16_t source, uint16_t dest, size_t length) 
 {
 	for (int i = 0; i < length; ++i)

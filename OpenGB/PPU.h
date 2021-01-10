@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <array>
 #include <SDL.h>
 
 #define HBLANK 0
@@ -13,54 +14,31 @@
 #define OAM_READ_CYCLES 80
 #define VRAM_READ_CYCLES 172
 
+#define LCDC 0xFF40
+#define STAT 0xFF41
+#define LY 0xFF44
+#define LYC 0xFF45
+
 class GameBoy;
 
 class PPU
 {
 	private:
 		GameBoy *gb = nullptr;
-		SDL_Renderer *renderer;
-
-		uint8_t frame_buffer[160 * 144 * 4] = { 0 };
-
+		std::array<uint8_t, 4> pixels;
+		std::array<uint8_t, 4> palettes;
+		std::array<uint8_t, 160 * 144> lcd;
 		int cycles = 0;
 
-		void read_lcd_control();
+		uint8_t mode;
 
-		void handle_ppu_modes();
-		void render_scanline();
-
-		void render_frame();
-
-		uint8_t bg_display_enable;
-		uint8_t sprite_display_enable;
-		uint8_t sprite_size;
-		uint8_t bg_tile_map_region;
-		uint8_t bg_and_window_tile_map_region;
-		uint8_t window_display_enable;
-		uint8_t window_tile_map_region;
-		uint8_t lcd_display_enable;
-
-		uint8_t ppu_mode;
-		uint8_t scanline;
-		uint8_t tile;
-		uint8_t colorval;
-		uint8_t color;
-
-		const uint8_t COLORS[16] =
-		{
-			0xFF, 0xFF, 0xFF,
-			0xC0, 0xC0, 0xC0,
-			0x60, 0x60, 0x60,
-			0x00, 0x00, 0x00,
-		};
+		void draw(uint8_t scanline);
+		void check_lyc();
 
 	public:
 		void clock();
 
 		void connectGB(GameBoy *g) { gb = g; }
-		void setRenderer(SDL_Renderer *r) { renderer = r; }
-		uint8_t* get_frame_buffer() { return frame_buffer; }
-
+		const std::array<uint8_t, 160 * 144> &get_lcd() const { return lcd; }
 };
 

@@ -23,11 +23,14 @@ class GameBoy;
 #define FLAGS_SET(x) (regs.f |= (x))
 #define FLAGS_CLEAR(x) (regs.f &= ~(x))
 
-#define VBLANK 0x0040
-#define LCD_STATUS 0x0048
-#define TIMER 0x0050
-#define SERIAL 0x0058
-#define JOYPAD 0x0060
+#define VBLANK_ISR 0x0040
+#define LCD_STATUS_ISR 0x0048
+#define TIMER_ISR 0x0050
+#define SERIAL_ISR 0x0058
+#define JOYPAD_ISR 0x0060
+
+#define IF 0xFF0F
+#define IE 0xFFFF
 
 class CPU
 {

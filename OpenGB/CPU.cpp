@@ -10,7 +10,7 @@ CPU::CPU()
 	regs.hl = 0x014D;
 
 	sp = 0xFFFE;
-	pc = 0x0100;
+	pc = 0x0000;
 
 	opcode = 0x00;
 
@@ -104,8 +104,8 @@ void CPU::log()
 
 void CPU::handle_interrupts()
 {
-	uint8_t fired = gb->mmu.readByte(0xFF0F);
-	uint8_t ie = gb->mmu.readByte(0xFFFF);
+	uint8_t fired = gb->mmu.readByte(IF);
+	uint8_t ie = gb->mmu.readByte(IE);
 	if (interrupts_enabled)
 	{ 
 
@@ -122,7 +122,7 @@ void CPU::handle_interrupts()
 			if ((fired & 0x01) & (ie & 0x01))
 			{
 				push(pc);
-				jp(VBLANK);
+				jp(VBLANK_ISR);
 				gb->mmu.writeByte(0xFF0f, (fired & ~0x01));
 			}
 
@@ -130,7 +130,7 @@ void CPU::handle_interrupts()
 			if ((fired & 0x02) & (ie & 0x02))
 			{
 				push(pc);
-				jp(LCD_STATUS);
+				jp(LCD_STATUS_ISR);
 				gb->mmu.writeByte(0xFF0F, (fired & ~0x02));
 			}
 
@@ -138,7 +138,7 @@ void CPU::handle_interrupts()
 			if ((fired & 0x04) & (ie & 0x04))
 			{
 				push(pc);
-				jp(TIMER);
+				jp(TIMER_ISR);
 				gb->mmu.writeByte(0xFF0F, (fired & ~0x04));
 			}
 
@@ -146,7 +146,7 @@ void CPU::handle_interrupts()
 			if ((fired & 0x08) & (ie & 0x08))
 			{
 				push(pc);
-				jp(SERIAL);
+				jp(SERIAL_ISR);
 				gb->mmu.writeByte(0xFF0F, (fired & ~0x04));
 			}
 
@@ -154,7 +154,7 @@ void CPU::handle_interrupts()
 			if ((fired & 0x10) & (ie & 0x10))
 			{
 				push(pc);
-				jp(JOYPAD);
+				jp(JOYPAD_ISR);
 				gb->mmu.writeByte(0xFF0F, (fired & ~0x10));
 			}
 		}
