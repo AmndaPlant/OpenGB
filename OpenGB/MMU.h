@@ -4,7 +4,7 @@
 #include <memory>
 #include <iostream>
 
-//#define LOGGING
+//	#define LOGGING
 
 class GameBoy;
 
@@ -28,7 +28,6 @@ class MMU {
 		};
 
 	public:
-		MMU();
 		void copy(uint16_t source, uint16_t dest, size_t length);
 
 		uint8_t readByte(uint16_t addr);

@@ -10,7 +10,7 @@ CPU::CPU()
 	regs.hl = 0x014D;
 
 	sp = 0xFFFE;
-	pc = 0x0000;
+	pc = 0x0100;
 
 	opcode = 0x00;
 
@@ -42,7 +42,7 @@ CPU::CPU()
 		{"RET NZ", &a::ret_nz, 1},{"POP BC", &a::pop_bc, 1},{"JP NZ,a16", &a::jp_nz, 3},{"JP a16", &a::jp_nn, 3},{"CALL NZ,a16", &a::call_nz, 3},{"PUSH BC", &a::push_bc, 1},{"ADD A,d8", &a::add_n, 2},{"RST 00H", &a::rst_0, 1},{"RET Z", &a::ret_z, 1},{"RET", &a::ret, 1},{"JP Z,a16", &a::jp_z, 3},{"PREFIX CB", &a::cb, 1},{"CALL Z,a16", &a::call_z, 3},{"CALL a16", &a::call_nn, 3},{"ADC A,d8", &a::adc_n, 2},{"RST 08H", &a::rst_8, 1},
 		{"RET NC", &a::ret_nc, 1},{"POP DE", &a::pop_de, 1},{"JP NC,a16", &a::jp_nc, 3},{"NOP", &a::nop, 1},{"CALL NC,a16", &a::call_nc, 3},{"PUSH DE", &a::push_de, 1},{"SUB d8", &a::sub_n, 2},{"RST 10H", &a::rst_10, 1},{"RET C", &a::ret_c, 1},{"RETI", &a::reti, 1},{"JP C,a16", &a::jp_c, 3},{"NOP", &a::nop, 1},{"CALL C,a16", &a::call_c, 1},{"NOP", &a::nop, 1},{"SBC A,d8", &a::sbc_n, 2},{"RST 18H", &a::rst_18, 1},
 		{"LDH (a8),A", &a::ldh_n_a, 2},{"POP HL", &a::pop_hl, 1},{"LD(C),A", &a::ld_ff_c_a, 1},{"NOP", &a::nop, 1},{"NOP", &a::nop, 1},{"PUSH HL", &a::push_hl, 1},{"AND d8", &a::and_n, 2},{"RST 20H", &a::rst_20, 1},{"ADD SP,r8", &a::add_sp_n, 2},{"JP (HL)", &a::jp_hl, 1},{"LD (a16),A", &a::ld_nn_a, 3},{"NOP", &a::nop, 1},{"NOP", &a::nop, 1},{"NOP", &a::nop, 1},{"XOR d8", &a::xor_n, 2},{"RST 28H", &a::rst_28, 1},
-		{"LDH A,(a8)", &a::ldh_a_n, 2},{"POP AF", &a::pop_af, 1},{"LD A,(C)", &a::ld_a_ff_c, 1},{"DI", &a::di, 1},{"NOP", &a::undefined, 1},{"PUSH AF", &a::push_af, 1},{"OR d8", &a::or_n, 2},{"RST 30H", &a::rst_30, 1},{"LD HL,SP+r8", &a::ld_hl_sp_n, 2},{"LD SP,HL", &a::ld_sp_hl, 1},{"LD A,(a16)", &a::ld_a_nn, 3},{"EI", &a::ei, 1},{"NOP", &a::nop, 1},{"NOP", &a::nop, 1},{"CP d8", &a::cp_n, 2},{"RST 38H", &a::rst_38, 1}, 
+		{"LDH A,(a8)", &a::ldh_a_n, 2},{"POP AF", &a::pop_af, 1},{"LD A,(C)", &a::ld_a_ff_c, 1},{"DI", &a::di, 1},{"NOP", &a::nop, 1},{"PUSH AF", &a::push_af, 1},{"OR d8", &a::or_n, 2},{"RST 30H", &a::rst_30, 1},{"LD HL,SP+r8", &a::ld_hl_sp_n, 2},{"LD SP,HL", &a::ld_sp_hl, 1},{"LD A,(a16)", &a::ld_a_nn, 3},{"EI", &a::ei, 1},{"NOP", &a::nop, 1},{"NOP", &a::nop, 1},{"CP d8", &a::cp_n, 2},{"RST 38H", &a::rst_38, 1}, 
 	};
 
 	extended_lookup =
@@ -525,12 +525,8 @@ void CPU::ld_d_n()
 // 0x17
 void CPU::rla()
 {
-	uint8_t carry = FLAGS_ISCARRY ? 1 : 0;
-	regs.a & 0x80 ? FLAGS_SET(FLAGS_CARRY) : FLAGS_CLEAR(FLAGS_CARRY);
-	regs.a <<= 1;
-	regs.a += carry;
-	FLAGS_CLEAR(FLAGS_ZERO | FLAGS_NEGATIVE | FLAGS_HALFCARRY);
-	cycles = 1;
+	regs.a = rl(regs.a);
+	FLAGS_CLEAR(FLAGS_ZERO);
 }
 
 // 0x18
@@ -2280,7 +2276,7 @@ uint8_t CPU::rl(uint8_t value)
 	int old_carry = FLAGS_ISCARRY ? 1 : 0;
 	value & 0x80 ? FLAGS_SET(FLAGS_CARRY) : FLAGS_CLEAR(FLAGS_CARRY);
 	value <<= 1;
-	value += old_carry;
+	if (old_carry) value |= 1;
 	value == 0 ? FLAGS_SET(FLAGS_ZERO) : FLAGS_CLEAR(FLAGS_ZERO);
 	FLAGS_CLEAR(FLAGS_NEGATIVE | FLAGS_HALFCARRY);
 	return value;

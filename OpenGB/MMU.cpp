@@ -1,14 +1,6 @@
 #include "MMU.h"
 #include "GameBoy.h"
 
-MMU::MMU()
-{
-	for (int i = 0; i < 0x30; ++i)
-	{
-		cart[0x104 + i] = logo[i];
-	}
-}
-
 void MMU::copy(uint16_t source, uint16_t dest, size_t length) 
 {
 	for (int i = 0; i < length; ++i)
@@ -45,6 +37,7 @@ uint8_t MMU::readByte(uint16_t addr)
 	}
 	// TODO Special GPU addrs
 	// TODO various IO mem addrs
+	else if (addr == 0xFF00) return 0xFF;
 	else if (addr >= 0xFF00 && addr <= 0xFF7F)
 	{
 		return io[addr - 0xFF00];
@@ -142,4 +135,8 @@ void MMU::writeShort(uint16_t addr, uint16_t data, bool direct)
 void MMU::set_rom(uint8_t *rom_data)
 {
 	std::memcpy(cart, rom_data, sizeof(cart));
+	for (int i = 0; i < 0x30; ++i)
+	{
+		cart[0x0104 + i] = logo[i];
+	}
 }

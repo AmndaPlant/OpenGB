@@ -50,6 +50,8 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
+	SDL_SetWindowTitle(window, "OpenGB");
+
 	bool running = true;
 
 	float timeRemaining = 0.0f;

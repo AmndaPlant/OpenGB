@@ -2,7 +2,6 @@
 
 #include <cstdint>
 #include <array>
-#include <SDL.h>
 
 #define HBLANK 0
 #define VBLANK 1
@@ -16,8 +15,17 @@
 
 #define LCDC 0xFF40
 #define STAT 0xFF41
+#define SCY 0xFF42
+#define SCX 0xFF43
 #define LY 0xFF44
 #define LYC 0xFF45
+#define BGP 0xFF47
+
+#define test_bit(t, pos) \
+	(t & (1 << pos))
+
+#define get_bit(t, pos)\
+	(test_bit(t, pos) ? 1 : 0)
 
 class GameBoy;
 
@@ -25,14 +33,13 @@ class PPU
 {
 	private:
 		GameBoy *gb = nullptr;
-		std::array<uint8_t, 4> pixels;
-		std::array<uint8_t, 4> palettes;
 		std::array<uint8_t, 160 * 144> lcd;
 		int cycles = 0;
 
 		uint8_t mode;
 
 		void draw(uint8_t scanline);
+		void draw_background(uint8_t scanline);
 		void check_lyc();
 
 	public:
