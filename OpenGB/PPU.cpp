@@ -21,7 +21,7 @@ void PPU::draw_background(uint8_t scanline)
 	uint8_t y_pos = scroll_y + scanline;
 
 	uint16_t tile_row = (y_pos / 8) * 32;
-	for (int pixel = 0; pixel < 160; ++pixel)
+	for (int pixel = 0; pixel < LCD_WIDTH; ++pixel)
 	{
 		uint8_t x_pos = pixel + scroll_x;
 		
@@ -58,18 +58,18 @@ void PPU::draw_background(uint8_t scanline)
 
 		uint8_t palette = gb->mmu.readByte(BGP);
 		int colour = (palette >> (colour_no * 2)) & 0x03;
-		if (scanline >= 0 && scanline < 144 && pixel >= 0 && pixel < 160)
-			lcd[scanline * 160 + pixel] = colour;
+		if (scanline >= 0 && scanline < LCD_HEIGHT && pixel >= 0 && pixel < LCD_WIDTH)
+			lcd[scanline * LCD_WIDTH + pixel] = colour;
 	}
 }
 
 void PPU::draw(uint8_t scanline)
 {
 	// Check if display is enabled
-	if (gb->mmu.readByte(LCDC) & 0x80)
+	if (test_bit(gb->mmu.readByte(LCDC), 7))
 	{
 		// Draw background
-		if (gb->mmu.readByte(LCDC) & 0x01)
+		if (test_bit(gb->mmu.readByte(LCDC), 0))
 		{
 			draw_background(scanline);
 		}
@@ -80,9 +80,9 @@ void PPU::check_lyc()
 {
 	bool equal = gb->mmu.readByte(LY) == gb->mmu.readByte(LYC);
 	uint8_t status = gb->mmu.readByte(STAT) & 0xFB;
-	if (equal) status |= 0x04;
+	if (equal) set_bit(status, 2);
 	gb->mmu.writeByte(STAT, status);
-	if (gb->mmu.readByte(STAT) & 0x40) gb->mmu.writeByte(IF, gb->mmu.readByte(IF) | 0x02);
+	if (test_bit(status, 6)) gb->mmu.writeByte(IF, gb->mmu.readByte(IF) | 0x02);
 }
 
 void PPU::clock()
@@ -92,7 +92,7 @@ void PPU::clock()
  	uint8_t current_mode = mode;
 	uint8_t status = gb->mmu.readByte(STAT);
 
-	if (gb->mmu.readByte(LCDC) & 0x80)
+	if (test_bit(gb->mmu.readByte(LCDC), 7))
 	{
 		cycles += (gb->cpu.get_cycles() * 4);
 		switch (mode)
@@ -106,7 +106,7 @@ void PPU::clock()
 					++scanline;
 					gb->mmu.writeByte(LY, scanline, true);
 					check_lyc();
-					if (scanline >= 144) // We're on the final scanline
+					if (scanline >= LCD_HEIGHT) // We're on the final scanline
 					{
 						mode = VBLANK;
 						// Set STAT register 
@@ -116,7 +116,7 @@ void PPU::clock()
 						// Fire V-Blank interrupt
 						gb->mmu.writeByte(IF, (gb->mmu.readByte(IF) | 0x01));
 						// Check interrupt
-						req_int = gb->mmu.readByte(STAT) & 0x10;
+						req_int = test_bit(status, 4);
 					}
 					else
 					{
@@ -124,7 +124,7 @@ void PPU::clock()
 						status &= 0xFC;
 						status |= 0x02;
 						gb->mmu.writeByte(STAT, status);
-						req_int = gb->mmu.readByte(STAT) & 0x20;
+						req_int = test_bit(status, 5);
 					}
 				}
 				break;
@@ -136,7 +136,7 @@ void PPU::clock()
 					++scanline;
 					gb->mmu.writeByte(LY, scanline, true);
 					check_lyc();
-					if (scanline == 154) // End of frame
+					if (scanline == MAX_SCANLINES) // End of frame
 					{
 						mode = OAM_READ;
 						gb->mmu.writeByte(LY, 0x00);
@@ -144,7 +144,7 @@ void PPU::clock()
 						status &= 0xFC;
 						status |= 0x02;
 						gb->mmu.writeByte(STAT, status);
-						req_int = gb->mmu.readByte(STAT) & 0x20;
+						req_int = test_bit(status, 5);
 					}
 				}
 				break;
@@ -164,7 +164,7 @@ void PPU::clock()
 				{
 					cycles = 0;
 					mode = HBLANK;
-					req_int = gb->mmu.readByte(STAT) & 0x08;
+					req_int = test_bit(status, 3);
 					uint8_t status = gb->mmu.readByte(STAT);
 					status &= 0xFC;
 					status |= 0x00;

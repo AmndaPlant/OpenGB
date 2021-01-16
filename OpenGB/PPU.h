@@ -3,6 +3,8 @@
 #include <cstdint>
 #include <array>
 
+#include "Util.h"
+
 #define HBLANK 0
 #define VBLANK 1
 #define OAM_READ 2
@@ -21,11 +23,9 @@
 #define LYC 0xFF45
 #define BGP 0xFF47
 
-#define test_bit(t, pos) \
-	(t & (1 << pos))
-
-#define get_bit(t, pos)\
-	(test_bit(t, pos) ? 1 : 0)
+#define LCD_WIDTH 160
+#define LCD_HEIGHT 144
+#define MAX_SCANLINES 154
 
 class GameBoy;
 

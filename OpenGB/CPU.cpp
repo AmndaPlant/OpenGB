@@ -119,43 +119,43 @@ void CPU::handle_interrupts()
 			HALT = false;
 
 			// VBlank
-			if ((fired & 0x01) & (ie & 0x01))
+			if (test_bit(fired, 0) && test_bit(fired, 0))
 			{
 				push(pc);
 				jp(VBLANK_ISR);
-				gb->mmu.writeByte(0xFF0f, (fired & ~0x01));
+				gb->mmu.writeByte(IF, (fired & ~0x01));
 			}
 
 			// LCD Status
-			if ((fired & 0x02) & (ie & 0x02))
+			if (test_bit(fired, 1) & test_bit(ie, 1))
 			{
 				push(pc);
 				jp(LCD_STATUS_ISR);
-				gb->mmu.writeByte(0xFF0F, (fired & ~0x02));
+				gb->mmu.writeByte(IF, (fired & ~0x02));
 			}
 
 			// TIMER
-			if ((fired & 0x04) & (ie & 0x04))
+			if (test_bit(fired, 2) & test_bit(ie, 2))
 			{
 				push(pc);
 				jp(TIMER_ISR);
-				gb->mmu.writeByte(0xFF0F, (fired & ~0x04));
+				gb->mmu.writeByte(IF, (fired & ~0x04));
 			}
 
 			// SERIAL
-			if ((fired & 0x08) & (ie & 0x08))
+			if (test_bit(fired, 3) & test_bit(fired, 3))
 			{
 				push(pc);
 				jp(SERIAL_ISR);
-				gb->mmu.writeByte(0xFF0F, (fired & ~0x04));
+				gb->mmu.writeByte(IF, (fired & ~0x04));
 			}
 
 			// JOYPAD
-			if ((fired & 0x10) & (ie & 0x10))
+			if (test_bit(fired, 4) & test_bit(ie, 4))
 			{
 				push(pc);
 				jp(JOYPAD_ISR);
-				gb->mmu.writeByte(0xFF0F, (fired & ~0x10));
+				gb->mmu.writeByte(IF, (fired & ~0x10));
 			}
 		}
 	}
@@ -169,7 +169,7 @@ void CPU::handle_timer()
 {
 	timerDiv += cycles;
 
-	uint8_t timerAttrs = gb->mmu.readByte(0xFF07);
+	uint8_t timerAttrs = gb->mmu.readByte(TAC);
 	if ((timerAttrs >> 2) & 0x1)
 	{
 		timaCounter += cycles * 4;
@@ -180,11 +180,11 @@ void CPU::handle_timer()
 
 		while (timaCounter >= (4194304 / freq))
 		{
-			gb->mmu.writeByte(0xFF05, gb->mmu.readByte(0xFF05) + 1);
-			if (gb->mmu.readByte(0xFF05) == 0)
+			gb->mmu.writeByte(TIMA, gb->mmu.readByte(TIMA) + 1);
+			if (gb->mmu.readByte(TIMA) == 0)
 			{
 				gb->mmu.writeByte(IF, gb->mmu.readByte(IF) | 4);
-				gb->mmu.writeByte(0xFF05, gb->mmu.readByte(0xFF06));
+				gb->mmu.writeByte(TIMA, gb->mmu.readByte(TMA));
 			}
 			timaCounter -= (4194304 / freq);
 		}
@@ -193,7 +193,7 @@ void CPU::handle_timer()
 	if (timerDiv >= 256)
 	{
 		timerDiv -= 256;
-		gb->mmu.writeByte(0xFF04, (gb->mmu.readByte(0xFF04) + 1), true);
+		gb->mmu.writeByte(DIV, (gb->mmu.readByte(DIV) + 1), true);
 	}
 }
 
@@ -2244,8 +2244,8 @@ void CPU::rst_38()
 
 uint8_t CPU::rlc(uint8_t value)
 {
-	int carry = (value & 0x80) >> 7;
-	value & 0x80 ? FLAGS_SET(FLAGS_CARRY) : FLAGS_CLEAR(FLAGS_CARRY);
+	int carry = get_bit(value, 7);
+	test_bit(value, 7) ? FLAGS_SET(FLAGS_CARRY) : FLAGS_CLEAR(FLAGS_CARRY);
 	value <<= 1;
 	value += carry;
 	value == 0 ? FLAGS_SET(FLAGS_ZERO) : FLAGS_CLEAR(FLAGS_ZERO);
@@ -2255,12 +2255,12 @@ uint8_t CPU::rlc(uint8_t value)
 
 uint8_t CPU::rrc(uint8_t value)
 {
-	int carry = (value & 0x01);
+	int carry = get_bit(value, 0);
 	value >>= 1;
 	if (carry)
 	{
 		FLAGS_SET(FLAGS_CARRY);
-		value |= 0x80;
+		set_bit(value, 7);
 	}
 	else
 	{
@@ -2275,7 +2275,7 @@ uint8_t CPU::rrc(uint8_t value)
 uint8_t CPU::rl(uint8_t value)
 {
 	int old_carry = FLAGS_ISCARRY ? 1 : 0;
-	value & 0x80 ? FLAGS_SET(FLAGS_CARRY) : FLAGS_CLEAR(FLAGS_CARRY);
+	test_bit(value, 7) ? FLAGS_SET(FLAGS_CARRY) : FLAGS_CLEAR(FLAGS_CARRY);
 	value <<= 1;
 	if (old_carry) value |= 1;
 	value == 0 ? FLAGS_SET(FLAGS_ZERO) : FLAGS_CLEAR(FLAGS_ZERO);
@@ -2286,7 +2286,7 @@ uint8_t CPU::rl(uint8_t value)
 uint8_t CPU::rr(uint8_t value)
 {
 	int old_carry = (FLAGS_ISCARRY ? 1 : 0) << 7;
-	value & 0x01 ? FLAGS_SET(FLAGS_CARRY) : FLAGS_CLEAR(FLAGS_CARRY);
+	test_bit(value, 0) ? FLAGS_SET(FLAGS_CARRY) : FLAGS_CLEAR(FLAGS_CARRY);
 	value >>= 1;
 	value += old_carry;
 	value == 0 ? FLAGS_SET(FLAGS_ZERO) : FLAGS_CLEAR(FLAGS_ZERO);
@@ -2296,7 +2296,7 @@ uint8_t CPU::rr(uint8_t value)
 
 uint8_t CPU::sla(uint8_t value)
 {
-	value & 0x80 ? FLAGS_SET(FLAGS_CARRY) : FLAGS_CLEAR(FLAGS_CARRY);
+	test_bit(value, 7) ? FLAGS_SET(FLAGS_CARRY) : FLAGS_CLEAR(FLAGS_CARRY);
 	value <<= 1;
 	value == 0 ? FLAGS_SET(FLAGS_ZERO) : FLAGS_CLEAR(FLAGS_ZERO);
 	FLAGS_CLEAR(FLAGS_NEGATIVE | FLAGS_HALFCARRY);
@@ -2305,7 +2305,7 @@ uint8_t CPU::sla(uint8_t value)
 
 uint8_t CPU::sra(uint8_t value)
 {
-	value & 0x01 ? FLAGS_SET(FLAGS_CARRY) : FLAGS_CLEAR(FLAGS_CARRY);
+	test_bit(value, 0) ? FLAGS_SET(FLAGS_CARRY) : FLAGS_CLEAR(FLAGS_CARRY);
 	value = (value & 0x80) | value >> 1;
 	value == 0 ? FLAGS_SET(FLAGS_ZERO) : FLAGS_CLEAR(FLAGS_ZERO);
 	FLAGS_CLEAR(FLAGS_NEGATIVE | FLAGS_HALFCARRY);
@@ -2323,7 +2323,7 @@ uint8_t CPU::swap(uint8_t value)
 
 uint8_t CPU::srl(uint8_t value)
 {
-	value & 0x01 ? FLAGS_SET(FLAGS_CARRY) : FLAGS_CLEAR(FLAGS_CARRY);
+	test_bit(value, 0) ? FLAGS_SET(FLAGS_CARRY) : FLAGS_CLEAR(FLAGS_CARRY);
 	value >>= 1;
 	value == 0 ? FLAGS_SET(FLAGS_ZERO) : FLAGS_CLEAR(FLAGS_ZERO);
 	FLAGS_CLEAR(FLAGS_NEGATIVE | FLAGS_HALFCARRY);
@@ -2332,19 +2332,21 @@ uint8_t CPU::srl(uint8_t value)
 
 void CPU::bit(uint8_t value, uint8_t bit)
 {
-	((value & (1 << bit)) == 0) ? FLAGS_SET(FLAGS_ZERO) : FLAGS_CLEAR(FLAGS_ZERO);
+	test_bit(value, bit) ? FLAGS_CLEAR(FLAGS_ZERO) : FLAGS_SET(FLAGS_ZERO);
 	FLAGS_SET(FLAGS_HALFCARRY);
 	FLAGS_CLEAR(FLAGS_NEGATIVE);
 }
 
 uint8_t CPU::res(uint8_t value, uint8_t bit)
 {
-	return (value & ~(1 << bit));
+	clear_bit(value, bit);
+	return value;
 }
 
 uint8_t CPU::set(uint8_t value, uint8_t bit)
 {
-	return (value | (1 << bit));
+	set_bit(value, bit);
+	return value;
 }
 
 // 0x00
@@ -4168,7 +4170,7 @@ void CPU::cpu_step()
 	}
 
 	total_cycles += cycles;
-	if (total_cycles >= 17556)
+	if (total_cycles >= FRAME_CYCLES)
 	{
 		total_cycles = 0;
 		frame_complete = true;

@@ -5,6 +5,8 @@
 #include <iomanip>
 #include <vector>
 
+#include "Util.h"
+
 //#define LOGGING
 
 class GameBoy;
@@ -29,8 +31,14 @@ class GameBoy;
 #define SERIAL_ISR 0x0058
 #define JOYPAD_ISR 0x0060
 
+#define DIV 0xFF04
+#define TIMA 0xFF05
+#define TMA 0xFF06
+#define TAC 0xFF07
 #define IF 0xFF0F
 #define IE 0xFFFF
+
+#define FRAME_CYCLES 17556
 
 class CPU
 {

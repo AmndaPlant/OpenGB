@@ -31,6 +31,7 @@
     <ClInclude Include="GameBoy.h" />
     <ClInclude Include="MMU.h" />
     <ClInclude Include="PPU.h" />
+    <ClInclude Include="Util.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
