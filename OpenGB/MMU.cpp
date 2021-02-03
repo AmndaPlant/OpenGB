@@ -125,7 +125,12 @@ void MMU::writeByte(uint16_t addr, uint8_t data, bool direct)
 	}
 	else if (addr == 0xFF44 && !direct) // LY
 	{
-		io[0x44] = 0x00;
+		//io[0x44] = 0x00;
+	}
+	else if (addr == 0xFF45) // LYC
+	{
+		io[0x45] = data;
+		gb->ppu.check_lyc(); // Force an LY-LYC check
 	}
 	else if (addr >= 0xFF00 && addr <= 0xFF7F)
 	{
