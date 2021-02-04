@@ -50,7 +50,11 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	SDL_SetWindowTitle(window, "OpenGB");
+	std::string window_title = "OpenGB - ";
+	std::string rom_title = argv[1];
+	window_title += rom_title;
+
+	SDL_SetWindowTitle(window, window_title.c_str());
 
 	bool running = true;
 
