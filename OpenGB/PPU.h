@@ -44,6 +44,7 @@ class PPU
 		int cycles = 0;
 
 		uint8_t mode;
+		uint8_t window_counter;
 
 		void draw(uint8_t scanline);
 		void draw_background(uint8_t scanline);

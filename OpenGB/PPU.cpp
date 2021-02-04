@@ -77,8 +77,11 @@ void PPU::draw_window(uint8_t scanline)
 	uint8_t window_x = gb->mmu.readByte(WX) - 7;
 	uint8_t window_y = gb->mmu.readByte(WY);
 
+	if (window_x < 0 || window_x > 159 || window_y < 0 || window_y > 143)
+		return;
+
 	// Really hacky fix that may break some games
-	if (window_y < scanline) return;
+	if (scanline < window_y) return;
 
 	if (test_bit(gb->mmu.readByte(LCDC), 4))
 		tiledata = 0x8000;
@@ -89,17 +92,17 @@ void PPU::draw_window(uint8_t scanline)
 	}
 
 	if (test_bit(gb->mmu.readByte(LCDC), 6))
-		tiledata = 0x9C00;
+		window_memory = 0x9C00;
 	else
-		tiledata = 0x9800;
+		window_memory = 0x9800;
 
-	uint8_t y_pos = scanline - window_y;
+	uint8_t y_pos = window_counter;
 
 	uint16_t tile_row = y_pos / 8 * 32;
 	for (int pixel = window_x; pixel < LCD_WIDTH; ++pixel)
 	{
-		uint8_t x_pos = 0;
-		if (pixel >= window_x)
+		uint8_t x_pos = 8;
+		if (pixel > window_x);
 			x_pos = pixel - window_x;
 
 		uint16_t tile_col = (x_pos / 8);
@@ -131,7 +134,7 @@ void PPU::draw_window(uint8_t scanline)
 
 		int colour_no = get_bit(high, colour_bit);
 		colour_no <<= 1;
-		colour_no = get_bit(low, colour_bit);
+		colour_no |= get_bit(low, colour_bit);
 
 		uint8_t palette = gb->mmu.readByte(BGP);
 		int colour = (palette >> (colour_no * 2)) & 0x03;
@@ -141,14 +144,16 @@ void PPU::draw_window(uint8_t scanline)
 			bg_colours[scanline * LCD_WIDTH + pixel] = colour_no;
 		}
 	}
+	++window_counter;
 }
 
 void PPU::draw_sprites(uint8_t scanline)
 {
 	bool use_8x16 = test_bit(gb->mmu.readByte(LCDC), 2);
 	int sprite_count = 0;
-	for (int sprite = 0; sprite < 40 && sprite_count < 10; ++sprite)
+	for (int sprite = 0; sprite < 40; ++sprite)
 	{
+		if (sprite_count >= 10) break;
 		uint8_t sprite_x_coords[10]; // Really hacky fix for DMG acid'
 		bool skip_sprite = false;
 		uint8_t index = sprite * 4;
@@ -247,11 +252,14 @@ void PPU::draw(uint8_t scanline)
 			if (test_bit(gb->mmu.readByte(LCDC), 5))
 				draw_window(scanline);
 		}
-		else
-			for(int i = 0; i < LCD_WIDTH; ++i)
+		/*else
+		{
+			for (uint8_t pixel = 0; pixel < LCD_WIDTH; ++pixel)
+			{
 				if (scanline >= 0 && scanline < LCD_HEIGHT)
-					lcd[scanline * LCD_WIDTH + i] = 0;
-
+					lcd[scanline * LCD_WIDTH + pixel] = 0;
+			}
+		}*/
 
 		// Draw sprites
 		if (test_bit(gb->mmu.readByte(LCDC), 1))
@@ -326,6 +334,7 @@ void PPU::clock()
 					{
 						mode = OAM_READ;
 						gb->mmu.writeByte(LY, 0x00);
+						window_counter = 0;
 						uint8_t status = gb->mmu.readByte(STAT);
 						status &= 0xFC;
 						status |= 0x02;
