@@ -31,7 +31,7 @@ uint8_t MMU::readByte(uint16_t addr)
 	{
 		return wram[addr - 0xE000];
 	}
-	else if (addr >= 0xFE00 && addr <= 0xFEFF)
+	else if (addr >= 0xFE00 && addr <= 0xFE9F)
 	{
 		return oam[addr - 0xFE00];
 	}
@@ -47,7 +47,7 @@ uint8_t MMU::readByte(uint16_t addr)
 		return hram[addr - 0xFF80];
 	}
 
-	return 0; // In case we have an illegal address
+	return 0xFF; // In case we have an illegal address
 }
 
 uint16_t MMU::readShort(uint16_t addr)
@@ -73,7 +73,7 @@ void MMU::writeByte(uint16_t addr, uint8_t data, bool direct)
 	{
 		wram[addr - 0xE000] = data;
 	}
-	else if (addr >= 0xFE00 && addr <= 0xFEFF)
+	else if (addr >= 0xFE00 && addr <= 0xFE9F)
 	{
 		oam[addr - 0xFE00] = data;
 	}
@@ -132,6 +132,14 @@ void MMU::writeByte(uint16_t addr, uint8_t data, bool direct)
 	{
 		io[0x45] = data;
 		gb->ppu.check_lyc(); // Force an LY-LYC check
+	}
+	else if (addr == 0xFF46) // OAM DMA
+	{
+		uint16_t dma_addr = data * 0x100;
+		for (int i = 0; i < 0xA0; ++i)
+		{
+			oam[i] = readByte(dma_addr + i);
+		}
 	}
 	else if (addr >= 0xFF00 && addr <= 0xFF7F)
 	{

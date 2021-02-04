@@ -333,7 +333,7 @@ void PPU::clock()
 					if (scanline == MAX_SCANLINES) // End of frame
 					{
 						mode = OAM_READ;
-						gb->mmu.writeByte(LY, 0x00);
+						gb->mmu.writeByte(LY, 0x00, true);
 						window_counter = 0;
 						uint8_t status = gb->mmu.readByte(STAT);
 						status &= 0xFC;
