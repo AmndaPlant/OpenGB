@@ -1,9 +1,5 @@
 #pragma once
 
-#include <fstream>
-#include <iostream>
-#include <vector>
-
 #include "MMU.h"
 #include "Cartridge.h"
 #include "CPU.h"
@@ -17,9 +13,9 @@ class GameBoy
 		MMU mmu;
 		CPU cpu;
 		PPU ppu;
+		Cartridge cart;
 
 		bool readROM(const char* filename);
-		void unloadROM();
 
 		void clock();
 };

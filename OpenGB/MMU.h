@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cstdint>
-#include <memory>
 #include <iostream>
 
 //	#define LOGGING
@@ -29,7 +28,6 @@ class MMU {
 		void writeByte(uint16_t addr, uint8_t data, bool direct = false);
 		void writeShort(uint16_t addr, uint16_t data, bool direct = false);
 
-		void set_rom(uint8_t* rom_data);
 		void connectGB(GameBoy *g) { gb = g; }
 };
 

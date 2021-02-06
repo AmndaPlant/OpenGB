@@ -72,3 +72,24 @@ const std::map<rom_type, std::string> rom_type_names =
 	{ROM_HUC1_RAM_BATT, "HuC1+RAM+Battery"}
 };
 
+class GameBoy;
+
+class Cartridge
+{
+	private:
+		uint8_t* rom;
+		uint8_t* ram;
+		uint8_t rom_bank = 1;
+		uint8_t ram_bank = 0;
+		bool ram_enabled = false;
+		bool rom_mode = 0;
+		rom_type type;
+		GameBoy *gb = nullptr;
+
+	public:
+		bool load_cart(const char* filename);
+		uint8_t read_cart(uint16_t addr);
+		void write_cart(uint16_t addr, uint8_t data);
+
+		void connectGB(GameBoy *g) { gb = g; }
+};

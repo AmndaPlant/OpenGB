@@ -13,7 +13,7 @@ uint8_t MMU::readByte(uint16_t addr)
 {
 	if (addr <= 0x7FFF)
 	{
-		return cart[addr];
+		return gb->cart.read_cart(addr);
 	}
 	else if (addr >= 0x8000 && addr <= 0x9FFF)
 	{
@@ -21,7 +21,7 @@ uint8_t MMU::readByte(uint16_t addr)
 	}
 	else if (addr >= 0xA000 && addr <= 0xBFFF)
 	{
-		return sram[addr - 0xA000];
+		return gb->cart.read_cart(addr);
 	}
 	else if (addr >= 0xC000 && addr <= 0xDFFF)
 	{
@@ -57,13 +57,17 @@ uint16_t MMU::readShort(uint16_t addr)
 
 void MMU::writeByte(uint16_t addr, uint8_t data, bool direct)
 {
+	if (addr <= 0x7FFF)
+	{
+		gb->cart.write_cart(addr, data);
+	}
 	if (addr >= 0x8000 && addr <= 0x9FFF)
 	{
 		vram[addr - 0x8000] = data;
 	}
 	else if (addr >= 0xA000 && addr <= 0xBFFF)
 	{
-		sram[addr - 0xA000] = data;
+		gb->cart.write_cart(addr, data);
 	}
 	else if (addr >= 0xC000 && addr <= 0xDFFF)
 	{
@@ -155,9 +159,4 @@ void MMU::writeShort(uint16_t addr, uint16_t data, bool direct)
 {
 	writeByte(addr, (uint8_t)(data & 0x00FF), direct);
 	writeByte(addr + 1, (uint8_t)((data & 0xFF00) >> 8), direct);
-}
-
-void MMU::set_rom(uint8_t *rom_data)
-{
-	std::memcpy(cart, rom_data, sizeof(cart));
 }
