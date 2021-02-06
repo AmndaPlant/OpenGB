@@ -6,6 +6,11 @@ The easiest way to build this emulator is using Visual Studio. Simply open the s
 
 A more cross platform build system is planned for the future.
 
+# Tests
+The emulator has been tested with [Blargg's tests](https://github.com/retrio/gb-test-roms) and.
+
+![Blargg result](https://i.imgur.com/kVxMObd.png)
+
 ## Playing
 Usage:
 
