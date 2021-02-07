@@ -276,7 +276,7 @@ void PPU::check_lyc()
 	if (equal) set_bit(status, 2);
 	else clear_bit(status, 2);
 	gb->mmu.writeByte(STAT, status);
-	if (test_bit(status, 6) && equal) gb->mmu.writeByte(IF, gb->mmu.readByte(IF) | 0x02);
+	if (test_bit(status, 6) && equal) gb->cpu.request_interrupt(lcd_status);
 }
 
 void PPU::clock()
@@ -308,7 +308,7 @@ void PPU::clock()
 						status |= 0x01;
 						gb->mmu.writeByte(STAT, status);
 						// Fire V-Blank interrupt
-						gb->mmu.writeByte(IF, (gb->mmu.readByte(IF) | 0x01));
+						gb->cpu.request_interrupt(vblank);
 						// Check interrupt
 						req_int = test_bit(status, 4);
 					}
@@ -371,7 +371,7 @@ void PPU::clock()
 				break;
 		}
 		if (req_int && (mode != current_mode))
-			gb->mmu.writeByte(IF, gb->mmu.readByte(IF) | 0x02);
+			gb->cpu.request_interrupt(lcd_status);
 
 	}
 	else

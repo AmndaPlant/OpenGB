@@ -40,6 +40,14 @@ class GameBoy;
 
 #define FRAME_CYCLES 17556
 
+enum interrupts {
+	vblank,
+	lcd_status,
+	timer,
+	serial,
+	joypad
+};
+
 class CPU
 {
 	private:
@@ -710,5 +718,7 @@ class CPU
 		bool frame_complete;
 
 		uint8_t get_cycles() { return cycles; }
+
+		void request_interrupt(interrupts i);
 };
 

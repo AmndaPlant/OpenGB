@@ -4176,3 +4176,25 @@ void CPU::cpu_step()
 		frame_complete = true;
 	}
 }
+
+void CPU::request_interrupt(interrupts i)
+{
+	switch (i)
+	{
+		case vblank:
+			gb->mmu.writeByte(IF, (gb->mmu.readByte(IF) | 0x01));
+			break;
+		case lcd_status:
+			gb->mmu.writeByte(IF, gb->mmu.readByte(IF) | 0x02);
+			break;
+		case timer:
+			gb->mmu.writeByte(IF, gb->mmu.readByte(IF) | 0x04);
+			break;
+		case serial:
+			gb->mmu.writeByte(IF, gb->mmu.readByte(IF) | 0x08);
+			break;
+		case joypad:
+			gb->mmu.writeByte(IF, gb->mmu.readByte(IF) | 0x10);
+			break;
+	}
+}
