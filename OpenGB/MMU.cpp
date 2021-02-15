@@ -1,6 +1,8 @@
 #include "MMU.h"
 #include "GameBoy.h"
 
+#include "Util.h"
+
 void MMU::copy(uint16_t source, uint16_t dest, size_t length) 
 {
 	for (int i = 0; i < length; ++i)
@@ -37,7 +39,7 @@ uint8_t MMU::readByte(uint16_t addr)
 	}
 	// TODO Special GPU addrs
 	// TODO various IO mem addrs
-	else if (addr == 0xFF00) return 0xFF;
+	else if (addr == 0xFF00) return joypad_mem_state();
 	else if (addr >= 0xFF00 && addr <= 0xFF7F)
 	{
 		return io[addr - 0xFF00];
@@ -159,4 +161,41 @@ void MMU::writeShort(uint16_t addr, uint16_t data, bool direct)
 {
 	writeByte(addr, (uint8_t)(data & 0x00FF), direct);
 	writeByte(addr + 1, (uint8_t)((data & 0xFF00) >> 8), direct);
+}
+
+uint8_t MMU::get_joypad_state()
+{
+	return joypad_state;
+}
+
+void MMU::set_joypad_state(const uint8_t key)
+{
+	set_bit(joypad_state, key);
+}
+
+void MMU::clear_joypad_state(const uint8_t key)
+{
+	clear_bit(joypad_state, key);
+}
+
+uint8_t MMU::joypad_mem_state()
+{
+	uint8_t res = io[0x00];
+
+	res ^= 0xFF; // Flip all bits
+
+	// Buttons
+	if (!(test_bit(res, 4)))
+	{
+		uint8_t top_joypad = joypad_state >> 4;
+		top_joypad |= 0xF0; // Set top nibble to 1s
+		res &= top_joypad;
+	}
+	else if (!(test_bit(res, 5)))
+	{
+		uint8_t bottom_joypad = joypad_state & 0x0F;
+		bottom_joypad |= 0xF0;
+		res &= bottom_joypad;
+	}
+	return res;
 }

@@ -7,6 +7,75 @@
 
 const std::array<uint32_t, 4> colors = { 0xFFFFFFFF, 0xC0C0C0FF, 0x606060FF, 0x000000FF };
 
+GameBoy gb;
+
+void check_input(SDL_Event e)
+{
+	int key = -1;
+	if (e.type == SDL_KEYDOWN)
+	{
+		switch (e.key.keysym.sym)
+		{
+			case SDLK_z:
+				key = GameBoy::KEY_B;
+				break;
+			case SDLK_x:
+				key = GameBoy::KEY_A;
+				break;
+			case SDLK_RETURN:
+				key = GameBoy::KEY_START;
+				break;
+			case SDLK_RSHIFT:
+				key = GameBoy::KEY_SELECT;
+				break;
+			case SDLK_UP:
+				key = GameBoy::KEY_UP;
+				break;
+			case SDLK_DOWN:
+				key = GameBoy::KEY_DOWN;
+				break;
+			case SDLK_LEFT:
+				key = GameBoy::KEY_LEFT;
+				break;
+			case SDLK_RIGHT:
+				key = GameBoy::KEY_RIGHT;
+				break;
+		}
+		if (key != -1) gb.key_pressed(key);
+	}
+	else if (e.type == SDL_KEYUP)
+	{
+		switch (e.key.keysym.sym)
+		{
+		case SDLK_z:
+			key = GameBoy::KEY_B;
+			break;
+		case SDLK_x:
+			key = GameBoy::KEY_A;
+			break;
+		case SDLK_RETURN:
+			key = GameBoy::KEY_START;
+			break;
+		case SDLK_RSHIFT:
+			key = GameBoy::KEY_SELECT;
+			break;
+		case SDLK_UP:
+			key = GameBoy::KEY_UP;
+			break;
+		case SDLK_DOWN:
+			key = GameBoy::KEY_DOWN;
+			break;
+		case SDLK_LEFT:
+			key = GameBoy::KEY_LEFT;
+			break;
+		case SDLK_RIGHT:
+			key = GameBoy::KEY_RIGHT;
+			break;
+		}
+		if (key != -1) gb.key_released(key);
+	}
+}
+
 int main(int argc, char **argv)
 {
 
@@ -16,7 +85,6 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	GameBoy gb;
 	if (gb.readROM(argv[1]))
 	{
 		std::cout << "Succesfully loaded ROM!" << std::endl;
@@ -65,6 +133,7 @@ int main(int argc, char **argv)
 		SDL_Event e;
 		while (SDL_PollEvent(&e))
 		{
+			check_input(e);
 			switch (e.type)
 			{
 				case SDL_QUIT:
