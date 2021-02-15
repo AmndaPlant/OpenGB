@@ -126,10 +126,9 @@ int main(int argc, char **argv)
 
 	bool running = true;
 
-	float timeRemaining = 0.0f;
-
 	while (running)
 	{
+		int start = SDL_GetTicks();
 		SDL_Event e;
 		while (SDL_PollEvent(&e))
 		{
@@ -155,6 +154,11 @@ int main(int argc, char **argv)
 		SDL_UpdateTexture(texture, nullptr, &pixels[0], 160 * 4);
 		SDL_RenderCopy(renderer, texture, nullptr, nullptr);
 		SDL_RenderPresent(renderer);
+
+		int time = SDL_GetTicks() - start;
+		if (time < 0) continue;
+		int sleepTime = (1000.f / 60.f) - time;
+		if (sleepTime > 0) SDL_Delay(sleepTime);
 	}
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);

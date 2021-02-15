@@ -162,10 +162,10 @@ void PPU::draw_sprites(uint8_t scanline)
 		uint8_t tile_location = gb->mmu.readByte(OAM + index + 2);
 		uint8_t attr = gb->mmu.readByte(OAM + index + 3);
 
-		for (int i = 0; i < 10; ++i)
+		/*for (int i = 0; i < 10; ++i)
 		{
 			if (sprite_x_coords[i] == x_pos) skip_sprite = true;
-		}
+		}*/
 
 		if (skip_sprite) continue;
 
@@ -198,7 +198,7 @@ void PPU::draw_sprites(uint8_t scanline)
 			uint8_t low = gb->mmu.readByte(data_addr);
 			uint8_t high = gb->mmu.readByte(data_addr + 1);
 
-			for (int tile_pixel = 7; tile_pixel >= 0; --tile_pixel)
+			for (int tile_pixel = 0; tile_pixel < 8; ++tile_pixel)
 			{
 				int colour_bit = tile_pixel;
 
@@ -218,14 +218,14 @@ void PPU::draw_sprites(uint8_t scanline)
 				uint8_t palette = gb->mmu.readByte(colour_addr);
 				int colour = (palette >> (colour_no * 2)) & 0x03;
 
-				int x_pix = 0 - tile_pixel;
-				x_pix += 7;
+				int x_pix = 7 - tile_pixel;
+				//x_pix += 7;
 				int pixel = x_pos + x_pix;
 
-				if (scanline < 0 || scanline >= LCD_HEIGHT || pixel < 0 || pixel >= LCD_WIDTH)
+				/*if (scanline < 0 || scanline >= LCD_HEIGHT || pixel < 0 || pixel >= LCD_WIDTH)
 				{
 					continue;
-				}
+				}*/
 
 				if (bg_priority && bg_colours[scanline * LCD_WIDTH + pixel] != 0)
 				{
