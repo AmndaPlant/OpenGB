@@ -157,8 +157,8 @@ void PPU::draw_sprites(uint8_t scanline)
 		uint8_t sprite_x_coords[10]; // Really hacky fix for DMG acid'
 		bool skip_sprite = false;
 		uint8_t index = sprite * 4;
-		uint8_t y_pos = gb->mmu.readByte(OAM + index) - 16;
-		uint8_t x_pos = gb->mmu.readByte(OAM + index + 1) - 8;
+		int8_t y_pos = gb->mmu.readByte(OAM + index) - 16;
+		int8_t x_pos = gb->mmu.readByte(OAM + index + 1) - 8;
 		uint8_t tile_location = gb->mmu.readByte(OAM + index + 2);
 		uint8_t attr = gb->mmu.readByte(OAM + index + 3);
 
@@ -218,8 +218,8 @@ void PPU::draw_sprites(uint8_t scanline)
 				uint8_t palette = gb->mmu.readByte(colour_addr);
 				int colour = (palette >> (colour_no * 2)) & 0x03;
 
-				int x_pix = 7 - tile_pixel;
-				//x_pix += 7;
+				int x_pix = 0 - tile_pixel;
+				x_pix += 7;
 				int pixel = x_pos + x_pix;
 
 				/*if (scanline < 0 || scanline >= LCD_HEIGHT || pixel < 0 || pixel >= LCD_WIDTH)
@@ -233,7 +233,7 @@ void PPU::draw_sprites(uint8_t scanline)
 				}
 
 				if (scanline >= 0 && scanline < LCD_HEIGHT && pixel >= 0 && pixel < LCD_WIDTH)
-				lcd[scanline * LCD_WIDTH + pixel] = colour;
+					lcd[scanline * LCD_WIDTH + pixel] = colour;
 			}
 		}
 	}
