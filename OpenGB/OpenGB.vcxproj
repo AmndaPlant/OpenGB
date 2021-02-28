@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="APU.cpp" />
     <ClCompile Include="Cartridge.cpp" />
     <ClCompile Include="CPU.cpp" />
     <ClCompile Include="GameBoy.cpp" />
@@ -27,6 +28,7 @@
     <ClCompile Include="PPU.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="APU.h" />
     <ClInclude Include="Cartridge.h" />
     <ClInclude Include="CPU.h" />
     <ClInclude Include="GameBoy.h" />

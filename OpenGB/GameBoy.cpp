@@ -6,6 +6,7 @@ GameBoy::GameBoy()
 	cpu.connectGB(this);
 	ppu.connectGB(this);
 	cart.connectGB(this);
+	apu.connectGB(this);
 
 	mmu.writeByte(P1, 0xFF); // Joypad
 	mmu.writeByte(0xFF05, 0x00); // TIMA
@@ -27,6 +28,7 @@ void GameBoy::clock()
 {
 	cpu.cpu_step();
 	ppu.clock();
+	apu.clock();
 }
 
 void GameBoy::key_pressed(int key)

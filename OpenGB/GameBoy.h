@@ -4,6 +4,7 @@
 #include "Cartridge.h"
 #include "CPU.h"
 #include "PPU.h"
+#include "APU.h"
 
 class GameBoy
 {
@@ -25,6 +26,7 @@ class GameBoy
 		MMU mmu;
 		CPU cpu;
 		PPU ppu;
+		APU apu;
 		Cartridge cart;
 
 		bool readROM(const char* filename);
