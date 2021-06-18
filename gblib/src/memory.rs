@@ -29,7 +29,7 @@ impl Ram {
 
     pub fn new() -> Self {
         Self {
-            data: vec![0u8; Self::BANK_SIZE * num_banks as usize];
+            data: vec![0xFFu8; Self::BANK_SIZE * 2 as usize];
         }
     }
 }
@@ -105,7 +105,7 @@ impl MemoryBus {
     pub fn new() -> Self {
         Self {
             ram: Ram::new();
-            high_ram: Box::new([0u8; 0x80]),
+            high_ram: Box::new([0xFFu8; 0x80]),
             int_enable: 0,
         }
     }
@@ -113,7 +113,7 @@ impl MemoryBus {
     /// Reset the memory bus
     pub fn reset(&mut self) {
         self.ram = Ram::new();
-        self.high_ram = Box::new([0u8; 0x80]);
+        self.high_ram = Box::new([0xFFu8; 0x80]);
         self.int_enable = 0;
     }
 
