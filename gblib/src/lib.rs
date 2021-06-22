@@ -1,3 +1,7 @@
+pub mod cartridge;
+pub mod error;
+mod memory;
+
 #[cfg(test)]
 mod tests {
     #[test]
