@@ -694,19 +694,18 @@ impl Cartridge {
 
     /// Manufacturer code
     pub fn manufacturer_code(&self) -> Result<&str> {
-        let raw = &self.data[0x13F..0x142];
+        let raw = &self.data[0x13F..=0x142];
         Ok(std::str::from_utf8(raw)?)
     }
 
     /// Licensee code (replaced manufacturer code on newer games)
     pub fn licensee_code(&self) -> Result<&str> {
-        let raw = &self.data[0x144..0x145];
-        let code: &str = std::str::from_utf8(raw)?;
+        let code = &self.data[0x14B];
 
         Ok(match code {
-            "00" => "None",
-            "01" => "Nintendo R&D 1",
-            "31" => "Nintendo",
+            0x00 => "None",
+            0x01 => "Nintendo R&D 1",
+            0x31 => "Nintendo",
             _ => "Other",
         })
     }
@@ -724,5 +723,34 @@ impl Cartridge {
     /// RAM size
     pub fn ram_size(&self) -> Result<RamSize> {
         RamSize::try_from(self.data[0x149])
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use std::fs::File;
+    use std::io::Read;
+    use std::path::Path;
+
+    use super::*;
+
+    #[test]
+    fn parse_cartridge_header() {
+        let sample_rom_path = Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("..")
+            .join("ROMS")
+            .join("tetris.gb");
+
+        let mut file = File::open(sample_rom_path).unwrap();
+        let mut data = Vec::new();
+        file.read_to_end(&mut data).unwrap();
+
+        let cartridge = Cartridge::from_bytes(data);
+
+        assert_eq!(cartridge.title().unwrap(), "TETRIS\0\0\0\0\0\0\0\0\0");
+        assert_eq!(cartridge.cartridge_type().unwrap(), CartridgeType::ROM);
+        assert_eq!(cartridge.ram_size().unwrap(), RamSize::NotPresent);
+        assert_eq!(cartridge.rom_size().unwrap(), RomSize::_32K);
+        assert_eq!(cartridge.licensee_code().unwrap(), "Nintendo R&D 1");
     }
 }

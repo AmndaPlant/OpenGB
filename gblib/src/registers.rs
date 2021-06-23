@@ -114,6 +114,8 @@ impl Registers {
         // Build a mask for this flag
         let mask: u8 = 1 << flag as u8;
 
+        println!("{}", mask);
+
         // Update the flags register
         if value {
             self.F |= mask;
@@ -236,5 +238,40 @@ impl std::fmt::Display for Registers {
             af, bc, de, hl, self.PC, self.SP,
             self.zero(), self.subtract(), self.half_carry(), self.carry()
         )
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn combined_regs() {
+        let mut regs = Registers::new();
+
+        regs.write(Reg8::A, 0x10);
+        regs.write(Reg8::F, 0xFF);
+        assert_eq!(regs.read(Reg16::AF), 0x10F0);
+
+        regs.write(Reg16::BC, 0xBEEF);
+        assert_eq!(regs.read(Reg8::B), 0xBE);
+        assert_eq!(regs.read(Reg8::C), 0xEF);
+    }
+
+    #[test]
+    fn flags() {
+        let mut regs = Registers::new();
+
+        regs.set(Flag::Zero, true);
+        assert!(regs.zero());
+        assert_eq!(regs.F, 0xB0);
+
+        regs.set(Flag::Carry, true);
+        assert!(regs.carry());
+        assert_eq!(regs.F, 0xB0);
+
+        regs.clear(Flag::Zero);
+        assert!(!regs.zero());
+        assert_eq!(regs.F, 0x30);
     }
 }

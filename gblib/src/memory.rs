@@ -213,3 +213,21 @@ impl MemoryWrite<u16, u16> for MemoryBus {
         self.write(addr + 1, value[1]);
     }
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn ram_operations() {
+        let mut ram = Ram::new();
+
+        ram.write(Ram::BASE_ADDR, 0x66u8);
+        let value: u8 = ram.read(Ram::BASE_ADDR);
+        assert_eq!(value, 0x66);
+
+        ram.write(Ram::BASE_ADDR + 0x1234u16, 0x66u8);
+        let value: u8 = ram.read(Ram::BASE_ADDR + 0x1234u16);
+        assert_eq!(value, 0x66);
+    }
+}
